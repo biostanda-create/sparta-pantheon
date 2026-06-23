@@ -1,0 +1,24 @@
+name = "pantheon-plus"
+main = "src/index.js"
+compatibility_date = "2024-11-01"
+
+# Created by `wrangler kv namespace create pantheon_plus_kv` — paste the id it prints below.
+kv_namespaces = [
+  { binding = "KV", id = "REPLACE_WITH_KV_NAMESPACE_ID" }
+]
+
+# Set these with `wrangler secret put <NAME>` (see worker/README.md):
+#   STRIPE_SECRET_KEY
+#   STRIPE_WEBHOOK_SECRET
+#   STRIPE_PRICE_MONTHLY
+#   STRIPE_PRICE_ANNUAL
+#   VAPID_PRIVATE_KEY_D
+#   VAPID_PUBLIC_KEY_X
+#   VAPID_PUBLIC_KEY_Y
+# Plain (non-secret) var — your deployed app URL, used for Stripe redirect after checkout:
+[vars]
+APP_URL = "https://example.com/finalspartan.html"
+
+# Sends a daily reminder push to everyone who subscribed (no payload, see src/index.js `scheduled`).
+[triggers]
+crons = ["0 18 * * *"]
