@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="SPARTA">
@@ -240,6 +240,8 @@
   .text-glow-blood { color: var(--crimson); }
   @keyframes pulse-glow { 0%, 100% { opacity: 0.95; } 50% { opacity: 0.65; } }
   .pulse-glow { animation: pulse-glow 3.2s ease-in-out infinite; }
+  @keyframes two-step-swing { 0%, 100% { transform: rotate(-16deg) scale(1); } 50% { transform: rotate(16deg) scale(1.12); } }
+  .two-step-anim { display: inline-block; animation: two-step-swing 1.1s ease-in-out infinite; transform-origin: center; }
   @keyframes float-up { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-80px); opacity: 0; } }
   @keyframes flicker { 0%, 100% { opacity: 1; } 45% { opacity: 1; } 50% { opacity: 0.4; } 55% { opacity: 1; } }
   .flicker { animation: flicker 3.2s infinite; }
@@ -258,6 +260,7 @@
     font-family: 'Inter', -apple-system, sans-serif; font-weight: 600; letter-spacing: 0.01em; padding: 12px 22px;
     background: linear-gradient(180deg, #1c1f22, #141619); border: 1px solid rgba(201, 137, 42, 0.45); border-radius: 8px;
     color: var(--gold-2); cursor: pointer; position: relative; font-size: 14px;
+    min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center;
     transition: background 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
   }
   @media (hover: hover) and (pointer: fine) { .btn:hover { background: linear-gradient(180deg, #25292d, #1c1f22); border-color: var(--gold); } }
@@ -284,10 +287,10 @@
   input[type="number"]:focus, input[type="text"]:focus { border-color: var(--gold); box-shadow: 0 0 12px rgba(201, 137, 42, 0.35); }
   input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
   input[type=number] { -moz-appearance: textfield; }
-  .container-app { max-width: 480px; margin: 0 auto; min-height: 100vh; min-height: 100dvh; position: relative; z-index: 10; padding-bottom: env(safe-area-inset-bottom); }
+  .container-app { max-width: 480px; margin: 0 auto; min-height: 100vh; min-height: 100dvh; position: relative; z-index: 10; padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
   .safe-top { padding-top: env(safe-area-inset-top); }
   .nav-bottom {
-    position: sticky; bottom: 0; left: 0; right: 0;
+    position: fixed; bottom: 0; left: 0; right: 0; margin: 0 auto; max-width: 480px;
     background: linear-gradient(180deg, rgba(11, 12, 14, 0.82), rgba(11, 12, 14, 0.98) 30%);
     backdrop-filter: blur(10px); border-top: 1px solid var(--line-2);
     padding: 8px 4px calc(8px + env(safe-area-inset-bottom)); z-index: 50; display: flex; overflow: hidden;
@@ -813,8 +816,8 @@ function Toast({ message, type, onClose }) {
 const STREAK_FREEZE_MAX = 2;
 const DEFAULT_STATE = {
   ready: false, step: 'intro', hub: 'hub', name: '', consent: null, firstReveal: false,
-  gender: null, hair: null, eye: null, class: null, frequency: null, mode: null,
-  storySeen: [], customPlan: [], goal: null, weightLog: [], lastWeightWeek: null,
+  gender: null, hair: null, eye: null, class: null, frequency: null, mode: 'story',
+  storySeen: [], customCategories: [], goal: null, weightLog: [], lastWeightWeek: null,
   level: 1, xp: 0, totalXP: 0, streak: 0, lastWorkoutDate: null, workoutsCompleted: 0,
   // Streak freezes (Duolingo-style): start with max, refill 1 per week, cap at STREAK_FREEZE_MAX.
   // Rest days no longer punish — freezes cover missed days; if not enough, streak resets to 0 with no XP penalty.
@@ -1146,14 +1149,10 @@ function App() {
     if (state.step === 'hair')     return <HairScreen onSelect={(h) => update({ hair: h, step: 'eye' })} onBack={() => update({ step: 'gender' })} />;
     if (state.step === 'eye')      return <EyeScreen onSelect={(e) => update({ eye: e, step: 'class' })} onBack={() => update({ step: 'hair' })} />;
     if (state.step === 'class')    return <ClassScreen onSelect={(c) => update({ class: c, step: 'freq' })} onBack={() => update({ step: 'eye' })} />;
-    if (state.step === 'freq')     return <FreqScreen onSelect={(f) => update({ frequency: f, step: 'mode' })} onBack={() => update({ step: 'class' })} />;
-    if (state.step === 'mode')     return <ModeScreen current={state.mode} onSelect={(m) => update({ mode: m, step: m === 'custom' ? 'custom' : 'goal' })} onBack={() => update({ step: 'freq' })} />;
-    if (state.step === 'custom')   return <CustomPlanScreen initial={state.customPlan} onConfirm={(plan) => update({ customPlan: plan, step: 'goal' })} onBack={() => update({ step: 'mode' })} />;
-    if (state.step === 'goal')     return <GoalScreen onSubmit={({ goal, kg }) => { const week = getISOWeek(); update({ goal, weightLog: kg > 0 ? [{ week, date: new Date().toISOString().slice(0,10), kg }] : [], lastWeightWeek: kg > 0 ? week : null, step: 'creating' }); }} onBack={() => update({ step: state.mode === 'custom' ? 'custom' : 'mode' })} />;
+    if (state.step === 'freq')     return <FreqScreen onSelect={(f) => update({ frequency: f, step: 'goal' })} onBack={() => update({ step: 'class' })} />;
+    if (state.step === 'goal')     return <GoalScreen onSubmit={({ goal, kg }) => { const week = getISOWeek(); update({ goal, weightLog: kg > 0 ? [{ week, date: new Date().toISOString().slice(0,10), kg }] : [], lastWeightWeek: kg > 0 ? week : null, step: 'creating' }); }} onBack={() => update({ step: 'freq' })} />;
     if (state.step === 'creating') return <CreatingScreen state={state} onDone={() => update({ ready: true, step: 'done', hub: 'hub', firstReveal: true })} />;
   }
-
-  if (state.ready && !state.mode) { return <ModeScreen current={null} onSelect={(m) => update({ mode: m })} onBack={null} />; }
 
   const worldTier = avatarTierFor(state.level || 1);
   const weatherClass = worldTier <= 1 ? 'weather-storm' : worldTier <= 3 ? 'weather-fading' : worldTier === 4 ? 'weather-clearing' : 'weather-clear';
@@ -1171,18 +1170,33 @@ function App() {
       </div>
       <div className="container-app">
         {state.hub === 'hub'     && <HubScreen state={state} onGoto={(t) => update({ hub: t })} onOpenPaywall={() => setShowPaywall(true)} />}
-        {state.hub === 'train'   && (
-          view.screen === 'custom-edit'
-            ? <CustomPlanScreen initial={state.customPlan} editing onConfirm={(plan) => { update({ customPlan: plan }); setView({ screen: null }); showToast('PLAN SAVED', 'success'); }} onBack={() => setView({ screen: null })} />
-            : view.screen === 'logger'
-              ? <ExerciseLogger exerciseId={view.data.exerciseId} categoryId={view.data.categoryId} currentPR={state.stats?.prs?.[view.data.exerciseId]} onCancel={() => setView(view.data.from === 'plan' ? { screen: null } : { screen: 'exercises', data: { categoryId: view.data.categoryId } })} onSave={(payload) => { logWorkout(payload); setView({ screen: null }); update({ hub: 'hub' }); }} />
-              : view.screen === 'exercises'
-                ? <ExerciseList categoryId={view.data.categoryId} onPick={(exerciseId) => setView({ screen: 'logger', data: { exerciseId, categoryId: view.data.categoryId } })} onBack={() => setView({ screen: null })} />
-                : <TrainScreen state={state} onPickCategory={(catId) => setView({ screen: 'exercises', data: { categoryId: catId } })} onPickExercise={(exerciseId, categoryId) => setView({ screen: 'logger', data: { exerciseId, categoryId, from: 'plan' } })} onEditPlan={() => setView({ screen: 'custom-edit' })} />
-        )}
+        {state.hub === 'train'   && (() => {
+          const customCats = state.customCategories || [];
+          const resolveCustomCat = (cc) => cc && { ...cc, exercises: (cc.exerciseIds || []).map(id => getExerciseById(id)?.exercise).filter(Boolean) };
+          if (view.screen === 'logger') {
+            return <ExerciseLogger exerciseId={view.data.exerciseId} categoryId={view.data.categoryId} currentPR={state.stats?.prs?.[view.data.exerciseId]} onCancel={() => setView(view.data.returnTo || { screen: null })} onSave={(payload) => { logWorkout(payload); setView({ screen: null }); update({ hub: 'hub' }); }} />;
+          }
+          if (view.screen === 'exercises') {
+            return <ExerciseList categoryId={view.data.categoryId} onPick={(exerciseId) => setView({ screen: 'logger', data: { exerciseId, categoryId: view.data.categoryId, returnTo: { screen: 'exercises', data: { categoryId: view.data.categoryId } } } })} onBack={() => setView({ screen: null })} />;
+          }
+          if (view.screen === 'category-new') {
+            return <CreateCategoryScreen onConfirm={(ids, name) => { const cat = { id: `cat_${Date.now()}`, name, rune: '✦', color: 'var(--blue-2)', exerciseIds: ids }; update({ customCategories: [...customCats, cat] }); setView({ screen: null }); showToast('CATEGORY CREATED', 'success'); }} onBack={() => setView({ screen: null })} />;
+          }
+          if (view.screen === 'category-edit') {
+            const cat = customCats.find(c => c.id === view.data.categoryId);
+            if (!cat) return null;
+            return <CreateCategoryScreen editing initial={cat.exerciseIds} initialName={cat.name} onConfirm={(ids, name) => { update({ customCategories: customCats.map(c => c.id === cat.id ? { ...c, name, exerciseIds: ids } : c) }); setView({ screen: 'category-detail', data: { categoryId: cat.id } }); showToast('CATEGORY SAVED', 'success'); }} onDelete={() => { update({ customCategories: customCats.filter(c => c.id !== cat.id) }); setView({ screen: null }); showToast('CATEGORY DELETED', 'success'); }} onBack={() => setView({ screen: 'category-detail', data: { categoryId: cat.id } })} />;
+          }
+          if (view.screen === 'category-detail') {
+            const cat = resolveCustomCat(customCats.find(c => c.id === view.data.categoryId));
+            if (!cat) return null;
+            return <CustomCategoryDetail category={cat} onPick={(exerciseId) => setView({ screen: 'logger', data: { exerciseId, categoryId: cat.id, returnTo: { screen: 'category-detail', data: { categoryId: cat.id } } } })} onEdit={() => setView({ screen: 'category-edit', data: { categoryId: cat.id } })} onBack={() => setView({ screen: null })} />;
+          }
+          return <TrainScreen state={state} onPickCategory={(catId) => setView({ screen: 'exercises', data: { categoryId: catId } })} onPickExercise={(exerciseId, categoryId) => setView({ screen: 'logger', data: { exerciseId, categoryId, returnTo: { screen: null } } })} onPickCustomCategory={(catId) => setView({ screen: 'category-detail', data: { categoryId: catId } })} onCreateCategory={() => setView({ screen: 'category-new' })} />;
+        })()}
         {state.hub === 'tasks'   && <TasksScreen state={state} />}
         {state.hub === 'pr'      && <PRBoardScreen state={state} />}
-        {state.hub === 'profile' && <ProfileScreen state={state} onChangeClass={(c) => { update({ class: c }); showToast('PATH CHANGED', 'success'); }} onChangeGoal={(g) => { update({ goal: g }); showToast('GOAL CHANGED', 'success'); }} onChangeMode={(m) => { update({ mode: m }); showToast(m === 'story' ? 'MODE: STORY' : 'MODE: CUSTOM', 'success'); }} onEditPlan={() => { setView({ screen: 'custom-edit' }); update({ hub: 'train' }); }} onLogWeight={() => setShowWeighIn(true)} onReset={async () => { await storage.set('jomsviking_state_v1', JSON.stringify(DEFAULT_STATE)); setState(DEFAULT_STATE); }} onOpenPaywall={() => setShowPaywall(true)} onBackupNow={backupNow} onRestoreBackup={restoreBackup} onRestoreCode={restoreWithCode} onShowToast={showToast} onChangeTheme={(id) => { update({ theme: id }); showToast(`THEME: ${id.toUpperCase()}`, 'success'); }} />}
+        {state.hub === 'profile' && <ProfileScreen state={state} onChangeClass={(c) => { update({ class: c }); showToast('PATH CHANGED', 'success'); }} onChangeGoal={(g) => { update({ goal: g }); showToast('GOAL CHANGED', 'success'); }} onGotoTrain={() => { setView({ screen: null }); update({ hub: 'train' }); }} onLogWeight={() => setShowWeighIn(true)} onReset={async () => { await storage.set('jomsviking_state_v1', JSON.stringify(DEFAULT_STATE)); setState(DEFAULT_STATE); }} onOpenPaywall={() => setShowPaywall(true)} onBackupNow={backupNow} onRestoreBackup={restoreBackup} onRestoreCode={restoreWithCode} onShowToast={showToast} onChangeTheme={(id) => { update({ theme: id }); showToast(`THEME: ${id.toUpperCase()}`, 'success'); }} />}
         <BottomNav active={state.hub} onChange={(t) => { setView({ screen: null }); update({ hub: t }); }} />
       </div>
       {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
@@ -1235,7 +1249,7 @@ function StepHeader({ step, total, title, subtitle, onBack }) {
     <div style={{ padding: '24px 20px 16px' }} className="safe-top">
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
         {onBack ? <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding: '6px 14px', fontSize: 11 }}>◂ BACK</button> : <div />}
-        <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em' }}>STEP {String(step).padStart(2,'0')} / {String(total).padStart(2,'0')}</div>
+        {step && total ? <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em' }}>STEP {String(step).padStart(2,'0')} / {String(total).padStart(2,'0')}</div> : <div />}
       </div>
       <div className="font-display" style={{ fontSize: 22, fontWeight: 900, color: 'var(--gold)', letterSpacing: '0.02em' }}>{title}</div>
       {subtitle && <div className="font-ui" style={{ fontSize: 14, color: 'var(--text-dim)', marginTop: 6, fontStyle: 'italic' }}>{subtitle}</div>}
@@ -1519,67 +1533,81 @@ function GoalScreen({ onSubmit, onBack }) {
           <input type="number" inputMode="decimal" value={kg} onChange={(e) => setKg(e.target.value)} placeholder="—" min="20" max="400" step="0.1" style={{ fontSize: 26 }} />
           <div className="font-ui" style={{ fontSize: 12, color: 'var(--text-faint)', marginTop: 8, textAlign: 'center', fontStyle: 'italic' }}>Optional. The app asks again each week and compares your progress.</div>
         </div>
-        <button type="button" className="btn glow-gold" onClick={() => valid && onSubmit({ goal, kg: w > 0 ? w : 0 })} disabled={!valid} style={{ width: '100%', fontSize: 15, padding: '16px', opacity: valid ? 1 : 0.4, marginTop: 4 }}>ENTER THE PANTHEON</button>
+        <button type="button" className="btn glow-gold" onClick={() => valid && onSubmit({ goal, kg: w > 0 ? w : 0 })} disabled={!valid} style={{ width: '100%', fontSize: 15, padding: '16px', opacity: valid ? 1 : 0.4, marginTop: 4 }}>▸ BEGIN JOURNEY</button>
       </div>
     </div>
   );
 }
 
-const MODES = [
-  { id: 'story', label: 'STORY', rune: 'Λ', color: 'var(--gold)', tagline: 'The Sleeping Gods',
-    desc: 'Advance chapter by chapter, like a book. Every few levels you reveal a piece of the story; quests and bosses follow the storyline.',
-    points: ['Story chapters every ~5 levels', 'Themed quests and enemies', 'A boss hidden behind a dark mask'] },
-  { id: 'custom', label: 'CUSTOM', rune: 'Σ', color: 'var(--blue-2)', tagline: 'Your plan, your rules',
-    desc: 'Build your own list of exercises and train exactly your way. No story, just a clean log and progression.',
-    points: ['Pick your own exercises', 'Quick access to favorites', 'Full RPG progression and quests'] },
-];
-
-function ModeScreen({ onSelect, onBack, current }) {
+function CreateCategoryNameScreen({ initialName, onBack, onSubmit, editing }) {
+  const [name, setName] = useState(initialName || '');
+  const trimmed = name.trim();
+  const valid = trimmed.length >= 2;
   return (
     <div className="container-app">
-      <StepHeader step={7} total={8} title="HOW DO YOU WANT TO PLAY?" subtitle="Can be changed later in the profile." onBack={onBack} />
-      <div style={{ padding: '8px 20px 40px', display: 'flex', flexDirection: 'column', gap: 16 }}>
-        {MODES.map((m, i) => (
-          <button key={m.id} type="button" className="card carved rise" style={{ animationDelay: `${0.1 + i*0.1}s`, padding: '22px', borderLeft: `3px solid ${m.color}`, borderColor: current === m.id ? m.color : 'var(--line)' }} onClick={() => onSelect(m.id)}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 16 }}>
-              <div className="font-rune" style={{ fontSize: 46, color: m.color, lineHeight: 1, filter: `drop-shadow(0 0 10px ${m.color})` }}>{m.rune}</div>
-              <div style={{ flex: 1, textAlign: 'left' }}>
-                <div className="font-display" style={{ fontSize: 22, color: m.color, letterSpacing: '0.02em', fontWeight: 900 }}>{m.label}</div>
-                <div className="font-ui" style={{ fontSize: 13, color: 'var(--gold-2)', fontStyle: 'italic', marginTop: 2 }}>{m.tagline}</div>
-                <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', marginTop: 8, lineHeight: 1.5 }}>{m.desc}</div>
-                <div style={{ marginTop: 10, display: 'flex', flexDirection: 'column', gap: 4 }}>
-                  {m.points.map((p, j) => (<div key={j} className="font-ui" style={{ fontSize: 12, color: 'var(--text-faint)' }}>▸ {p}</div>))}
-                </div>
-              </div>
-              <div style={{ color: m.color, fontSize: 22 }}>▸</div>
-            </div>
-          </button>
-        ))}
+      <StepHeader title={editing ? 'RENAME CATEGORY' : 'NAME YOUR CATEGORY'} subtitle="Give it a name, just like Strongman or Calisthenics." onBack={onBack} />
+      <div style={{ padding: '8px 20px 0', textAlign: 'center' }}>
+        <div className="font-rune two-step-anim" style={{ fontSize: 44, color: 'var(--gold)', display: 'inline-block' }}>⚔</div>
+      </div>
+      <div style={{ padding: '24px 20px 0' }}>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value.slice(0, 30))}
+          placeholder="E.G. LEG DAY"
+          maxLength={30}
+          autoFocus
+          autoCapitalize="characters"
+          autoComplete="off"
+          spellCheck={false}
+          style={{ fontSize: 22, padding: '14px 16px', letterSpacing: '0.02em' }}
+          onKeyDown={(e) => { if (e.key === 'Enter' && valid) onSubmit(trimmed); }}
+        />
+        <div className="font-ui" style={{ fontSize: 12, color: 'var(--text-faint)', marginTop: 10, textAlign: 'center', fontStyle: 'italic' }}>2–30 characters. You can rename it later.</div>
+      </div>
+      <div style={{ position: 'fixed', left: 0, right: 0, bottom: 'calc(64px + env(safe-area-inset-bottom))', padding: '12px 20px calc(12px + env(safe-area-inset-bottom))', background: 'linear-gradient(180deg, transparent, var(--bg) 30%)', maxWidth: 480, margin: '0 auto', zIndex: 60 }}>
+        <button type="button" className="btn glow-gold" onClick={() => valid && onSubmit(trimmed)} disabled={!valid} style={{ width: '100%', fontSize: 15, padding: '16px', opacity: valid ? 1 : 0.4 }}>▸ CONTINUE</button>
       </div>
     </div>
   );
 }
 
-function CustomPlanScreen({ initial, onConfirm, onBack, editing }) {
+function CreateCategoryScreen({ initial, initialName, onConfirm, onBack, onDelete, editing }) {
+  const [phase, setPhase] = useState(initialName ? 'pick' : 'name');
+  const [catName, setCatName] = useState(initialName || '');
   const [selected, setSelected] = useState(() => new Set(initial || []));
   const [openCat, setOpenCat] = useState(null);
   function toggle(id) { setSelected(prev => { const next = new Set(prev); if (next.has(id)) next.delete(id); else next.add(id); return next; }); }
   const count = selected.size;
+
+  if (phase === 'name') {
+    return (
+      <CreateCategoryNameScreen
+        initialName={catName}
+        onBack={onBack}
+        onSubmit={(n) => { setCatName(n); setPhase('pick'); }}
+        editing={editing}
+      />
+    );
+  }
+
   return (
     <div className="container-app">
-      {editing ? (
-        <div style={{ padding: '24px 20px 16px' }} className="safe-top">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-            <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding: '6px 14px', fontSize: 11 }}>◂ BACK</button>
-            <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em' }}>SELECTED {count}</div>
-          </div>
-          <div className="font-display" style={{ fontSize: 22, fontWeight: 900, color: 'var(--gold)', letterSpacing: '0.02em' }}>MY PLAN</div>
-          <div className="font-ui" style={{ fontSize: 14, color: 'var(--text-dim)', marginTop: 6, fontStyle: 'italic' }}>Pick the exercises you want on hand.</div>
+      <div style={{ padding: '24px 20px 16px' }} className="safe-top">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+          <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding: '6px 14px', fontSize: 11 }}>◂ BACK</button>
+          <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em' }}>SELECTED {count}</div>
         </div>
-      ) : (
-        <StepHeader step={7} total={8} title="BUILD YOUR PLAN" subtitle={`Pick the exercises you will train. Selected: ${count}`} onBack={onBack} />
-      )}
-      <div style={{ padding: '8px 20px 120px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+          <div className="font-display" style={{ fontSize: 22, fontWeight: 900, color: 'var(--gold)', letterSpacing: '0.02em' }}>{catName.toUpperCase()}</div>
+          <button type="button" className="btn btn-iron" onClick={() => setPhase('name')} style={{ padding: '4px 10px', fontSize: 11 }}>✎ RENAME</button>
+          {editing && onDelete && (
+            <button type="button" className="btn btn-iron" onClick={() => { if (window.confirm('Delete this category? Your exercise history stays untouched.')) onDelete(); }} style={{ padding: '4px 10px', fontSize: 11, color: 'var(--blood-2)' }}>🗑 DELETE</button>
+          )}
+        </div>
+        <div className="font-ui" style={{ fontSize: 14, color: 'var(--text-dim)', marginTop: 6, fontStyle: 'italic' }}>Pick the exercises you want on hand.</div>
+      </div>
+      <div style={{ padding: '8px 20px 190px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         {EXERCISE_CATEGORIES.map((c) => {
           const open = openCat === c.id;
           const picked = c.exercises.filter(e => selected.has(e.id)).length;
@@ -1600,7 +1628,7 @@ function CustomPlanScreen({ initial, onConfirm, onBack, editing }) {
                     return (
                       <button key={e.id} type="button" onClick={() => toggle(e.id)} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 6, cursor: 'pointer', textAlign: 'left', background: on ? 'rgba(190,44,36,0.12)' : 'rgba(0,0,0,0.25)', border: `1px solid ${on ? c.color : 'var(--line)'}` }}>
                         <div style={{ width: 20, height: 20, borderRadius: 4, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${on ? c.color : 'var(--line-2)'}`, background: on ? c.color : 'transparent', color: '#0b0c0d', fontSize: 13, fontWeight: 900 }}>{on ? '✓' : ''}</div>
-                        <span className="font-rune" style={{ fontSize: 16, color: c.color, width: 18, textAlign: 'center' }}>{e.sigil}</span>
+                        <span className="font-rune two-step-anim" style={{ fontSize: 16, color: c.color, width: 18, textAlign: 'center' }}>{e.sigil}</span>
                         <span style={{ flex: 1, fontSize: 14, color: on ? 'var(--text)' : 'var(--text-dim)' }}>{e.name}</span>
                       </button>
                     );
@@ -1611,8 +1639,42 @@ function CustomPlanScreen({ initial, onConfirm, onBack, editing }) {
           );
         })}
       </div>
-      <div style={{ position: 'fixed', left: 0, right: 0, bottom: 0, padding: '12px 20px calc(12px + env(safe-area-inset-bottom))', background: 'linear-gradient(180deg, transparent, var(--bg) 30%)', maxWidth: 480, margin: '0 auto' }}>
-        <button type="button" className="btn glow-gold" onClick={() => onConfirm(Array.from(selected))} style={{ width: '100%', fontSize: 15, padding: '16px' }}>{editing ? `SAVE PLAN (${count})` : (count > 0 ? `CONTINUE · ${count} EXERCISES` : 'CONTINUE WITHOUT A PLAN')}</button>
+      <div style={{ position: 'fixed', left: 0, right: 0, bottom: 'calc(64px + env(safe-area-inset-bottom))', padding: '12px 20px calc(12px + env(safe-area-inset-bottom))', background: 'linear-gradient(180deg, transparent, var(--bg) 30%)', maxWidth: 480, margin: '0 auto', zIndex: 60 }}>
+        <button type="button" className="btn glow-gold" onClick={() => count > 0 && onConfirm(Array.from(selected), catName)} disabled={count === 0} style={{ width: '100%', fontSize: 15, padding: '16px', opacity: count > 0 ? 1 : 0.4 }}>{editing ? `SAVE CATEGORY (${count})` : `CREATE CATEGORY · ${count} EXERCISES`}</button>
+      </div>
+    </div>
+  );
+}
+
+function CustomCategoryDetail({ category, onPick, onBack, onEdit }) {
+  if (!category) return null;
+  return (
+    <div style={{ paddingBottom: 24 }}>
+      <div className="safe-top" style={{ padding: '20px 20px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
+        <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding: '6px 12px', fontSize: 12 }}>◂</button>
+        <div style={{ flex: 1 }}>
+          <div className="font-display" style={{ fontSize: 20, fontWeight: 900, color: category.color, letterSpacing: '0.02em', marginTop: 2 }}>{category.name.toUpperCase()}</div>
+          <div className="font-ui" style={{ fontSize: 12, color: 'var(--text-dim)', marginTop: 2, fontStyle: 'italic' }}>Your own template · {category.exercises.length} exercises</div>
+        </div>
+        <button type="button" className="btn btn-iron" onClick={onEdit} style={{ padding: '6px 12px', fontSize: 11 }}>✎ EDIT</button>
+      </div>
+      <div style={{ padding: '12px 20px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {category.exercises.length === 0 ? (
+          <div className="card" style={{ padding: '16px', textAlign: 'center' }}>
+            <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', fontStyle: 'italic' }}>This category has no exercises yet — tap EDIT to add some.</div>
+          </div>
+        ) : category.exercises.map((ex, i) => (
+          <button key={ex.id} type="button" className="card rise" style={{ animationDelay: `${0.02 + i*0.04}s`, padding: '12px 14px', borderLeft: `3px solid ${category.color}` }} onClick={() => onPick(ex.id)}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div className="font-display two-step-anim" style={{ fontSize: 18, color: category.color, width: 30, textAlign: 'center', fontWeight: 900 }}>{ex.sigil}</div>
+              <div style={{ flex: 1, textAlign: 'left' }}>
+                <div className="font-display" style={{ fontSize: 14, color: 'var(--text)', letterSpacing: '0.02em', fontWeight: 700 }}>{ex.name}</div>
+                <div className="font-display" style={{ fontSize: 11, color: 'var(--text-faint)', letterSpacing: '0.02em', marginTop: 2, fontWeight: 700 }}>{ex.weighted ? 'WEIGHTED' : ex.timed ? 'TIMED' : 'BODYWEIGHT'}{ex.unit && ` · ${ex.unit.toUpperCase()}`}</div>
+              </div>
+              <div style={{ color: category.color, fontSize: 18, opacity: 0.7 }}>›</div>
+            </div>
+          </button>
+        ))}
       </div>
     </div>
   );
@@ -1852,9 +1914,8 @@ function HubScreen({ state, onGoto, onOpenPaywall }) {
   );
 }
 
-function TrainScreen({ state, onPickCategory, onPickExercise, onEditPlan }) {
-  const isCustom = state.mode === 'custom';
-  const plan = (state.customPlan || []).map(id => getExerciseById(id)).filter(Boolean);
+function TrainScreen({ state, onPickCategory, onPickExercise, onPickCustomCategory, onCreateCategory }) {
+  const customCats = state.customCategories || [];
   const [query, setQuery] = useState('');
   const q = query.trim().toLowerCase();
   const searchResults = q.length === 0 ? [] : EXERCISE_CATEGORIES.flatMap(c =>
@@ -1866,7 +1927,7 @@ function TrainScreen({ state, onPickCategory, onPickExercise, onEditPlan }) {
     <div style={{ paddingBottom: 24 }}>
       <div className="safe-top" style={{ padding: '20px 20px 8px' }}>
         <h2 style={{ fontSize: 26, fontWeight: 700, color: 'var(--bone)', margin: 0, letterSpacing: '-0.015em' }}>Training</h2>
-        <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', marginTop: 4 }}>{isCustom ? 'Your own plan, or browse the categories.' : 'Pick a category and log your sets.'}</div>
+        <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', marginTop: 4 }}>Pick a category and log your sets.</div>
       </div>
       <div style={{ padding: '8px 20px 0' }}>
         <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
@@ -1877,7 +1938,7 @@ function TrainScreen({ state, onPickCategory, onPickExercise, onEditPlan }) {
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search exercises…"
             className="font-ui"
-            style={{ width: '100%', boxSizing: 'border-box', padding: '11px 36px 11px 34px', fontSize: 14, color: 'var(--text)', background: 'var(--panel-2)', border: '1px solid var(--line)', borderRadius: 10, outline: 'none' }}
+            style={{ width: '100%', boxSizing: 'border-box', padding: '11px 36px 11px 34px', fontSize: 16, color: 'var(--text)', background: 'var(--panel-2)', border: '1px solid var(--line)', borderRadius: 10, outline: 'none' }}
           />
           {query && (
             <button type="button" onClick={() => setQuery('')} aria-label="Clear search" style={{ position: 'absolute', right: 8, background: 'transparent', border: 'none', color: 'var(--text-faint)', fontSize: 16, cursor: 'pointer', padding: '4px 6px', lineHeight: 1 }}>✕</button>
@@ -1895,7 +1956,7 @@ function TrainScreen({ state, onPickCategory, onPickExercise, onEditPlan }) {
             searchResults.map(({ exercise, category }, i) => (
               <button key={exercise.id} type="button" className="card rise" style={{ animationDelay: `${0.02 + Math.min(i, 10)*0.03}s`, padding: '12px 14px', borderLeft: `3px solid ${category.color}` }} onClick={() => onPickExercise(exercise.id, category.id)}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div className="font-display" style={{ fontSize: 18, color: category.color, width: 30, textAlign: 'center', fontWeight: 900 }}>{exercise.sigil}</div>
+                  <div className="font-display two-step-anim" style={{ fontSize: 18, color: category.color, width: 30, textAlign: 'center', fontWeight: 900 }}>{exercise.sigil}</div>
                   <div style={{ flex: 1, textAlign: 'left' }}>
                     <div className="font-display" style={{ fontSize: 14, color: 'var(--text)', letterSpacing: '0.02em', fontWeight: 700 }}>{exercise.name}</div>
                     <div className="font-ui" style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 2 }}>{category.name.charAt(0) + category.name.slice(1).toLowerCase()}</div>
@@ -1908,36 +1969,34 @@ function TrainScreen({ state, onPickCategory, onPickExercise, onEditPlan }) {
         </div>
       )}
       {q.length === 0 && (<>
-      {isCustom && (
-        <div style={{ padding: '8px 20px 0' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-            <div className="font-display" style={{ fontSize: 11, color: 'var(--gold)', letterSpacing: '0.02em', fontWeight: 700 }}>◆ MY PLAN</div>
-            <button type="button" className="btn btn-iron" onClick={onEditPlan} style={{ padding: '6px 12px', fontSize: 11 }}>EDIT</button>
-          </div>
-          {plan.length === 0 ? (
-            <button type="button" className="card" onClick={onEditPlan} style={{ padding: '16px', textAlign: 'center', borderColor: 'rgba(190,44,36,0.4)' }}>
-              <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', fontStyle: 'italic' }}>Your plan is empty — tap and pick the exercises you want to train.</div>
-            </button>
-          ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {plan.map(({ exercise, category }, i) => (
-                <button key={exercise.id} type="button" className="card rise" style={{ animationDelay: `${0.03 + i*0.04}s`, padding: '12px 14px', borderLeft: `3px solid ${category.color}` }} onClick={() => onPickExercise(exercise.id, category.id)}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <div className="font-rune" style={{ fontSize: 22, color: category.color, width: 26, textAlign: 'center' }}>{exercise.sigil}</div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: 14, color: 'var(--text)', fontWeight: 600 }}>{exercise.name}</div>
-                      <div className="font-ui" style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 2 }}>{category.name.charAt(0) + category.name.slice(1).toLowerCase()}</div>
-                    </div>
-                    <div style={{ color: category.color, fontSize: 18, opacity: 0.7 }}>›</div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          )}
-          <div className="knot-divider" style={{ margin: '16px 0 4px' }} />
-          <div className="font-display" style={{ fontSize: 11, color: 'var(--text-faint)', letterSpacing: '0.02em', fontWeight: 700 }}>ALL CATEGORIES</div>
+      <div style={{ padding: '8px 20px 0' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+          <div className="font-display" style={{ fontSize: 11, color: 'var(--gold)', letterSpacing: '0.02em', fontWeight: 700 }}>◆ YOUR CATEGORIES</div>
+          <button type="button" className="btn btn-iron" onClick={onCreateCategory} style={{ padding: '6px 12px', fontSize: 11 }}>+ CREATE NEW</button>
         </div>
-      )}
+        {customCats.length === 0 ? (
+          <button type="button" className="card" onClick={onCreateCategory} style={{ padding: '16px', textAlign: 'center', borderColor: 'rgba(190,44,36,0.4)' }}>
+            <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', fontStyle: 'italic' }}>No custom categories yet — create your own training template.</div>
+          </button>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {customCats.map((c, i) => (
+              <button key={c.id} type="button" className="card rise" style={{ animationDelay: `${0.03 + i*0.04}s`, padding: '14px 16px', borderLeft: `3px solid ${c.color}` }} onClick={() => onPickCustomCategory(c.id)}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                  <div className="font-rune" style={{ fontSize: 28, color: c.color, lineHeight: 1, width: 32, textAlign: 'center' }}>{c.rune}</div>
+                  <div style={{ flex: 1 }}>
+                    <span style={{ fontSize: 15, color: 'var(--text)', fontWeight: 600 }}>{c.name}</span>
+                    <div className="font-ui" style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 4 }}>{(c.exerciseIds || []).length} exercises</div>
+                  </div>
+                  <div style={{ color: c.color, fontSize: 18, opacity: 0.7 }}>›</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+        <div className="knot-divider" style={{ margin: '16px 0 4px' }} />
+        <div className="font-display" style={{ fontSize: 11, color: 'var(--text-faint)', letterSpacing: '0.02em', fontWeight: 700 }}>ALL CATEGORIES</div>
+      </div>
       <div style={{ padding: '12px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         {EXERCISE_CATEGORIES.map((c, i) => {
           const recommended = (state.class === 'strength' && c.statBonus === 'strength') || (state.class === 'speed' && c.statBonus === 'agility');
@@ -1985,7 +2044,7 @@ function ExerciseList({ categoryId, onPick, onBack }) {
             <div key={ex.id} className="card rise" style={{ animationDelay: `${0.02 + i*0.04}s`, overflow: 'hidden' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px' }}>
                 <button type="button" onClick={() => onPick(ex.id)} style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 14, background: 'transparent', border: 'none', padding: 0, textAlign: 'left', cursor: 'pointer', color: 'inherit' }}>
-                  <div className="font-display" style={{ fontSize: 18, color: cat.color, width: 36, textAlign: 'center', fontWeight: 900 }}>{ex.sigil}</div>
+                  <div className="font-display two-step-anim" style={{ fontSize: 18, color: cat.color, width: 36, textAlign: 'center', fontWeight: 900 }}>{ex.sigil}</div>
                   <div style={{ flex: 1, textAlign: 'left' }}>
                     <div className="font-display" style={{ fontSize: 15, color: 'var(--text)', letterSpacing: '0.02em', fontWeight: 700 }}>{ex.name}</div>
                     <div className="font-display" style={{ fontSize: 11, color: 'var(--text-faint)', letterSpacing: '0.02em', marginTop: 2, fontWeight: 700 }}>{ex.weighted ? 'WEIGHTED' : ex.timed ? 'TIMED' : 'BODYWEIGHT'}{ex.unit && ` · ${ex.unit.toUpperCase()}`}</div>
@@ -2026,9 +2085,30 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave })
   const [timerSetIdx, setTimerSetIdx] = useState(null);
   const [markAsPR, setMarkAsPR] = useState(false);
   const timerRef = useRef(null);
-  // Timestamp-based stopwatch — no drift when tab is backgrounded or screen sleeps
+  // Timestamp-based stopwatch — no drift when backgrounded, and the start time is mirrored to
+  // localStorage so the elapsed time survives iOS suspending/reloading the WebView while away.
   const timerStartRef = useRef(0);
   const timerBaseRef = useRef(0);
+  const timerStorageKey = `sparta_timer_${exerciseId}`;
+  function persistTimer(setIdx) {
+    try { window.localStorage.setItem(timerStorageKey, JSON.stringify({ base: timerBaseRef.current, startedAt: timerStartRef.current, setIdx })); } catch {}
+  }
+  function clearPersistedTimer() {
+    try { window.localStorage.removeItem(timerStorageKey); } catch {}
+  }
+  // Restore a timer that was still running when the app got suspended/backgrounded
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(timerStorageKey);
+      if (raw) {
+        const saved = JSON.parse(raw);
+        timerBaseRef.current = saved.base + (Date.now() - saved.startedAt) / 1000;
+        setTimerSetIdx(saved.setIdx);
+        setTimerValue(timerBaseRef.current);
+        setTimerRunning(true);
+      }
+    } catch {}
+  }, []);
   useEffect(() => {
     if (timerRunning) {
       timerStartRef.current = Date.now();
@@ -2038,36 +2118,44 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave })
       };
       tick();
       timerRef.current = setInterval(tick, 100);
+      // Force an immediate recompute the moment the app comes back to the foreground,
+      // instead of waiting for the next 100ms tick to catch up.
+      const onVisible = () => { if (document.visibilityState === 'visible') tick(); };
+      document.addEventListener('visibilitychange', onVisible);
+      return () => { clearInterval(timerRef.current); document.removeEventListener('visibilitychange', onVisible); };
     } else {
       clearInterval(timerRef.current);
     }
-    return () => clearInterval(timerRef.current);
   }, [timerRunning]);
   function updateSet(idx, field, val) { setSets(s => s.map((x, i) => i === idx ? { ...x, [field]: val } : x)); }
   function addSet() { setSets(s => [...s, { reps: '', weight: '', time: '' }]); }
   function removeSet(idx) { setSets(s => s.length > 1 ? s.filter((_, i) => i !== idx) : s); }
-  function startTimerFor(idx) { setTimerSetIdx(idx); setTimerValue(0); timerBaseRef.current = 0; setTimerRunning(true); }
+  function startTimerFor(idx) {
+    setTimerSetIdx(idx); setTimerValue(0); timerBaseRef.current = 0; timerStartRef.current = Date.now(); setTimerRunning(true);
+    persistTimer(idx);
+  }
   function stopTimer() {
     // Freeze the displayed value using the same timestamp math as the tick
     const finalElapsed = timerBaseRef.current + (Date.now() - timerStartRef.current) / 1000;
     setTimerRunning(false);
     timerBaseRef.current = finalElapsed;
     setTimerValue(finalElapsed);
+    clearPersistedTimer();
     if (timerSetIdx !== null) {
       const seconds = Math.round(finalElapsed * 10) / 10;
       updateSet(timerSetIdx, 'time', String(seconds));
     }
   }
-  function resetTimer() { setTimerRunning(false); setTimerValue(0); timerBaseRef.current = 0; }
+  function resetTimer() { setTimerRunning(false); setTimerValue(0); timerBaseRef.current = 0; clearPersistedTimer(); }
+  function handleCancel() { clearPersistedTimer(); onCancel(); }
   function canSave() { return sets.some(s => isTimed ? Number(s.time) > 0 : Number(s.reps) > 0); }
-  function handleSave() { const validSets = sets.filter(s => isTimed ? Number(s.time) > 0 : Number(s.reps) > 0); if (validSets.length === 0) return; onSave({ exerciseId, sets: validSets, markAsPR }); }
+  function handleSave() { const validSets = sets.filter(s => isTimed ? Number(s.time) > 0 : Number(s.reps) > 0); if (validSets.length === 0) return; clearPersistedTimer(); onSave({ exerciseId, sets: validSets, markAsPR }); }
   const prLine = (() => { if (!currentPR) return null; return currentPR.detail; })();
   return (
     <div style={{ paddingBottom: 24 }}>
       <div className="safe-top" style={{ padding: '20px 20px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <button type="button" className="btn btn-iron" onClick={onCancel} style={{ padding: '6px 12px', fontSize: 12 }}>◂</button>
+        <button type="button" className="btn btn-iron" onClick={handleCancel} style={{ padding: '6px 12px', fontSize: 12 }}>◂</button>
         <div style={{ flex: 1 }}><div className="font-display" style={{ fontSize: 18, fontWeight: 900, color: category.color, letterSpacing: '0.02em', marginTop: 2 }}>{exercise.name.toUpperCase()}</div></div>
-        <div className="font-display" style={{ fontSize: 28, color: category.color, fontWeight: 900 }}>{exercise.sigil}</div>
       </div>
       {prLine && (
         <div style={{ padding: '0 20px 8px' }}>
@@ -2095,6 +2183,9 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave })
             </div>
           </div>
         </div>
+      </div>
+      <div style={{ padding: '4px 20px 10px', display: 'flex', justifyContent: 'center' }}>
+        <div className="font-rune two-step-anim" style={{ fontSize: 64, color: category.color, lineHeight: 1, filter: `drop-shadow(0 0 14px ${category.color})` }}>{exercise.sigil}</div>
       </div>
       <div style={{ padding: '8px 20px 12px' }}>
         <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 8 }}>SETS · {sets.length}</div>
@@ -2312,7 +2403,7 @@ function PRBoardScreen({ state }) {
               const fresh = e.ts && (Date.now() - e.ts < 7 * 86400000);
               return (
                 <div key={e.exId} className="panel rise" style={{ animationDelay: `${0.02 + i*0.03}s`, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 12, borderLeft: `3px solid ${e.category.color}`, background: fresh ? 'rgba(201, 137, 42, 0.10)' : undefined }}>
-                  <div className="font-display" style={{ fontSize: 22, color: e.category.color, width: 36, textAlign: 'center', fontWeight: 900 }}>{e.exercise.sigil}</div>
+                  <div className="font-display two-step-anim" style={{ fontSize: 22, color: e.category.color, width: 36, textAlign: 'center', fontWeight: 900 }}>{e.exercise.sigil}</div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, flexWrap: 'wrap' }}>
                       <span className="font-display" style={{ fontSize: 14, color: 'var(--text)', letterSpacing: '0.02em', fontWeight: 700 }}>{e.exercise.name}</span>
@@ -2345,7 +2436,7 @@ function ProfileSection({ title, defaultOpen = false, children }) {
   );
 }
 
-function ProfileScreen({ state, onChangeClass, onChangeGoal, onChangeMode, onEditPlan, onLogWeight, onReset, onOpenPaywall, onBackupNow, onRestoreBackup, onRestoreCode, onShowToast, onChangeTheme }) {
+function ProfileScreen({ state, onChangeClass, onChangeGoal, onGotoTrain, onLogWeight, onReset, onOpenPaywall, onBackupNow, onRestoreBackup, onRestoreCode, onShowToast, onChangeTheme }) {
   const [remindersOn, setRemindersOn] = useState(false);
   const [showRecovery, setShowRecovery] = useState(false);
   const [recoveryInput, setRecoveryInput] = useState('');
@@ -2356,7 +2447,6 @@ function ProfileScreen({ state, onChangeClass, onChangeGoal, onChangeMode, onEdi
   const [legalDoc, setLegalDoc] = useState(null);
   const [showClassPick, setShowClassPick] = useState(false);
   const [showGoalPick, setShowGoalPick] = useState(false);
-  const [showModePick, setShowModePick] = useState(false);
   const titles = [
     { id: 'awakened', name: 'Awakened', condition: true },
     { id: 'novice', name: 'Gatekeeper', condition: state.level >= 5 },
@@ -2495,24 +2585,12 @@ function ProfileScreen({ state, onChangeClass, onChangeGoal, onChangeMode, onEdi
           <div className="panel" style={{ padding: 16 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
               <div>
-                <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em' }}>GAME MODE</div>
-                <div className="font-display" style={{ fontSize: 19, color: state.mode === 'custom' ? 'var(--blue-2)' : 'var(--gold)', fontWeight: 900, letterSpacing: '0.02em', marginTop: 2 }}>{state.mode === 'custom' ? 'Σ CUSTOM' : 'Λ STORY'}</div>
-                <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', marginTop: 4, fontStyle: 'italic' }}>{state.mode === 'custom' ? 'Your own exercise plan' : 'The Sleeping Gods — chapters by level'}</div>
+                <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em' }}>YOUR CATEGORIES</div>
+                <div className="font-display" style={{ fontSize: 19, color: 'var(--blue-2)', fontWeight: 900, letterSpacing: '0.02em', marginTop: 2 }}>{(state.customCategories || []).length} custom {(state.customCategories || []).length === 1 ? 'category' : 'categories'}</div>
+                <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', marginTop: 4, fontStyle: 'italic' }}>Build your own training templates, right alongside Strongman, Calisthenics and the rest.</div>
               </div>
-              <button type="button" className="btn btn-iron" onClick={() => setShowModePick(s => !s)} style={{ padding: '6px 10px', fontSize: 11 }}>CHANGE</button>
+              <button type="button" className="btn btn-iron" onClick={onGotoTrain} style={{ padding: '6px 10px', fontSize: 11 }}>MANAGE</button>
             </div>
-            {showModePick && (
-              <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 8 }}>
-                {MODES.map(m => (
-                  <button key={m.id} type="button" className="card" onClick={() => { onChangeMode(m.id); setShowModePick(false); }} style={{ padding: '10px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderColor: state.mode === m.id ? m.color : 'var(--line)' }}>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}><span className="font-rune" style={{ fontSize: 20, color: m.color }}>{m.rune}</span><span className="font-display" style={{ fontSize: 14, letterSpacing: '0.02em', color: m.color, fontWeight: 900 }}>{m.label}</span></span>
-                    {state.mode === m.id && <span style={{ color: m.color, fontSize: 16 }}>✓</span>}
-                  </button>
-                ))}
-                <div className="font-ui" style={{ fontSize: 11, color: 'var(--text-faint)', fontStyle: 'italic' }}>* Progress, XP and records stay. Only the way you play changes.</div>
-              </div>
-            )}
-            {state.mode === 'custom' && (<button type="button" className="btn btn-iron" onClick={onEditPlan} style={{ width: '100%', marginTop: 12, padding: '10px', fontSize: 12 }}>✎ EDIT MY PLAN ({(state.customPlan || []).length})</button>)}
           </div>
           <div className="panel" style={{ padding: 16 }}>
             <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em' }}>DAILY REMINDER</div>
@@ -2576,7 +2654,7 @@ function ProfileScreen({ state, onChangeClass, onChangeGoal, onChangeMode, onEdi
               <button type="button" onClick={() => setShowRecovery(s => !s)} style={{ marginTop: 10, background: 'transparent', border: 'none', color: 'var(--text-faint)', fontSize: 11, textDecoration: 'underline', cursor: 'pointer', padding: 0 }}>I have a recovery code from another device</button>
               {showRecovery && (
                 <div style={{ marginTop: 10, display: 'flex', gap: 8 }}>
-                  <input type="text" value={recoveryInput} onChange={(e) => setRecoveryInput(e.target.value)} placeholder="PASTE RECOVERY CODE" style={{ fontSize: 12, padding: '8px 10px', fontFamily: 'monospace', letterSpacing: 0 }} />
+                  <input type="text" value={recoveryInput} onChange={(e) => setRecoveryInput(e.target.value)} placeholder="PASTE RECOVERY CODE" style={{ fontSize: 16, padding: '8px 10px', fontFamily: 'monospace', letterSpacing: 0 }} />
                   <button type="button" className="btn" onClick={() => { onRestoreCode(recoveryInput); setRecoveryInput(''); setShowRecovery(false); }} style={{ padding: '8px 14px', fontSize: 11 }}>APPLY</button>
                 </div>
               )}
@@ -2651,7 +2729,7 @@ function PaywallModal({ state, onClose, onCheckout, onRestoreCode }) {
         <button type="button" onClick={() => setShowRecovery(s => !s)} style={{ marginTop: 14, width: '100%', background: 'transparent', border: 'none', color: 'var(--text-faint)', fontSize: 11, textDecoration: 'underline', cursor: 'pointer', padding: 0 }}>Already a member? Restore with recovery code</button>
         {showRecovery && (
           <div style={{ marginTop: 10, display: 'flex', gap: 8 }}>
-            <input type="text" value={code} onChange={(e) => setCode(e.target.value)} placeholder="PASTE RECOVERY CODE" style={{ fontSize: 12, padding: '8px 10px', fontFamily: 'monospace', letterSpacing: 0 }} />
+            <input type="text" value={code} onChange={(e) => setCode(e.target.value)} placeholder="PASTE RECOVERY CODE" style={{ fontSize: 16, padding: '8px 10px', fontFamily: 'monospace', letterSpacing: 0 }} />
             <button type="button" className="btn" onClick={() => { onRestoreCode(code); setCode(''); }} style={{ padding: '8px 14px', fontSize: 11 }}>APPLY</button>
           </div>
         )}

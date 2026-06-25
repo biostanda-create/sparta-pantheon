@@ -4,3 +4,18 @@ node_modules/
 worker/node_modules/
 worker/.dev.vars
 worker/.wrangler/
+
+# Android build artifacts
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+
+# iOS build artifacts
+ios/App/build/
+ios/.xcode.env.local
+
+# Test screenshots
+s*.png
+crop*.png
+dump.xml
