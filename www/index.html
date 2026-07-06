@@ -647,6 +647,29 @@ const EXERCISE_CATEGORIES = [
     { id: 'yoga_pigeon',   name: 'Pigeon Pose (hold)',       weighted: false, unit: 's',  sigil: 'Y', timed: true, info: 'From a plank, bring one knee to the same wrist, shin at an angle on the mat. Fold forward for a deep hip stretch. Hold. Switch sides.' },
   ]},
 ];
+
+function getExerciseById(exId) {
+  for (const c of EXERCISE_CATEGORIES) { for (const e of c.exercises) if (e.id === exId) return { exercise: e, category: c }; }
+  return null;
+}
+
+function formatTimePR(seconds) {
+  if (!seconds || seconds <= 0) return '—';
+  if (seconds < 60) return `${seconds.toFixed(1)}s`;
+  if (seconds < 3600) { const m = Math.floor(seconds / 60); const s = Math.round(seconds % 60); return `${m}:${s.toString().padStart(2, '0')}`; }
+  const h = Math.floor(seconds / 3600); const m = Math.floor((seconds % 3600) / 60); const s = Math.round(seconds % 60);
+  return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
+function getISOWeek(d = new Date()) {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
+  const weekNo = Math.ceil(((date - yearStart) / 86400000 + 1)/7);
+  return `${date.getUTCFullYear()}-W${weekNo}`;
+}
+
 const QUEST_POOL = [
   { id: 'q1', title: 'Battle of Thermopylae', desc: 'Complete 5 workouts',            target: 5,    metric: 'workouts',   xp: 300, rune: 'Λ', storyTitle: 'Kindle the Spark',         storyDesc: 'Complete 5 workouts — each one wakes a sleeping soul.' },
   { id: 'q2', title: 'Iron Discipline',       desc: 'Lift 5000 kg in total',           target: 5000, metric: 'volume',     xp: 400, rune: 'Σ', storyTitle: 'Break the Weight',          storyDesc: 'Lift 5000 kg — the weight of every excuse that kept you on the couch.' },
