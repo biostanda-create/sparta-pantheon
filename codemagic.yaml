@@ -1,4 +1,23 @@
 workflows:
+  android-debug:
+    name: SPARTA Android (debug APK)
+    max_build_duration: 30
+    instance_type: linux_x2
+    environment:
+      node: latest
+      java: 17
+    scripts:
+      - name: Install npm dependencies
+        script: npm install
+      - name: Copy latest app into www
+        script: cp finalspartan.html www/index.html
+      - name: Sync Capacitor Android assets
+        script: npx cap sync android
+      - name: Build debug APK
+        script: cd android && chmod +x gradlew && ./gradlew assembleDebug
+    artifacts:
+      - android/app/build/outputs/apk/debug/app-debug.apk
+
   ios-sideload-unsigned:
     name: SPARTA iOS (unsigned, for Sideloadly/AltStore)
     max_build_duration: 60
