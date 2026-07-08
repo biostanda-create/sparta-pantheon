@@ -90,6 +90,7 @@
     -webkit-text-size-adjust: 100%;
     -webkit-touch-callout: none;
     touch-action: manipulation;
+    overscroll-behavior: none;
   }
   body { background: var(--bg); background-attachment: fixed; transition: background-color 0.6s ease; }
   body.in-game { background: transparent !important; }
@@ -270,6 +271,7 @@
   @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
   @keyframes orbit { 0% { transform: rotate(0deg) translateX(36px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(36px) rotate(-360deg); } }
   button { font-family: inherit; touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
+  img { image-rendering: -webkit-optimize-contrast; -webkit-transform: translateZ(0); }
   .btn {
     font-family: 'Inter', -apple-system, sans-serif; font-weight: 600; letter-spacing: 0.01em; padding: 12px 22px;
     background: linear-gradient(180deg, #1c1f22, #141619); border: 1px solid rgba(201, 137, 42, 0.45); border-radius: 8px;
@@ -969,17 +971,25 @@ const VikingAvatar = HopliteAvatar;
 
 function computeStats(state) {
   const lvl = state.level || 1;
-  const base = 10 + lvl * 2;
-  let str = base, agi = base, vit = base;
-  if (state.class === 'strength') str = Math.floor(base * 1.5);
-  if (state.class === 'speed')    agi = Math.floor(base * 1.5);
-  if (state.class === 'hybrid') { str = Math.floor(base * 1.2); agi = Math.floor(base * 1.2); vit = Math.floor(base * 1.2); }
-  const totalVolume = (state.stats?.totalVolume) || 0;
-  const totalPulls  = (state.stats?.totalPulls) || 0;
-  const totalRun    = (state.stats?.totalRunMinutes) || 0;
-  str += Math.floor(totalVolume / 1000);
-  agi += Math.floor(totalPulls / 20) + Math.floor(totalRun / 30);
-  vit += Math.floor((state.workoutsCompleted || 0) / 3);
+  const base = 10 + lvl;
+  const vol  = (state.stats?.totalVolume) || 0;
+  const pull = (state.stats?.totalPulls) || 0;
+  const run  = (state.stats?.totalRunMinutes) || 0;
+  const wo   = (state.workoutsCompleted) || 0;
+  let str, agi, vit;
+  if (state.class === 'strength') {
+    str = base * 2 + Math.floor(vol / 500);
+    agi = base     + Math.floor(pull / 20);
+    vit = base     + Math.floor(wo / 3);
+  } else if (state.class === 'speed') {
+    str = base     + Math.floor(vol / 1000);
+    agi = base * 2 + Math.floor(pull / 15) + Math.floor(run / 20);
+    vit = base     + Math.floor(wo / 3);
+  } else {
+    str = base + Math.floor(vol / 800);
+    agi = base + Math.floor(pull / 18) + Math.floor(run / 25);
+    vit = base + Math.floor(wo / 2);
+  }
   return { STR: str, AGI: agi, VIT: vit };
 }
 
@@ -2102,9 +2112,6 @@ function CreatingScreen({ state, onDone }) {
         </div>
       </div>
       <div className="font-display flicker" style={{ marginTop: 32, fontSize: 14, letterSpacing: '0.02em', color: 'var(--gold)', textAlign: 'center', padding: '0 20px' }}>{phrases[Math.min(phase, 3)]}</div>
-      <div style={{ marginTop: 20, width: 200, height: 4, background: 'rgba(0,0,0,0.5)', border: '1px solid var(--line-2)' }}>
-        <div style={{ width: `${(phase+1) * 25}%`, height: '100%', background: 'var(--gold)', boxShadow: '0 0 10px var(--gold)', transition: 'width 0.6s' }} />
-      </div>
     </div>
   );
 }
@@ -2659,19 +2666,31 @@ function ExerciseList({ categoryId, prevCatId, nextCatId, onNavigate, onPick, on
   const prevCat = prevCatId ? EXERCISE_CATEGORIES.find(c => c.id === prevCatId) : null;
   const nextCat = nextCatId ? EXERCISE_CATEGORIES.find(c => c.id === nextCatId) : null;
   const [openId, setOpenId] = useState(null);
+  const [dragX, setDragX] = useState(0);
+  const [swiping, setSwiping] = useState(false);
   const touchStartX = useRef(null);
-  useEffect(() => { setOpenId(null); }, [categoryId]);
+  useEffect(() => { setOpenId(null); setDragX(0); setSwiping(false); }, [categoryId]);
   if (!cat) return null;
-  function handleTouchStart(e) { touchStartX.current = e.touches[0].clientX; }
+  function handleTouchStart(e) { touchStartX.current = e.touches[0].clientX; setSwiping(true); }
+  function handleTouchMove(e) {
+    if (touchStartX.current === null) return;
+    const dx = e.touches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) < 5) return;
+    if ((dx > 0 && !prevCat) || (dx < 0 && !nextCat)) { setDragX(dx * 0.12); return; }
+    setDragX(dx * 0.88);
+  }
   function handleTouchEnd(e) {
     if (touchStartX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
     touchStartX.current = null;
+    setSwiping(false);
+    setDragX(0);
     if (dx > 60 && prevCat) onNavigate(prevCatId);
     else if (dx < -60 && nextCat) onNavigate(nextCatId);
   }
+  function handleTouchCancel() { touchStartX.current = null; setSwiping(false); setDragX(0); }
   return (
-    <div style={{ paddingBottom: 24 }} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+    <div style={{ transform: `translateX(${dragX}px)`, transition: swiping ? 'none' : 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)', willChange: 'transform', touchAction: 'pan-y' }} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} onTouchCancel={handleTouchCancel}>
       <div className="safe-top" style={{ padding: '20px 20px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding: '6px 12px', fontSize: 12 }}>◂</button>
         <div style={{ flex: 1 }}>
@@ -3879,6 +3898,7 @@ const EXERCISE_CATEGORIES="en">
     -webkit-text-size-adjust: 100%;
     -webkit-touch-callout: none;
     touch-action: manipulation;
+    overscroll-behavior: none;
   }
   body { background: var(--bg); background-attachment: fixed; transition: background-color 0.6s ease; }
   body.in-game { background: transparent !important; }
@@ -4059,6 +4079,7 @@ const EXERCISE_CATEGORIES="en">
   @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
   @keyframes orbit { 0% { transform: rotate(0deg) translateX(36px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(36px) rotate(-360deg); } }
   button { font-family: inherit; touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
+  img { image-rendering: -webkit-optimize-contrast; -webkit-transform: translateZ(0); }
   .btn {
     font-family: 'Inter', -apple-system, sans-serif; font-weight: 600; letter-spacing: 0.01em; padding: 12px 22px;
     background: linear-gradient(180deg, #1c1f22, #141619); border: 1px solid rgba(201, 137, 42, 0.45); border-radius: 8px;
@@ -4756,17 +4777,25 @@ const VikingAvatar = HopliteAvatar;
 
 function computeStats(state) {
   const lvl = state.level || 1;
-  const base = 10 + lvl * 2;
-  let str = base, agi = base, vit = base;
-  if (state.class === 'strength') str = Math.floor(base * 1.5);
-  if (state.class === 'speed')    agi = Math.floor(base * 1.5);
-  if (state.class === 'hybrid') { str = Math.floor(base * 1.2); agi = Math.floor(base * 1.2); vit = Math.floor(base * 1.2); }
-  const totalVolume = (state.stats?.totalVolume) || 0;
-  const totalPulls  = (state.stats?.totalPulls) || 0;
-  const totalRun    = (state.stats?.totalRunMinutes) || 0;
-  str += Math.floor(totalVolume / 1000);
-  agi += Math.floor(totalPulls / 20) + Math.floor(totalRun / 30);
-  vit += Math.floor((state.workoutsCompleted || 0) / 3);
+  const base = 10 + lvl;
+  const vol  = (state.stats?.totalVolume) || 0;
+  const pull = (state.stats?.totalPulls) || 0;
+  const run  = (state.stats?.totalRunMinutes) || 0;
+  const wo   = (state.workoutsCompleted) || 0;
+  let str, agi, vit;
+  if (state.class === 'strength') {
+    str = base * 2 + Math.floor(vol / 500);
+    agi = base     + Math.floor(pull / 20);
+    vit = base     + Math.floor(wo / 3);
+  } else if (state.class === 'speed') {
+    str = base     + Math.floor(vol / 1000);
+    agi = base * 2 + Math.floor(pull / 15) + Math.floor(run / 20);
+    vit = base     + Math.floor(wo / 3);
+  } else {
+    str = base + Math.floor(vol / 800);
+    agi = base + Math.floor(pull / 18) + Math.floor(run / 25);
+    vit = base + Math.floor(wo / 2);
+  }
   return { STR: str, AGI: agi, VIT: vit };
 }
 
@@ -5889,9 +5918,6 @@ function CreatingScreen({ state, onDone }) {
         </div>
       </div>
       <div className="font-display flicker" style={{ marginTop: 32, fontSize: 14, letterSpacing: '0.02em', color: 'var(--gold)', textAlign: 'center', padding: '0 20px' }}>{phrases[Math.min(phase, 3)]}</div>
-      <div style={{ marginTop: 20, width: 200, height: 4, background: 'rgba(0,0,0,0.5)', border: '1px solid var(--line-2)' }}>
-        <div style={{ width: `${(phase+1) * 25}%`, height: '100%', background: 'var(--gold)', boxShadow: '0 0 10px var(--gold)', transition: 'width 0.6s' }} />
-      </div>
     </div>
   );
 }
@@ -6446,19 +6472,31 @@ function ExerciseList({ categoryId, prevCatId, nextCatId, onNavigate, onPick, on
   const prevCat = prevCatId ? EXERCISE_CATEGORIES.find(c => c.id === prevCatId) : null;
   const nextCat = nextCatId ? EXERCISE_CATEGORIES.find(c => c.id === nextCatId) : null;
   const [openId, setOpenId] = useState(null);
+  const [dragX, setDragX] = useState(0);
+  const [swiping, setSwiping] = useState(false);
   const touchStartX = useRef(null);
-  useEffect(() => { setOpenId(null); }, [categoryId]);
+  useEffect(() => { setOpenId(null); setDragX(0); setSwiping(false); }, [categoryId]);
   if (!cat) return null;
-  function handleTouchStart(e) { touchStartX.current = e.touches[0].clientX; }
+  function handleTouchStart(e) { touchStartX.current = e.touches[0].clientX; setSwiping(true); }
+  function handleTouchMove(e) {
+    if (touchStartX.current === null) return;
+    const dx = e.touches[0].clientX - touchStartX.current;
+    if (Math.abs(dx) < 5) return;
+    if ((dx > 0 && !prevCat) || (dx < 0 && !nextCat)) { setDragX(dx * 0.12); return; }
+    setDragX(dx * 0.88);
+  }
   function handleTouchEnd(e) {
     if (touchStartX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
     touchStartX.current = null;
+    setSwiping(false);
+    setDragX(0);
     if (dx > 60 && prevCat) onNavigate(prevCatId);
     else if (dx < -60 && nextCat) onNavigate(nextCatId);
   }
+  function handleTouchCancel() { touchStartX.current = null; setSwiping(false); setDragX(0); }
   return (
-    <div style={{ paddingBottom: 24 }} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+    <div style={{ transform: `translateX(${dragX}px)`, transition: swiping ? 'none' : 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)', willChange: 'transform', touchAction: 'pan-y' }} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} onTouchCancel={handleTouchCancel}>
       <div className="safe-top" style={{ padding: '20px 20px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding: '6px 12px', fontSize: 12 }}>◂</button>
         <div style={{ flex: 1 }}>
