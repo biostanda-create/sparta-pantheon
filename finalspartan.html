@@ -90,7 +90,6 @@
     -webkit-text-size-adjust: 100%;
     -webkit-touch-callout: none;
     touch-action: manipulation;
-    overscroll-behavior: none;
   }
   body { background: var(--bg); background-attachment: fixed; transition: background-color 0.6s ease; }
   body.in-game { background: transparent !important; }
@@ -271,7 +270,7 @@
   @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
   @keyframes orbit { 0% { transform: rotate(0deg) translateX(36px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(36px) rotate(-360deg); } }
   button { font-family: inherit; touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
-  img { image-rendering: -webkit-optimize-contrast; -webkit-transform: translateZ(0); }
+  img { image-rendering: -webkit-optimize-contrast; }
   .btn {
     font-family: 'Inter', -apple-system, sans-serif; font-weight: 600; letter-spacing: 0.01em; padding: 12px 22px;
     background: linear-gradient(180deg, #1c1f22, #141619); border: 1px solid rgba(201, 137, 42, 0.45); border-radius: 8px;
@@ -2693,7 +2692,7 @@ function ExerciseList({ categoryId, prevCatId, nextCatId, onNavigate, onPick, on
   }
   function handleTouchCancel() { touchStartX.current = null; setSwiping(false); setDragX(0); }
   return (
-    <div style={{ transform: `translateX(${dragX}px)`, transition: swiping ? 'none' : 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)', willChange: 'transform', touchAction: 'pan-y' }} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} onTouchCancel={handleTouchCancel}>
+    <div style={{ transform: dragX !== 0 ? `translateX(${dragX}px)` : undefined, transition: swiping ? 'none' : 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)' }} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} onTouchCancel={handleTouchCancel}>
       <div className="safe-top" style={{ padding: '20px 20px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding: '6px 12px', fontSize: 12 }}>◂</button>
         <div style={{ flex: 1 }}>
@@ -3901,7 +3900,6 @@ const EXERCISE_CATEGORIES="en">
     -webkit-text-size-adjust: 100%;
     -webkit-touch-callout: none;
     touch-action: manipulation;
-    overscroll-behavior: none;
   }
   body { background: var(--bg); background-attachment: fixed; transition: background-color 0.6s ease; }
   body.in-game { background: transparent !important; }
@@ -4082,7 +4080,7 @@ const EXERCISE_CATEGORIES="en">
   @keyframes shine { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
   @keyframes orbit { 0% { transform: rotate(0deg) translateX(36px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(36px) rotate(-360deg); } }
   button { font-family: inherit; touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; }
-  img { image-rendering: -webkit-optimize-contrast; -webkit-transform: translateZ(0); }
+  img { image-rendering: -webkit-optimize-contrast; }
   .btn {
     font-family: 'Inter', -apple-system, sans-serif; font-weight: 600; letter-spacing: 0.01em; padding: 12px 22px;
     background: linear-gradient(180deg, #1c1f22, #141619); border: 1px solid rgba(201, 137, 42, 0.45); border-radius: 8px;
@@ -6502,7 +6500,7 @@ function ExerciseList({ categoryId, prevCatId, nextCatId, onNavigate, onPick, on
   }
   function handleTouchCancel() { touchStartX.current = null; setSwiping(false); setDragX(0); }
   return (
-    <div style={{ transform: `translateX(${dragX}px)`, transition: swiping ? 'none' : 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)', willChange: 'transform', touchAction: 'pan-y' }} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} onTouchCancel={handleTouchCancel}>
+    <div style={{ transform: dragX !== 0 ? `translateX(${dragX}px)` : undefined, transition: swiping ? 'none' : 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)' }} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} onTouchCancel={handleTouchCancel}>
       <div className="safe-top" style={{ padding: '20px 20px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding: '6px 12px', fontSize: 12 }}>◂</button>
         <div style={{ flex: 1 }}>
