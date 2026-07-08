@@ -2419,17 +2419,25 @@ const WORKOUT_DB = {
       {id:'lsit',         cat:'abs',       n:'L-Sit Hold',            s:4, r:'30s'},
     ],
   },
-  cardio: {
+  endurance: {
     beginner:     [
       {id:'run3k',        cat:'cardio',    n:'3K Run',                s:1, r:'—'},
-      {id:'run1k',        cat:'cardio',    n:'1K Intervals',          s:3, r:'2 min rest'},
     ],
     intermediate: [
       {id:'run5k',        cat:'cardio',    n:'5K Run',                s:1, r:'—'},
-      {id:'sprint400',    cat:'cardio',    n:'400m Sprints',          s:4, r:'2 min rest'},
     ],
     advanced:     [
       {id:'run10k',       cat:'cardio',    n:'10K Run',               s:1, r:'—'},
+    ],
+  },
+  speed: {
+    beginner:     [
+      {id:'run1k',        cat:'cardio',    n:'1K Intervals',          s:3, r:'2 min rest'},
+    ],
+    intermediate: [
+      {id:'sprint400',    cat:'cardio',    n:'400m Sprints',          s:4, r:'2 min rest'},
+    ],
+    advanced:     [
       {id:'sprint100',    cat:'cardio',    n:'100m Sprints',          s:8, r:'60s rest'},
       {id:'sprint400',    cat:'cardio',    n:'400m Sprints',          s:4, r:'3 min rest'},
     ],
@@ -2445,18 +2453,18 @@ const PLAN_TEMPLATES = {
     6: [['chest','triceps'],['back','biceps'],['legs'],['shoulders','abs'],['chest','triceps'],['back','biceps']],
   },
   cardio: {
-    2: [['cardio'],['chest','back','legs']],
-    3: [['chest','back'],['cardio'],['legs','shoulders']],
-    4: [['chest','back'],['cardio'],['legs','shoulders'],['cardio']],
-    5: [['chest','back'],['cardio'],['legs','shoulders'],['abs'],['cardio']],
-    6: [['chest'],['cardio'],['back'],['legs'],['cardio'],['shoulders','abs']],
+    2: [['endurance'],['chest','back','legs']],
+    3: [['chest','back'],['endurance'],['speed','legs']],
+    4: [['chest','back'],['endurance'],['legs','shoulders'],['speed']],
+    5: [['chest','back'],['endurance'],['legs','shoulders'],['abs'],['speed']],
+    6: [['chest'],['endurance'],['back'],['speed'],['legs'],['shoulders','abs']],
   },
   hybrid: {
-    2: [['chest','back','shoulders'],['cardio','legs']],
-    3: [['chest','back'],['cardio'],['legs','shoulders','abs']],
-    4: [['chest','triceps'],['cardio'],['back','biceps'],['legs','shoulders']],
-    5: [['chest','triceps'],['cardio'],['back','biceps'],['legs'],['cardio','abs']],
-    6: [['chest','triceps'],['back','biceps'],['cardio'],['legs'],['shoulders','abs'],['cardio']],
+    2: [['chest','back','shoulders'],['endurance','legs']],
+    3: [['chest','back'],['endurance'],['legs','shoulders','abs']],
+    4: [['chest','triceps'],['speed'],['back','biceps'],['legs','shoulders']],
+    5: [['chest','triceps'],['endurance'],['back','biceps'],['legs'],['speed','abs']],
+    6: [['chest','triceps'],['back','biceps'],['endurance'],['legs'],['shoulders','abs'],['speed']],
   },
 };
 
@@ -6198,17 +6206,25 @@ const WORKOUT_DB = {
       {id:'lsit',         cat:'abs',       n:'L-Sit Hold',            s:4, r:'30s'},
     ],
   },
-  cardio: {
+  endurance: {
     beginner:     [
       {id:'run3k',        cat:'cardio',    n:'3K Run',                s:1, r:'—'},
-      {id:'run1k',        cat:'cardio',    n:'1K Intervals',          s:3, r:'2 min rest'},
     ],
     intermediate: [
       {id:'run5k',        cat:'cardio',    n:'5K Run',                s:1, r:'—'},
-      {id:'sprint400',    cat:'cardio',    n:'400m Sprints',          s:4, r:'2 min rest'},
     ],
     advanced:     [
       {id:'run10k',       cat:'cardio',    n:'10K Run',               s:1, r:'—'},
+    ],
+  },
+  speed: {
+    beginner:     [
+      {id:'run1k',        cat:'cardio',    n:'1K Intervals',          s:3, r:'2 min rest'},
+    ],
+    intermediate: [
+      {id:'sprint400',    cat:'cardio',    n:'400m Sprints',          s:4, r:'2 min rest'},
+    ],
+    advanced:     [
       {id:'sprint100',    cat:'cardio',    n:'100m Sprints',          s:8, r:'60s rest'},
       {id:'sprint400',    cat:'cardio',    n:'400m Sprints',          s:4, r:'3 min rest'},
     ],
@@ -6224,18 +6240,18 @@ const PLAN_TEMPLATES = {
     6: [['chest','triceps'],['back','biceps'],['legs'],['shoulders','abs'],['chest','triceps'],['back','biceps']],
   },
   cardio: {
-    2: [['cardio'],['chest','back','legs']],
-    3: [['chest','back'],['cardio'],['legs','shoulders']],
-    4: [['chest','back'],['cardio'],['legs','shoulders'],['cardio']],
-    5: [['chest','back'],['cardio'],['legs','shoulders'],['abs'],['cardio']],
-    6: [['chest'],['cardio'],['back'],['legs'],['cardio'],['shoulders','abs']],
+    2: [['endurance'],['chest','back','legs']],
+    3: [['chest','back'],['endurance'],['speed','legs']],
+    4: [['chest','back'],['endurance'],['legs','shoulders'],['speed']],
+    5: [['chest','back'],['endurance'],['legs','shoulders'],['abs'],['speed']],
+    6: [['chest'],['endurance'],['back'],['speed'],['legs'],['shoulders','abs']],
   },
   hybrid: {
-    2: [['chest','back','shoulders'],['cardio','legs']],
-    3: [['chest','back'],['cardio'],['legs','shoulders','abs']],
-    4: [['chest','triceps'],['cardio'],['back','biceps'],['legs','shoulders']],
-    5: [['chest','triceps'],['cardio'],['back','biceps'],['legs'],['cardio','abs']],
-    6: [['chest','triceps'],['back','biceps'],['cardio'],['legs'],['shoulders','abs'],['cardio']],
+    2: [['chest','back','shoulders'],['endurance','legs']],
+    3: [['chest','back'],['endurance'],['legs','shoulders','abs']],
+    4: [['chest','triceps'],['speed'],['back','biceps'],['legs','shoulders']],
+    5: [['chest','triceps'],['endurance'],['back','biceps'],['legs'],['speed','abs']],
+    6: [['chest','triceps'],['back','biceps'],['endurance'],['legs'],['shoulders','abs'],['speed']],
   },
 };
 
