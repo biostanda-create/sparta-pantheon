@@ -43,13 +43,38 @@ back fully engaged, arms bent, gold veins tracing down the lats and
 forearms.
 
 ### 4. Weighted Pull-ups (`wpullup`)
-Same pull-up mid-motion as above, but with a heavy stone/iron weight plate
-hanging from a chain at the waist, added tension visible through the core
-and shoulders. (v8 — v7 výsledek: ruce jen položené na tyči místo
-sevřeného úchopu, znovu rovné paže, jeden kotouč, protáhlá hlava — model
-zjevně nedodržuje všechny detaily z dlouhého promptu. v8 přesouvá úchop +
-pokrčené lokty na úplný začátek prompta, kde má věta větší váhu, a
-popisuje sevřenou pěst kolem tyče explicitně)
+Jeden mega-prompt se přes v2-v8 opakovaně vracel ke stejným chybám (rovné
+paže, hlava, počet kotoučů, úchop) — moc protichůdných detailů najednou.
+Postup od v9 je krokový: nejdřív dostat pózu + úchop správně jednoduchým
+promptem, pak na už hotovém obrázku dodělávat detaily přes Gemini
+image-editing (ne psaním nového promptu od nuly).
+
+**Krok A — základní póza a úchop (generuj jako první, samostatně):**
+```
+Photorealistic obsidian statue, full front view, entire body visible. A
+muscular man hangs from a horizontal stone bar. Both hands grip the bar
+in a closed fist, palms facing away from the body (pronated/overhand
+grip), fingers wrapped fully around the bar, thumbs locking the grip.
+Elbows bent at roughly 90 degrees, actively pulling the body upward — not
+a straight-armed dead hang. Feet off the ground. Chest and face both
+face the camera directly (not a back view). Black obsidian material with
+glowing gold veins across the body. Normal human-sized head, smooth
+faceless obsidian surface, no helmet. Dark dramatic background, 8k,
+square 1:1.
+```
+
+**Krok B — jakmile Krok A sedí (póza + úchop OK), edituj TENTO obrázek
+v Gemini (ne nový prompt):**
+```
+Edit this image: add a thick chain hanging from a weight belt around the
+waist, with five to six heavy iron weight plates stacked together on the
+chain, dangling below the hips. Keep everything else in the image
+exactly the same — same pose, same grip, same head, same background.
+```
+
+Pokud Krok A vyjde s chybou (rovné ruce / špatný úchop / špatná hlava),
+oprav to jako Krok B editem obrázku ("uprav lokty tak, aby byly pokrčené"
+/ "sevři ruce do pěsti kolem tyče"), místo přepisování celého promptu.
 
 ### 5. Lat Pulldown (`latpull`)
 Statue seated, leaning slightly back, pulling a wide bar down to the upper
