@@ -45,9 +45,11 @@ forearms.
 ### 4. Weighted Pull-ups (`wpullup`)
 Same pull-up mid-motion as above, but with a heavy stone/iron weight plate
 hanging from a chain at the waist, added tension visible through the core
-and shoulders. (v7 — v6 bylo lepší, ale chceme ještě víc závaží a
-explicitně nadhmat (pronated/overhand grip, dlaně směřují od těla) místo
-obecného "overhand grip")
+and shoulders. (v8 — v7 výsledek: ruce jen položené na tyči místo
+sevřeného úchopu, znovu rovné paže, jeden kotouč, protáhlá hlava — model
+zjevně nedodržuje všechny detaily z dlouhého promptu. v8 přesouvá úchop +
+pokrčené lokty na úplný začátek prompta, kde má věta větší váhu, a
+popisuje sevřenou pěst kolem tyče explicitně)
 
 ### 5. Lat Pulldown (`latpull`)
 Statue seated, leaning slightly back, pulling a wide bar down to the upper
