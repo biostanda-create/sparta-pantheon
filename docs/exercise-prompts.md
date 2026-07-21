@@ -102,9 +102,19 @@ surface, no helmet. Dark dramatic background, 8k, square 1:1.
 ```
 
 ### 7. Barbell RDL (`barbellrdl`)
-Statue mid-hinge, barbell sliding down the thighs, hips pushed back,
-neutral spine, slight forward lean, gold veins highlighting the hamstrings
-and lower back.
+(v2 — mnohem víc závaží na tyči.)
+```
+Photorealistic obsidian statue, full front view, entire body visible. A
+muscular man is mid-hinge holding a barbell loaded with many large, thick
+heavy iron weight plates stacked tightly on each end — an extremely
+heavy load, clearly far more than the man could easily lift, bar visibly
+bending slightly under the weight. Hips pushed back, neutral straight
+spine, torso leaning forward, barbell sliding down the front of the
+thighs close to the body, knees softly bent. Black obsidian material
+with glowing gold veins highlighting the hamstrings and lower back.
+Normal human-sized head, smooth faceless obsidian surface, no helmet.
+Dark dramatic background, 8k, square 1:1.
+```
 
 ### 8. Back Extension (`backext`)
 Statue at the top of a back extension, hips on a pad, torso raised in
