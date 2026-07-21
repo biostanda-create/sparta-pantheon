@@ -117,9 +117,23 @@ Dark dramatic background, 8k, square 1:1.
 ```
 
 ### 8. Back Extension (`backext`)
-Statue at the top of a back extension, hips on a pad, torso raised in
-line with the legs, glutes and lower back contracted, gold veins glowing
-along the spine.
+(v2 — tohle NENÍ stojící cvik, dělá se na hyperextension lavici. v1 se
+zjevně vygenerovala jako stojící póza, tak je to teď popsané explicitně
+i s konstrukcí lavice.)
+```
+Photorealistic obsidian statue, full front view. A muscular man is
+positioned face-down on a stone hyperextension bench, NOT standing —
+his hips and upper thighs rest on an angled pad at roughly hip height,
+his ankles are locked under two fixed footpads behind him, legs staying
+horizontal/braced on the bench the whole time. His torso is raised up
+from a bent-forward position to be in a straight line with his legs,
+back arched slightly, glutes and lower back contracted at the top of
+the movement. The bench structure (angled pad, footpads, metal frame)
+must be clearly visible supporting his body. Black obsidian material
+with glowing gold veins along the spine and lower back. Normal
+human-sized head, smooth faceless obsidian surface, no helmet. Dark
+dramatic background, 8k, square 1:1.
+```
 
 ### 9. Axle Deadlift (`axledeadlift`)
 Same deadlift pulling motion as #1, but gripping a thick axle barbell,
