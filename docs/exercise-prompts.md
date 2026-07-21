@@ -45,7 +45,9 @@ forearms.
 ### 4. Weighted Pull-ups (`wpullup`)
 Same pull-up mid-motion as above, but with a heavy stone/iron weight plate
 hanging from a chain at the waist, added tension visible through the core
-and shoulders. (v2 — zjednodušeno kvůli anatomickým chybám, viz níže)
+and shoulders. (v3 — v2 mělo konflikt: paže zezadu, obličej zepředu; v3
+vynechává zmínky o zádových svalech a explicitně trvá na jednotném
+front-facing pohledu)
 
 ### 5. Lat Pulldown (`latpull`)
 Statue seated, leaning slightly back, pulling a wide bar down to the upper
