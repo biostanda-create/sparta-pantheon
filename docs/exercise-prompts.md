@@ -82,9 +82,24 @@ chest, elbows driving down and back, gold veins radiating across the
 widest part of the back.
 
 ### 6. Cable Row (`cablerow`)
-Statue seated upright, knees softly bent, pulling a handle into the
-stomach, elbows tight along the body, shoulder blades squeezed together,
-gold veins across the mid-back.
+(v1 chyba: kabel vedený svisle shora namísto vodorovně zepředu, chyběla
+opěrka na nohy — vypadalo to jako overhead pulling stroj, ne cable row.
+v2 explicitně popisuje nízkou kladku a footplate.)
+```
+Photorealistic obsidian statue, full front view, entire body visible.
+A muscular man sits on the floor of a cable row station with legs
+extended straight forward, both feet braced flat against a vertical
+metal footplate in front of him. A cable runs horizontally at waist
+height from a low pulley mounted at the base of the machine directly in
+front of his feet, attached to a V-handle. Both hands grip the handle
+and pull it straight back into the stomach, elbows driving back close
+along the body, shoulder blades squeezed together, torso upright with a
+slight backward lean. Do NOT show any cable or rope going upward or
+overhead — the cable is horizontal, at torso height, coming from the
+front. Black obsidian material with glowing gold veins across the
+back and mid-torso. Normal human-sized head, smooth faceless obsidian
+surface, no helmet. Dark dramatic background, 8k, square 1:1.
+```
 
 ### 7. Barbell RDL (`barbellrdl`)
 Statue mid-hinge, barbell sliding down the thighs, hips pushed back,
