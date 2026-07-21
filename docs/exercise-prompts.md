@@ -45,9 +45,10 @@ forearms.
 ### 4. Weighted Pull-ups (`wpullup`)
 Same pull-up mid-motion as above, but with a heavy stone/iron weight plate
 hanging from a chain at the waist, added tension visible through the core
-and shoulders. (v5 — v2: paže zezadu/obličej zepředu; v3 opravilo pohled,
-ale ztratilo vis; v4 vrátilo vis; v5 zdůrazňuje viditelný pevný úchop
-tyče oběma rukama a větší/těžší závaží — více kotoučů na řetězu)
+and shoulders. (v6 — v5 výsledek: rovné "dead hang" paže místo pokrčeného
+tahu, hubené tenké tělo, protáhlá vejčitá/mimozemská hlava, jen 1 kotouč.
+v6 explicitně žádá masivní svalnaté paže, výrazně pokrčené lokty, normální
+lidský tvar a velikost hlavy, a 2-3 viditelně naskládané kotouče)
 
 ### 5. Lat Pulldown (`latpull`)
 Statue seated, leaning slightly back, pulling a wide bar down to the upper
