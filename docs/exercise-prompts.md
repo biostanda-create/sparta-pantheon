@@ -8,6 +8,7 @@ Prompty pro generování soch cviků (obsidian + zlaté žíly styl). Cíl: jedn
 - Záběr: **celé tělo, front view** (ne z boku, ne detail)
 - Pozice: **cvik zachycený v pohybu** (dynamická akční póza, ne statický stoj)
 - Obličej: **faceless** — hladký obsidián bez rysů obličeje
+- Hlava: **bez helmy**, holá hlava (žádná Spartan helma ani jiná pokrývka hlavy)
 - Pozadí: tmavé, dramatické nasvícení zvýrazňující zlaté žíly
 - Styl vykreslení: fotorealistický render, vysoké rozlišení
 
@@ -17,9 +18,9 @@ Hyper-detailed obsidian statue of a muscular Spartan warrior, carved from
 black obsidian stone with glowing molten-gold veins running through the
 entire body like cracks of lava. Full front view, entire body visible,
 [ACCENT: exercise-specific pose/action]. Faceless — smooth featureless
-obsidian face, no facial details. Dramatic dark background, cinematic
-lighting reflecting off the gold veins, photorealistic render, 8k, square
-1:1 composition.
+obsidian face, no facial details, bare head with no helmet or any
+headwear. Dramatic dark background, cinematic lighting reflecting off the
+gold veins, photorealistic render, 8k, square 1:1 composition.
 ```
 
 ---
