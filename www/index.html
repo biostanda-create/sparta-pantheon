@@ -78,24 +78,24 @@
     --text-dim:  #c0b59c;          /* Aged parchment (was #9aa1a8 — too cold) */
     --text-faint:#928774;          /* Faded ink (still ≥4.5:1 on warm-black) */
     --card-bg-img:   url('imgs/img0.jpg');
-    --card-bg-hover: url('imgs/img0.jpg');
-    --boss-card-bg-img: url('imgs/img0.jpg');
-    --achiev-card-bg-img: url('imgs/img0.jpg');
-    --xpbar-bg-img: url('imgs/img1.jpg');
-    --quest-card-bg-img: url('imgs/img0.jpg');
-    --story-panel-bg-img: url('imgs/img0.jpg');
-    --tasks-panel-bg-img: url('imgs/img0.jpg');
-    --btn-bg-img: url('imgs/img0.jpg');
-    --nav-bg-img: url('imgs/img0.jpg');
-    --statbar-bg-img: url('imgs/img0.jpg');
-    --avatar-frame-bg-img: url('imgs/img0.jpg');
-    --profile-stats-bg-img: url('imgs/img0.jpg');
-    --path-active-bg-img: url('imgs/img0.jpg');
-    --path-inactive-bg-img: url('imgs/img0.jpg');
-    --abilities-bg-img: url('imgs/img0.jpg');
-    --str-bg-img: url('imgs/img0.jpg')
-    --agi-bg-img: url('imgs/img0.jpg')
-    --vit-bg-img: url('imgs/img0.jpg')
+    --card-bg-hover: url('imgs/img1.jpg');
+    --boss-card-bg-img: url('imgs/img2.jpg');
+    --achiev-card-bg-img: url('imgs/img3.jpg');
+    --xpbar-bg-img: url('imgs/img4.jpg');
+    --quest-card-bg-img: url('imgs/img5.jpg');
+    --story-panel-bg-img: url('imgs/img6.jpg');
+    --tasks-panel-bg-img: url('imgs/img7.jpg');
+    --btn-bg-img: url('imgs/img8.jpg');
+    --nav-bg-img: url('imgs/img9.jpg');
+    --statbar-bg-img: url('imgs/img10.jpg');
+    --avatar-frame-bg-img: url('imgs/img11.jpg');
+    --profile-stats-bg-img: url('imgs/img12.jpg');
+    --path-active-bg-img: url('imgs/img13.jpg');
+    --path-inactive-bg-img: url('imgs/img14.jpg');
+    --abilities-bg-img: url('imgs/img15.jpg');
+    --str-bg-img: url('imgs/img16.jpg')
+    --agi-bg-img: url('imgs/img17.jpg')
+    --vit-bg-img: url('imgs/img18.jpg')
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; outline: none; }
   html, body {
@@ -111,7 +111,7 @@
     touch-action: manipulation;
   }
   body { background-color: var(--bg); background-attachment: fixed; transition: background-color 0.6s ease; }
-  body:not(.in-game){background-image:url('imgs/img2.jpg');background-size:cover;background-position:center center;background-attachment:scroll;}
+  body:not(.in-game){background-image:url('imgs/img19.jpg');background-size:cover;background-position:center center;background-attachment:scroll;}
   body.in-game { background: transparent !important; }
   #root { min-height: 100vh; min-height: 100dvh; }
   body::before {
@@ -412,8 +412,8 @@
 </style>
 
 <script>
-window.RING_RANK_1='imgs/img3.png';
-window.RING_RANK_2='imgs/img3.png';window.RING_RANK_3='imgs/img3.png';window.RING_RANK_4='imgs/img3.png';window.RING_RANK_5='imgs/img3.png';window.RING_RANK_6='imgs/img3.png';window.RING_RANK_7='imgs/img3.png';window.RING_RANK_8='imgs/img3.png';window.RING_RANK_9='imgs/img3.png';window.RING_RANK_10='imgs/img3.png';window.RING_RANK_11='imgs/img3.png';window.RING_RANK_12='imgs/img3.png';window.RING_RANK_13='imgs/img3.png';window.RING_RANK_14='imgs/img3.png';window.RING_RANK_15='imgs/img3.png';window.RING_RANK_16='imgs/img3.png';window.RING_RANK_17='imgs/img3.png';window.RING_RANK_18='imgs/img3.png';window.RING_RANK_19='imgs/img3.png';window.RING_RANK_20='imgs/img3.png';
+window.RING_RANK_1='imgs/img20.png';
+window.RING_RANK_2='imgs/img21.png';window.RING_RANK_3='imgs/img22.png';window.RING_RANK_4='imgs/img23.png';window.RING_RANK_5='imgs/img24.png';window.RING_RANK_6='imgs/img25.png';window.RING_RANK_7='imgs/img26.png';window.RING_RANK_8='imgs/img27.png';window.RING_RANK_9='imgs/img28.png';window.RING_RANK_10='imgs/img29.png';window.RING_RANK_11='imgs/img30.png';window.RING_RANK_12='imgs/img31.png';window.RING_RANK_13='imgs/img32.png';window.RING_RANK_14='imgs/img33.png';window.RING_RANK_15='imgs/img34.png';window.RING_RANK_16='imgs/img35.png';window.RING_RANK_17='imgs/img36.png';window.RING_RANK_18='imgs/img37.png';window.RING_RANK_19='imgs/img38.png';window.RING_RANK_20='imgs/img39.png';
 window.getRankRing=function(lvl){
   var r=window;
   if(lvl>=95)return r.RING_RANK_20||r.RING_RANK_1;
@@ -437,7 +437,7 @@ window.getRankRing=function(lvl){
   if(lvl>=5)return r.RING_RANK_2||r.RING_RANK_1;
   return r.RING_RANK_1;
 };
-window.BG_INTRO='imgs/img2.jpg';
+window.BG_INTRO='imgs/img19.jpg';
 </script>
 </head>
 <body>
@@ -537,15 +537,15 @@ const BOSSES = [
   { level: 24, name: 'ZEUS',     title: 'King of the Gods',      emoji: '⚡' },
 ];
 
-const WEEK_CARD_BG = "imgs/img4.png";
-const WEEK_TITLE_STRENGTH = "imgs/img5.jpg";
-const WEEK_TITLE_HYPERTROPHY = "imgs/img5.jpg";
-const WEEK_TITLE_ENDURANCE = "imgs/img5.jpg";
-const WEEK_TITLE_POWER = "imgs/img5.jpg";
-const WEEK_TITLE_STRENGTH_F = "imgs/img5.jpg";
-const WEEK_TITLE_HYPERTROPHY_F = "imgs/img5.jpg";
-const WEEK_TITLE_POWER_F = "imgs/img5.jpg";
-const WEEK_TITLE_ENDURANCE_F = "imgs/img5.jpg";
+const WEEK_CARD_BG = "imgs/img40.png";
+const WEEK_TITLE_STRENGTH = "imgs/img41.jpg";
+const WEEK_TITLE_HYPERTROPHY = "imgs/img42.jpg";
+const WEEK_TITLE_ENDURANCE = "imgs/img43.jpg";
+const WEEK_TITLE_POWER = "imgs/img44.jpg";
+const WEEK_TITLE_STRENGTH_F = "imgs/img45.jpg";
+const WEEK_TITLE_HYPERTROPHY_F = "imgs/img46.jpg";
+const WEEK_TITLE_POWER_F = "imgs/img47.jpg";
+const WEEK_TITLE_ENDURANCE_F = "imgs/img48.jpg";
 const WEEK_TYPES = [
   { key: 'sila',        label: 'STRENGTH',    emoji: '⚔',  theme: 'Strength of Ares' },
   { key: 'hypertrofie', label: 'HYPERTROPHY', emoji: '💪', theme: 'Mass of Héraklés' },
@@ -943,64 +943,64 @@ const FREQUENCIES = [
 ];
 
 const CAT_IMGS = {
-  chest: 'imgs/img4.png',
-  back: 'imgs/img4.png',
-  shoulders: 'imgs/img4.png',
-  biceps: 'imgs/img4.png',
-  triceps: 'imgs/img4.png',
-  abs: 'imgs/img4.png',
-  legs: 'imgs/img4.png',
-  cardio: 'imgs/img4.png',
-  stretching: 'imgs/img4.png',
-  yoga: 'imgs/img6.jpg',
-  calisthenics: 'imgs/img4.png'
+  chest: 'imgs/img49.png',
+  back: 'imgs/img50.png',
+  shoulders: 'imgs/img51.png',
+  biceps: 'imgs/img52.png',
+  triceps: 'imgs/img53.png',
+  abs: 'imgs/img54.png',
+  legs: 'imgs/img55.png',
+  cardio: 'imgs/img56.png',
+  stretching: 'imgs/img57.png',
+  yoga: 'imgs/img58.jpg',
+  calisthenics: 'imgs/img59.png'
 };
 const EX_IMGS = {
-  bench:        { m: 'imgs/img7.jpg', f: 'imgs/img8.jpg' },
-  deadlift:     { m: 'imgs/img9.jpg', f: 'imgs/img8.jpg' },
-  ohp:          { m: 'imgs/img7.jpg', f: 'imgs/img8.jpg' },
-  frontsquat:   { m: 'imgs/img7.jpg', f: 'imgs/img8.jpg' },
-  pushpress:    { m: 'imgs/img7.jpg', f: 'imgs/img8.jpg' },
-  barbellrow:   { m: 'imgs/img7.jpg', f: 'imgs/img8.jpg' },
-  db_lunge:     { m: 'imgs/img7.jpg' },
-  squat:        { f: 'imgs/img8.jpg' },
-  sumodeadlift: { m: 'imgs/img7.jpg', f: 'imgs/img8.jpg' },
-  inclinebench: { m: 'imgs/img7.jpg', f: 'imgs/img8.jpg' },
-  barbellrdl:   { m: 'imgs/img7.jpg', f: 'imgs/img8.jpg' },
-  barbellcurl:  { m: 'imgs/img7.jpg', f: 'imgs/img8.jpg' },
-  yoga_sun:     { m: 'imgs/img7.jpg' },
-  wdip:      { m: 'imgs/img7.jpg' },
-  wpullup:   { m: 'imgs/img7.jpg' },  pushup:      { m: 'imgs/img10.jpg' },
-  pistol:      { m: 'imgs/img7.jpg' },
-  pullup:   { m: 'imgs/img7.jpg' },
-  latpull:  { m: 'imgs/img7.jpg' },
-  cablerow: { m: 'imgs/img7.jpg' },
-  shoulderm: { m: 'imgs/img7.jpg' },
-  facepull: { m: 'imgs/img7.jpg' },
-  db_frontrise: { m: 'imgs/img7.jpg' },
-  hspu: { m: 'imgs/img7.jpg' },
-  db_shrug: { m: 'imgs/img7.jpg' },
-  db_arnold: { m: 'imgs/img7.jpg' },
-  db_curl: { m: 'imgs/img7.jpg' },
-  db_hammer: { m: 'imgs/img7.jpg' },
-  db_conccurl: { m: 'imgs/img7.jpg' },
-  dip: { m: 'imgs/img7.jpg' },
-  yoke: { m: 'imgs/img7.jpg' },
-  atlas: { m: 'imgs/img7.jpg' },
-  duckwalk: { m: 'imgs/img7.jpg' },
-  tireflip: { m: 'imgs/img7.jpg' },
-  farmer: { m: 'imgs/img7.jpg' },
-  sandbag: { m: 'imgs/img7.jpg' },
-  legcurl: { m: 'imgs/img7.jpg' },
-  legext: { m: 'imgs/img7.jpg' },
-  backext: { m: 'imgs/img7.jpg' },
-  frontlever: { m: 'imgs/img7.jpg' },
-  db_shoulder: { m: 'imgs/img7.jpg' },
-  db_lateral: { m: 'imgs/img7.jpg' },
-  cablecurl: { m: 'imgs/img7.jpg' },
-  preachercurl: { m: 'imgs/img7.jpg' },
-  logpress: { m: 'imgs/img7.jpg' },
-  axledeadlift: { m: 'imgs/img7.jpg' },
+  bench:        { m: 'imgs/img60.jpg', f: 'imgs/img61.jpg' },
+  deadlift:     { m: 'imgs/img62.jpg', f: 'imgs/img63.jpg' },
+  ohp:          { m: 'imgs/img64.jpg', f: 'imgs/img65.jpg' },
+  frontsquat:   { m: 'imgs/img66.jpg', f: 'imgs/img67.jpg' },
+  pushpress:    { m: 'imgs/img68.jpg', f: 'imgs/img69.jpg' },
+  barbellrow:   { m: 'imgs/img70.jpg', f: 'imgs/img71.jpg' },
+  db_lunge:     { m: 'imgs/img72.jpg' },
+  squat:        { f: 'imgs/img73.jpg' },
+  sumodeadlift: { m: 'imgs/img74.jpg', f: 'imgs/img75.jpg' },
+  inclinebench: { m: 'imgs/img76.jpg', f: 'imgs/img77.jpg' },
+  barbellrdl:   { m: 'imgs/img78.jpg', f: 'imgs/img79.jpg' },
+  barbellcurl:  { m: 'imgs/img80.jpg', f: 'imgs/img81.jpg' },
+  yoga_sun:     { m: 'imgs/img82.jpg' },
+  wdip:      { m: 'imgs/img83.jpg' },
+  wpullup:   { m: 'imgs/img84.jpg' },  pushup:      { m: 'imgs/img85.jpg' },
+  pistol:      { m: 'imgs/img86.jpg' },
+  pullup:   { m: 'imgs/img87.jpg' },
+  latpull:  { m: 'imgs/img88.jpg' },
+  cablerow: { m: 'imgs/img89.jpg' },
+  shoulderm: { m: 'imgs/img90.jpg' },
+  facepull: { m: 'imgs/img91.jpg' },
+  db_frontrise: { m: 'imgs/img92.jpg' },
+  hspu: { m: 'imgs/img93.jpg' },
+  db_shrug: { m: 'imgs/img94.jpg' },
+  db_arnold: { m: 'imgs/img95.jpg' },
+  db_curl: { m: 'imgs/img96.jpg' },
+  db_hammer: { m: 'imgs/img97.jpg' },
+  db_conccurl: { m: 'imgs/img98.jpg' },
+  dip: { m: 'imgs/img99.jpg' },
+  yoke: { m: 'imgs/img100.jpg' },
+  atlas: { m: 'imgs/img101.jpg' },
+  duckwalk: { m: 'imgs/img102.jpg' },
+  tireflip: { m: 'imgs/img103.jpg' },
+  farmer: { m: 'imgs/img104.jpg' },
+  sandbag: { m: 'imgs/img105.jpg' },
+  legcurl: { m: 'imgs/img106.jpg' },
+  legext: { m: 'imgs/img107.jpg' },
+  backext: { m: 'imgs/img108.jpg' },
+  frontlever: { m: 'imgs/img109.jpg' },
+  db_shoulder: { m: 'imgs/img110.jpg' },
+  db_lateral: { m: 'imgs/img111.jpg' },
+  cablecurl: { m: 'imgs/img112.jpg' },
+  preachercurl: { m: 'imgs/img113.jpg' },
+  logpress: { m: 'imgs/img114.jpg' },
+  axledeadlift: { m: 'imgs/img115.jpg' },
 };
 const EXERCISE_CATEGORIES = [
   { id: 'back', name: 'BACK', sub: 'Zada', rune: 'B', color: 'var(--jade)', desc: 'The foundation of power.', statBonus: 'strength', xpType: 'weight', exercises: [
@@ -1265,14 +1265,14 @@ function avatarTierFor(level) {
 }
 
 const CHARACTER_VARIANTS = [
-  { id: 'v1', gender: 'm', name: 'The Titan', img: 'imgs/img11.png' },
-  { id: 'v2', gender: 'm', name: 'The Vanguard', img: 'imgs/img11.png' },
-  { id: 'v3', gender: 'm', name: 'The Architect', img: 'imgs/img11.png' },
-  { id: 'v4', gender: 'm', name: 'The Ascetic', img: 'imgs/img11.png' },
-  { id: 'v7', gender: 'f', name: 'The Sentinel', img: 'imgs/img11.png' },
-  { id: 'v8', gender: 'f', name: 'The Oracle', img: 'imgs/img11.png' },
-  { id: 'v9', gender: 'f', name: 'The Amazon', img: 'imgs/img11.png' },
-  { id: 'v10', gender: 'f', name: 'The Valkyrie', img: 'imgs/img11.png' },
+  { id: 'v1', gender: 'm', name: 'The Titan', img: 'imgs/img116.png' },
+  { id: 'v2', gender: 'm', name: 'The Vanguard', img: 'imgs/img117.png' },
+  { id: 'v3', gender: 'm', name: 'The Architect', img: 'imgs/img118.png' },
+  { id: 'v4', gender: 'm', name: 'The Ascetic', img: 'imgs/img119.png' },
+  { id: 'v7', gender: 'f', name: 'The Sentinel', img: 'imgs/img120.png' },
+  { id: 'v8', gender: 'f', name: 'The Oracle', img: 'imgs/img121.png' },
+  { id: 'v9', gender: 'f', name: 'The Amazon', img: 'imgs/img122.png' },
+  { id: 'v10', gender: 'f', name: 'The Valkyrie', img: 'imgs/img123.png' },
 ];
 
 
@@ -1307,36 +1307,36 @@ function useTransparentImg(src) {
   return dataUrl || src;
 }
 
-const BG_TIER0 = 'imgs/img12.jpg';
+const BG_TIER0 = 'imgs/img124.jpg';
 
-const BG_TIER1 = 'imgs/img12.jpg';
+const BG_TIER1 = 'imgs/img125.jpg';
 
-const BG_TIER2 = 'imgs/img12.jpg';
-      const BG_TIER3 = 'imgs/img12.jpg';
-      const BG_TIER4 = 'imgs/img12.jpg';
+const BG_TIER2 = 'imgs/img126.jpg';
+      const BG_TIER3 = 'imgs/img127.jpg';
+      const BG_TIER4 = 'imgs/img128.jpg';
 const BG_INTRO = window.BG_INTRO;
 
 const RING_IMGS = [
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png',
-  'imgs/img13.png'
+  'imgs/img129.png',
+  'imgs/img130.png',
+  'imgs/img131.png',
+  'imgs/img132.png',
+  'imgs/img132.png',
+  'imgs/img133.png',
+  'imgs/img134.png',
+  'imgs/img135.png',
+  'imgs/img136.png',
+  'imgs/img137.png',
+  'imgs/img138.png',
+  'imgs/img139.png',
+  'imgs/img140.png',
+  'imgs/img141.png',
+  'imgs/img142.png',
+  'imgs/img143.png',
+  'imgs/img144.png',
+  'imgs/img145.png',
+  'imgs/img146.png',
+  'imgs/img147.png'
 ];
 
       const RANK_FRAMES = [
