@@ -943,17 +943,17 @@ const FREQUENCIES = [
 ];
 
 const CAT_IMGS = {
-  chest: 'imgs/img49.png',
-  back: 'imgs/img50.png',
-  shoulders: 'imgs/img51.png',
-  biceps: 'imgs/img52.png',
-  triceps: 'imgs/img53.png',
-  abs: 'imgs/img54.png',
-  legs: 'imgs/img55.png',
-  cardio: 'imgs/img56.png',
-  stretching: 'imgs/img57.png',
-  yoga: 'imgs/img58.jpg',
-  calisthenics: 'imgs/img59.png'
+  chest:       { m: 'imgs/img49.png', f: 'imgs/cat_chest_f.png' },
+  back:        { m: 'imgs/img50.png', f: 'imgs/cat_back_f.png' },
+  shoulders:   { m: 'imgs/img51.png', f: 'imgs/cat_shoulders_f.png' },
+  biceps:      { m: 'imgs/img52.png', f: 'imgs/cat_biceps_f.png' },
+  triceps:     { m: 'imgs/img53.png', f: 'imgs/cat_triceps_f.png' },
+  abs:         { m: 'imgs/img54.png', f: 'imgs/cat_abs_f.png' },
+  legs:        { m: 'imgs/img55.png', f: 'imgs/cat_legs_f.png' },
+  cardio:      { m: 'imgs/img56.png', f: 'imgs/cat_cardio_f.png' },
+  stretching:  { m: 'imgs/img57.png', f: 'imgs/cat_stretching_f.png' },
+  yoga:        { m: 'imgs/img58.jpg', f: 'imgs/img58.jpg' },
+  calisthenics:{ m: 'imgs/img59.png', f: 'imgs/cat_calisthenics_f.png' },
 };
 const EX_IMGS = {
   bench:        { m: 'imgs/img60.jpg', f: 'imgs/img61.jpg' },
@@ -3641,7 +3641,7 @@ function TrainScreen({ state, onPickCategory, onPickExercise, onPickCustomCatego
             <button key={c.id} type="button" className="rise" onClick={() => onPickCategory(c.id)}
               style={{ animationDelay: `${0.03 + i*0.04}s`, position: 'relative', borderRadius: 12, overflow: 'hidden', border: `2px solid ${c.color}`, padding: 0, cursor: 'pointer', background: '#0b0c0d', boxShadow: `0 0 18px ${c.color}44`, display: 'flex', flexDirection: 'column' }}>
               <div style={{ position: 'relative', height: 115, overflow: 'hidden', flexShrink: 0 }}>
-                <img src={CAT_IMGS[c.id]} alt={c.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
+                <img src={state.gender === 'female' ? (CAT_IMGS[c.id]?.f || CAT_IMGS[c.id]?.m) : CAT_IMGS[c.id]?.m} alt={c.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.55) 100%)' }} />
                 {recommended && <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(190,44,36,0.85)', color: '#fff', fontSize: 9, fontWeight: 700, padding: '2px 6px', borderRadius: 4, letterSpacing: '0.05em' }}>★ REC</div>}
               </div>
