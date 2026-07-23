@@ -3650,9 +3650,9 @@ function TrainScreen({ state, onPickCategory, onPickExercise, onPickCustomCatego
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.55) 100%)' }} />
                 {recommended && <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(190,44,36,0.85)', color: '#fff', fontSize: 9, fontWeight: 700, padding: '2px 6px', borderRadius: 4, letterSpacing: '0.05em' }}>★ REC</div>}
               </div>
-              <div style={{ padding: '8px 12px 10px', background: 'rgba(8,6,4,0.97)', borderTop: `1px solid ${c.color}33` }}>
-                <div className="font-display" style={{ fontSize: 13, fontWeight: 900, color: '#fff', letterSpacing: '0.06em', lineHeight: 1.1 }}>{c.name}</div>
-                <div className="font-ui" style={{ fontSize: 10, color: c.color, marginTop: 2, fontWeight: 600 }}>{c.exercises.length} exercises</div>
+              <div style={{ padding: '6px 12px 10px', background: 'rgba(8,6,4,0.97)', borderTop: `1px solid ${c.color}33` }}>
+                <div className="font-display" style={{ fontSize: 16, fontWeight: 900, color: c.color, letterSpacing: '0.12em', lineHeight: 1.1, textTransform: 'uppercase', textShadow: `0 0 12px ${c.color}88` }}>{c.name}</div>
+                <div className="font-ui" style={{ fontSize: 10, color: 'var(--text-faint)', marginTop: 2, fontWeight: 600 }}>{c.exercises.length} exercises</div>
               </div>
             </button>
           );
