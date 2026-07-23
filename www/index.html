@@ -1376,32 +1376,38 @@ function useCircularAvatarImg(src) {
     if (_transparentImgCache.has(key)) { setDataUrl(_transparentImgCache.get(key)); return; }
     const img = new Image();
     img.onload = () => {
-      const iW = img.naturalWidth, iH = img.naturalHeight;
-      const dW = 600, dH = 870;
-      const scale = Math.max(dW / iW, dH / iH);
-      const sW = iW * scale, sH = iH * scale;
-      const offX = (dW - sW) / 2;
-      const offY = 0;
-      const cv = document.createElement('canvas');
-      cv.width = dW; cv.height = dH;
-      const ctx = cv.getContext('2d');
-      ctx.drawImage(img, offX, offY, sW, sH);
-      const id = ctx.getImageData(0, 0, dW, dH);
-      const d = id.data;
-      const cx = dW / 2, cy = dH / 2;
-      const r = dW * 0.68;
-      const r2 = r * r;
-      for (let i = 0; i < d.length; i += 4) {
-        const px = (i >> 2) % dW;
-        const py = Math.floor((i >> 2) / dW);
-        const dx = px - cx, dy = py - cy;
-        if (dx * dx + dy * dy > r2) d[i + 3] = 0;
+      try {
+        const iW = img.naturalWidth, iH = img.naturalHeight;
+        const dW = 600, dH = 870;
+        const scale = Math.max(dW / iW, dH / iH);
+        const sW = iW * scale, sH = iH * scale;
+        const offX = (dW - sW) / 2;
+        const offY = 0;
+        const cv = document.createElement('canvas');
+        cv.width = dW; cv.height = dH;
+        const ctx = cv.getContext('2d');
+        ctx.drawImage(img, offX, offY, sW, sH);
+        const id = ctx.getImageData(0, 0, dW, dH);
+        const d = id.data;
+        const cx = dW / 2, cy = dH / 2;
+        const r = dW * 0.68;
+        const r2 = r * r;
+        for (let i = 0; i < d.length; i += 4) {
+          const px = (i >> 2) % dW;
+          const py = Math.floor((i >> 2) / dW);
+          const dx = px - cx, dy = py - cy;
+          if (dx * dx + dy * dy > r2) d[i + 3] = 0;
+        }
+        ctx.putImageData(id, 0, 0);
+        const result = cv.toDataURL('image/png');
+        _transparentImgCache.set(key, result);
+        setDataUrl(result);
+      } catch(e) {
+        _transparentImgCache.set(key, src);
+        setDataUrl(src);
       }
-      ctx.putImageData(id, 0, 0);
-      const result = cv.toDataURL('image/png');
-      _transparentImgCache.set(key, result);
-      setDataUrl(result);
     };
+    img.onerror = () => { _transparentImgCache.set(key, src); setDataUrl(src); };
     img.src = src;
   }, [src]);
   return dataUrl;
@@ -2021,9 +2027,8 @@ function App() {
     if (state.step === 'consent')  return <ConsentScreen onBack={() => update({ step: 'intro' })} onAccept={(consent) => update({ consent, step: 'name' })} />;
     if (state.step === 'name')     return <NameScreen initial={state.name} onSubmit={(n) => update({ name: n, step: 'gender' })} />;
     if (state.step === 'gender')   return <GenderScreen onSelect={(g) => update({ gender: g, step: 'class' })} onBack={() => update({ step: 'name' })} />;
-    if (state.step === 'class')    return <ClassScreen onSelect={(c) => update({ class: c, step: 'freq' })} onBack={() => update({ step: 'gender' })} />;
-    if (state.step === 'freq')     return <FreqScreen onSelect={(f) => update({ frequency: f, step: 'goal' })} onBack={() => update({ step: 'class' })} />;
-    if (state.step === 'goal')      return <GoalScreen onSubmit={({ goal, kg }) => { const week = getISOWeek(); update({ goal, weightLog: kg > 0 ? [{ week, date: new Date().toISOString().slice(0,10), kg }] : [], lastWeightWeek: kg > 0 ? week : null, step: 'fitnesslevel' }); }} onBack={() => update({ step: 'freq' })} />;
+    if (state.step === 'class')    return <ClassScreen onSelect={(c) => update({ class: c, step: 'goal' })} onBack={() => update({ step: 'gender' })} />;
+    if (state.step === 'goal')      return <GoalScreen onSubmit={({ goal, kg }) => { const week = getISOWeek(); update({ goal, weightLog: kg > 0 ? [{ week, date: new Date().toISOString().slice(0,10), kg }] : [], lastWeightWeek: kg > 0 ? week : null, step: 'fitnesslevel' }); }} onBack={() => update({ step: 'class' })} />;
     if (state.step === 'fitnesslevel') return <FitnessLevelScreen onSelect={(level) => update({ trainingProfile: { level }, step: 'difficulty' })} onBack={() => update({ step: 'goal' })} />;
     if (state.step === 'difficulty') return <DifficultyScreen onSelect={(d) => update({ difficulty: d, step: 'trainfreq' })} onBack={() => update({ step: 'fitnesslevel' })} />;
     if (state.step === 'trainfreq') return <TrainFreqScreen onSelect={(f) => update({ frequency: f, step: 'avatar' })} onBack={() => update({ step: 'difficulty' })} />;
