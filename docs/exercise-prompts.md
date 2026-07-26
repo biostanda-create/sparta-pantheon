@@ -142,6 +142,98 @@ the hands and forearms.
 
 ---
 
+## Kategorie: SHOULDERS (Ramena)
+(Obrázky pro tuto kategorii už existují v appce z dřívějška, ale prompty
+se tehdy neuložily — toto je zpětná rekonstrukce podle base šablony, pro
+budoucí referenci/opravy.)
+
+### 1. Overhead Press (`ohp`)
+Statue standing tall, barbell at collarbone height driving straight
+overhead to full lockout, core and glutes braced, gold veins tracing up
+the shoulders and arms.
+
+### 2. Push Press (`pushpress`)
+Statue mid-drive: slight knee dip, barbell exploding upward off the
+shoulders with leg drive, gold veins pulsing through the legs and
+shoulders simultaneously.
+
+### 3. Log Press (`logpress`)
+Statue driving a thick stone/log-shaped implement overhead from chest
+height, slight dip mid-drive, gold veins concentrated across the chest
+and shoulders.
+
+### 4. Dumbbell Shoulder Press (`db_shoulder`)
+Statue seated or standing, two dumbbells pressed overhead to full
+lockout, gold veins tracing symmetrically up both arms.
+
+### 5. Lateral Raise (`db_lateral`)
+Statue standing, arms raised straight out to the sides at shoulder
+height, dumbbells in each hand, gold veins radiating across the top of
+the shoulders.
+
+### 6. Arnold Press (`db_arnold`)
+Statue mid-rotation: dumbbells transitioning from palms-in at face level
+to palms-out overhead, gold veins spiraling around the shoulders.
+
+### 7. Front Raise (`db_frontrise`)
+Statue standing, both arms raised straight out in front to shoulder
+height, dumbbells in each hand, gold veins tracing up the front delts.
+
+### 8. Dumbbell Shrug (`db_shrug`)
+Statue standing, dumbbells at the sides, shoulders driven straight up
+toward the ears, gold veins concentrated at the traps and neck line.
+
+### 9. Shoulder Press (machine) (`shoulderm`)
+Statue seated in a shoulder press machine, back supported, handles
+pressed overhead from shoulder height, gold veins across the shoulders
+and upper arms.
+
+### 10. Face Pull (`facepull`)
+Statue pulling a rope attachment toward the face at upper-chest height,
+elbows high and wide, rope spread apart at the end of the pull, gold
+veins across the rear shoulders and upper back.
+
+### 11. Rear Delt Fly (`revpecdeck`)
+Statue bent forward or seated at a reverse pec-deck, arms wide pulling
+apart, squeezing the rear delts and rhomboids, gold veins tracing across
+the upper back.
+
+---
+
+## Kategorie: BICEPS (Biceps)
+(Stejná situace jako SHOULDERS — obrázky existují, prompty zpětně
+rekonstruované.)
+
+### 1. Barbell Curl (`barbellcurl`)
+Statue standing, barbell at hip level curling up to chin height, upper
+arms pinned to the sides, gold veins concentrated along the biceps.
+
+### 2. Dumbbell Curl (`db_curl`)
+Statue standing tall, dumbbells at the sides curling upward, palms
+facing forward, gold veins tracing up both biceps.
+
+### 3. Hammer Curl (`db_hammer`)
+Statue standing, dumbbells curling upward with a neutral grip (palms
+facing each other the whole time), gold veins along the forearms and
+biceps.
+
+### 4. Concentration Curl (`db_conccurl`)
+Statue seated, one elbow braced against the inner thigh, curling a
+single dumbbell up to the shoulder, gold veins concentrated on the
+working arm.
+
+### 5. Cable Curl (`cablecurl`)
+Statue standing at a low cable pulley, curling a bar attachment up to
+chin height, upper arms pinned still, gold veins tracing the biceps
+under constant tension.
+
+### 6. Preacher Curl (`preachercurl`)
+Statue with upper arms braced against an angled preacher bench pad,
+curling a barbell up from a fully stretched position, gold veins
+concentrated along the front of the arms.
+
+---
+
 ## Poznámka pro další kategorie
 Až budeme dělat další kategorie (SHOULDERS, BICEPS, TRICEPS, CHEST, ABS,
 LEGS, CARDIO, CALISTHENICS, STRETCHING, YOGA), použij stejnou base šablonu
