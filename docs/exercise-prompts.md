@@ -7,7 +7,7 @@ Prompty pro generování soch cviků (obsidian + zlaté žíly styl). Cíl: jedn
 - Materiál: **obsidián** (černý vulkanický kámen) s **žhnoucími zlatými žílami** protékajícími celým tělem (jako praskliny s lávou/zlatem)
 - Záběr: **celé tělo, front view** (ne z boku, ne detail)
 - Pozice: **cvik zachycený v pohybu** (dynamická akční póza, ne statický stoj)
-- Obličej: **faceless** — hladký obsidián bez rysů obličeje
+- Obličej: **faceless — bezpodmínečně, na každém obrázku** — hladký obsidián bez rysů obličeje (žádné oči, nos, ústa)
 - Hlava: **bez helmy**, holá hlava (žádná Spartan helma ani jiná pokrývka hlavy)
 - Pozadí: tmavé, dramatické nasvícení zvýrazňující zlaté žíly
 - Styl vykreslení: fotorealistický render, vysoké rozlišení
@@ -16,12 +16,21 @@ Prompty pro generování soch cviků (obsidian + zlaté žíly styl). Cíl: jedn
 ```
 Hyper-detailed obsidian statue of a muscular Spartan warrior, carved from
 black obsidian stone with glowing molten-gold veins running through the
-entire body like cracks of lava. Full front view, entire body visible,
-[ACCENT: exercise-specific pose/action]. Faceless — smooth featureless
-obsidian face, no facial details, bare head with no helmet or any
-headwear. Dramatic dark background, cinematic lighting reflecting off the
-gold veins, photorealistic render, 8k, square 1:1 composition.
+entire body like cracks of lava. The face is completely blank and
+faceless — smooth featureless obsidian surface where the face would be,
+absolutely no eyes, no nose, no mouth, no facial features whatsoever, not
+even suggested or carved in outline. Full front view, entire body
+visible, [ACCENT: exercise-specific pose/action]. Bare head with no
+helmet or any headwear. Dramatic dark background, cinematic lighting
+reflecting off the gold veins, photorealistic render, 8k, square 1:1
+composition.
 ```
+
+**Pozn.:** Faceless je nepodkročitelný požadavek na úplně každý obrázek
+v appce (cviky i promo). Pokud generátor přidá jakékoli náznaky obličeje
+(oči, rysy), oprav to image-editingem na hotovém obrázku ("remove all
+facial features, make the face completely blank smooth obsidian")
+místo přepisování celého promptu.
 
 ---
 

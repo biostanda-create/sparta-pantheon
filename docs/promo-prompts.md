@@ -12,8 +12,10 @@ Cíl: emocionální zádrhel, prostor pro velký text nahoře/dole (např.
 Photorealistic obsidian statue of an extremely muscular warrior, carved
 from black obsidian stone with glowing molten-gold veins running through
 the entire body like cracks of lava. Dynamic mid-rep action pose (heavy
-barbell lift), captured with intense motion and strain. Faceless — smooth
-featureless obsidian face, bare head, no helmet. Dramatic close-up crop
+barbell lift), captured with intense motion and strain. The face is
+completely blank and faceless — smooth featureless obsidian surface
+where the face would be, absolutely no eyes, no nose, no mouth, no
+facial features whatsoever. Bare head, no helmet. Dramatic close-up crop
 on the upper body, extremely moody lighting with deep shadows and a
 single warm rim light tracing the gold veins. Large empty negative space
 at the top third of the frame for text overlay. Vertical 9:16
@@ -28,9 +30,12 @@ A grid collage of four separate photorealistic obsidian statue
 close-ups, each in its own panel with a thin dark border between panels,
 comic-panel-style layout. Each panel shows a different muscular obsidian
 warrior mid-exercise (deadlift, pull-up, squat, bench press), all
-carved from black obsidian stone with glowing molten-gold veins, all
-faceless with bare heads and no helmets. Consistent dramatic dark
-lighting across all four panels so they read as one cohesive set.
+carved from black obsidian stone with glowing molten-gold veins. Every
+single statue in every panel has a completely blank, faceless obsidian
+surface where the face would be — no eyes, no nose, no mouth, no facial
+features on any of them — and a bare head with no helmet. Consistent
+dramatic dark lighting across all four panels so they read as one
+cohesive set.
 Vertical 9:16 overall composition, cinematic, 8k.
 ```
 
@@ -42,8 +47,10 @@ Photorealistic wide shot of eleven identical obsidian statue busts
 arranged in a semicircle, each one representing a different muscle
 category (back, chest, shoulders, legs, arms, core), each statue in a
 distinct action pose relevant to its category, all carved from black
-obsidian stone with glowing molten-gold veins, all faceless with bare
-heads and no helmets. Dark temple/pantheon background with stone pillars
+obsidian stone with glowing molten-gold veins. Every single bust has a
+completely blank, faceless obsidian surface where the face would be —
+no eyes, no nose, no mouth, no facial features on any of them — and a
+bare head with no helmet. Dark temple/pantheon background with stone pillars
 and torches. Large empty negative space in the lower third for text
 overlay ("Choose your path"). Vertical 9:16 composition, cinematic, 8k.
 ```
@@ -55,7 +62,10 @@ Cíl: triumf, "Hall of Records" pocit, prostor pro CTA tlačítko
 Photorealistic obsidian statue of an extremely muscular warrior standing
 triumphant, arms raised in victory, carved from black obsidian stone
 with glowing molten-gold veins pulsing brightest across the whole body
-at this final moment. Faceless, bare head, no helmet. Positioned on a
+at this final moment. The face is completely blank and faceless —
+smooth featureless obsidian surface where the face would be, absolutely
+no eyes, no nose, no mouth, no facial features whatsoever. Bare head, no
+helmet. Positioned on a
 raised stone platform inside a grand pantheon hall lined with torches
 and carved pillars, epic scale. Large empty negative space at the very
 bottom of the frame for a call-to-action button. Vertical 9:16
