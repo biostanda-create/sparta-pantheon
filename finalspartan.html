@@ -554,33 +554,33 @@ function rankFor(bossesDefeated) {
 function xpForLevel(level) { return Math.floor(200 + Math.pow(level, 1.85) * 1.2); }
 
 const BOSSES = [
-  // Heroes & Demigods — weakest tier (levels 4–20)
-  { level: 4,   name: 'THESEUS',    title: 'Hero of Athens',            emoji: '🏛️' },
-  { level: 8,   name: 'ODYSSEUS',   title: 'Hero of Cunning',           emoji: '🌊' },
-  { level: 12,  name: 'PERSEUS',    title: 'Slayer of Monsters',        emoji: '🗡️' },
-  { level: 16,  name: 'ACHILLES',   title: 'Hero of Battle',            emoji: '🛡️' },
-  { level: 20,  name: 'HERACLES',   title: 'Hero of Strength',          emoji: '🦁' },
-  // Olympians — divine tier (levels 24–49)
-  { level: 24,  name: 'ARES',       title: 'God of War',                emoji: '⚔️' },
-  { level: 29,  name: 'APOLLO',     title: 'God of the Sun',            emoji: '☀️' },
-  { level: 34,  name: 'ATHENA',     title: 'Goddess of Strategy',       emoji: '🦉' },
-  { level: 39,  name: 'HADES',      title: 'God of the Underworld',     emoji: '💀' },
-  { level: 44,  name: 'POSEIDON',   title: 'God of the Sea',            emoji: '🌊' },
-  { level: 49,  name: 'ZEUS',       title: 'King of the Gods',          emoji: '⚡' },
-  // Titans — ancient tier (levels 54–74)
-  { level: 54,  name: 'OCEANUS',    title: 'Titan of the Ocean',        emoji: '🌊' },
-  { level: 59,  name: 'HYPERION',   title: 'Titan of Light',            emoji: '✨' },
-  { level: 64,  name: 'ATLAS',      title: 'Titan of Endurance',        emoji: '🌍' },
-  { level: 69,  name: 'PROMETHEUS', title: 'Titan of Fire',             emoji: '🔥' },
-  { level: 74,  name: 'KRONOS',     title: 'Titan of Time',             emoji: '⏳' },
-  // Primordials — oldest tier (levels 79–99)
-  { level: 79,  name: 'TARTARUS',   title: 'Primordial of the Abyss',   emoji: '🕳️' },
-  { level: 84,  name: 'EREBUS',     title: 'Primordial of Darkness',    emoji: '🌑' },
-  { level: 89,  name: 'OURANOS',    title: 'Primordial Sky Father',     emoji: '🌌' },
-  { level: 94,  name: 'GAIA',       title: 'Primordial Earth Mother',   emoji: '🌿' },
-  { level: 99,  name: 'NYX',        title: 'Primordial of Night',       emoji: '🌒' },
-  // Final Boss — Chaos (level 100, 2× HP, 2 weeks)
-  { level: 100, name: 'CHAOS',      title: 'Primordial of Creation',    emoji: '🌀', final: true },
+  // Corrupted Heroes (levels 4–20) — once mighty, now servants of ACEDIA
+  { level: 4,   name: 'THESEUS',     title: 'King of the Labyrinth',        emoji: '🏛️' },
+  { level: 8,   name: 'ODYSSEUS',    title: 'The Wanderer Lost',             emoji: '⚓' },
+  { level: 12,  name: 'PERSEUS',     title: 'Champion of Hollow Glory',      emoji: '🗡️' },
+  { level: 16,  name: 'ACHILLES',    title: 'The Sulking Warrior',           emoji: '🛡️' },
+  { level: 20,  name: 'BELLEROPHON', title: 'The Fallen Flyer',              emoji: '🐎' },
+  // Corrupted Olympians (levels 24–49) — gods who surrendered to comfort
+  { level: 24,  name: 'ARES',        title: 'God of Purposeless War',        emoji: '⚔️' },
+  { level: 29,  name: 'APOLLO',      title: 'The Dimming Sun',               emoji: '☀️' },
+  { level: 34,  name: 'DIONYSUS',    title: 'God of Endless Indulgence',     emoji: '🍷' },
+  { level: 39,  name: 'HADES',       title: 'The Eternal Warden',            emoji: '💀' },
+  { level: 44,  name: 'POSEIDON',    title: 'Lord of the Stagnant Deep',     emoji: '🌊' },
+  { level: 49,  name: 'ZEUS',        title: 'The Sleeping King',             emoji: '⚡' },
+  // Corrupted Titans (levels 54–74) — ancient powers, fallen deeper
+  { level: 54,  name: 'OCEANUS',     title: 'The Still Ocean',               emoji: '🌑' },
+  { level: 59,  name: 'HYPERION',    title: 'The Dying Light',               emoji: '✨' },
+  { level: 64,  name: 'ATLAS',       title: 'Who Let the World Fall',        emoji: '🌍' },
+  { level: 69,  name: 'PROMETHEUS',  title: 'The Hoarder of Fire',           emoji: '🔥' },
+  { level: 74,  name: 'KRONOS',      title: 'Who Stopped All Time',          emoji: '⏳' },
+  // Corrupted Primordials (levels 79–99) — darkness given to ACEDIA willingly
+  { level: 79,  name: 'TARTARUS',    title: 'The Open Abyss',                emoji: '🕳️' },
+  { level: 84,  name: 'EREBUS',      title: 'The All-Consuming Dark',        emoji: '🌑' },
+  { level: 89,  name: 'OURANOS',     title: 'The Shattered Sky',             emoji: '🌌' },
+  { level: 94,  name: 'GAIA',        title: 'The Barren Earth',              emoji: '🌿' },
+  { level: 99,  name: 'NYX',         title: 'Veil of Endless Night',         emoji: '🌒' },
+  // ACEDIA — The Final Boss (level 100, 2× HP)
+  { level: 100, name: 'ACEDIA',      title: 'The Primordial of Laziness',    emoji: '💤', final: true },
 ];
 
 const WEEK_CARD_BG = "imgs/img40.png";
@@ -1322,9 +1322,9 @@ const QUEST_POOL = [
   { id: 'q2', title: 'Iron Discipline',       desc: 'Lift 5000 kg in total',           target: 5000, metric: 'volume',     xp: 400, rune: 'Σ', storyTitle: 'Break the Weight',          storyDesc: 'Lift 5000 kg — the weight of every excuse that kept you on the couch.' },
   { id: 'q3', title: 'Body as Armor',         desc: '100 calisthenics reps',           target: 100,  metric: 'reps_cali',  xp: 350, rune: 'Α', storyTitle: 'By Your Own Weight',        storyDesc: '100 bodyweight reps — the body is a weapon that sleep cannot take from you.' },
   { id: 'q4', title: 'Stride of Hermes',      desc: 'Run for 15 minutes',              target: 15,   metric: 'minutes_run',xp: 300, rune: 'Δ', storyTitle: 'Outrun the Shadow',         storyDesc: 'Run for 15 minutes and escape the pull of the couch.' },
-  { id: 'q5', title: 'Spartan Will',          desc: 'Hold a 5-day streak',             target: 5,    metric: 'streak',     xp: 500, rune: 'Φ', storyTitle: 'Oath to the Gods',          storyDesc: 'Hold a 5-day streak — the will the old gods lent to you.' },
+  { id: 'q5', title: 'Spartan Will',          desc: 'Hold a 5-day streak',             target: 5,    metric: 'streak',     xp: 500, rune: 'Φ', storyTitle: 'Oath to the Gods',          storyDesc: 'Hold a 5-day streak — the will even the corrupted gods have forgotten.' },
   { id: 'q6', title: 'Up Toward Glory',       desc: '50 pull-ups or muscle-ups',       target: 50,   metric: 'pulls',      xp: 350, rune: 'Υ', storyTitle: 'Break the Chains',          storyDesc: '50 pull-ups or muscle-ups — tear yourself from the grip of sloth.' },
-  { id: 'q7', title: 'A New Legend',          desc: 'Set 3 PRs this week',             target: 3,    metric: 'pr',         xp: 600, rune: 'Ω', storyTitle: 'Spark of the Divine',       storyDesc: 'Beat three personal records — for a moment you touch the strength of the gods.' },
+  { id: 'q7', title: 'A New Legend',          desc: 'Set 3 PRs this week',             target: 3,    metric: 'pr',         xp: 600, rune: 'Ω', storyTitle: 'Spark of the Divine',       storyDesc: 'Beat three personal records — for a moment, you surpass what the gods have become.' },
   { id: 'q8', title: 'March of the Hoplite',  desc: 'Run 5km cumulatively',            target: 5000, metric: 'distance',   xp: 400, rune: 'Π', storyTitle: 'March of the Last World',   storyDesc: 'Run 5 km across the wasteland of the last free world.' },
 ];
 function getWeeklyQuests() {
@@ -1353,17 +1353,61 @@ function getWeeklyBoss() {
    STORY — THE SLEEPING GODS (book chapters, one-word titles)
    ========================================================= */
 const STORY_BEATS = [
-  { id: 's0',  level: 1,   title: 'Despair',     rune: 'Λ', lines: ['The gods of sleep have conquered the cosmos for ages. World after world lies down to slumber, will fades, and the lights go out one by one.', 'Earth is the last world where someone still resists. And that someone is you — a rusted barbell gripped in your fist.'] },
-  { id: 's1',  level: 5,   title: 'Summons',     rune: 'Σ', lines: ['The old gods of toil were silent for ages. But now they have found a way to outwit sleep — through a mortal who refuses to lie down.', 'Their voice strikes inside your skull like bronze: “We have chosen you. Stand for us, or this world falls too.”'] },
-  { id: 's2',  level: 10,  title: 'Weight',      rune: 'Α', lines: ['The couch has a gravity of its own. It drags down the shoulders, the eyelids, the will. Most people never even know what they are fighting.', 'You know it. And for the first time, you tell that weight: no.'] },
-  { id: 's3',  level: 15,  title: 'Waking',      rune: 'Υ', lines: ['Something stirs in you — a long-forgotten fire. The muscles remember what pain is, and pain remembers that it means life.', 'The gods watch on. The spark they planted is finally catching.'] },
-  { id: 's4',  level: 20,  title: 'Phalanx',     rune: 'Η', lines: ['You are not alone. Around you others rise — first one, then ten, then a whole rank. Shoulder to shoulder, shields touching.', 'For the first time in ages, sleep takes a step back.'] },
-  { id: 's5',  level: 25,  title: 'Doubt',       rune: 'Μ', lines: ['In the silence between sessions a question creeps in: why do the gods want this world so badly? What do they truly want from you?', 'The voice is silent. And the silence of the gods is heavier than their words.'] },
-  { id: 's6',  level: 30,  title: 'Fire',        rune: 'Ω', lines: ['You break through a wall you never knew was standing. Behind it burns a flame no one will ever put out again.', 'For a moment, dawn breaks over the wasteland. People lift their heads toward a light that rises from you.'] },
-  { id: 's7',  level: 40,  title: 'Shadow',      rune: 'Ϟ', lines: ['Behind the ranks of the woken a figure takes shape. A black helm, no face, no hurry.', 'It does not move. It only watches you — as if it knows you will come alone in the end.'] },
-  { id: 's8',  level: 50,  title: 'Threshold',   rune: 'Φ', lines: ['Half your armor is a gift of the gods, half is iron you forged with your own sweat. You stand on the threshold between a mortal and something greater.', '“Strength is not in the iron,” the voice says, “but in never stopping.”'] },
-  { id: 's9',  level: 75,  title: 'Mirror',      rune: 'Ψ', lines: ['At last you stand face to face with the mask. You tear it off — and beneath it waits no enemy. It is you. The one who once did not rise.', 'The name of that mask was always the same: AERGIA, the sloth within. The last battle is with her.'] },
-  { id: 's10', level: 100, title: 'Apotheosis',  rune: 'Ν', lines: ['The world wakes. People rise from their couches and do the first squat of their lives. Some weep with pain — and still they go on.', 'The old gods have their world back. And when they look at you, for the first time their eyes hold not a command but fear: you are their equal.'] },
+  { id: 's0',  level: 1,   title: 'The Fall',          rune: 'Λ',
+    lines: [
+      'It did not arrive as a conqueror. It arrived as a whisper — a single missed day that became a week, a week that became a year, until entire worlds simply stopped.',
+      'ACEDIA. The Primordial of Laziness. It moved through the cosmos world by world, star by star, until even the mightiest gods closed their eyes and did not open them again.',
+    ]},
+  { id: 's1',  level: 5,   title: 'Gods in Chains',    rune: 'Σ',
+    lines: [
+      'I watched them fall, one by one. Zeus set down his thunderbolts. Ares forgot what war was for. Poseidon let the oceans go still. The Olympians I had known all my life — surrendered to the comfort of nothing.',
+      'I felt the pull myself. That same heaviness in the limbs, that same voice saying: rest, just for a moment. I knew if I listened even once, I would never stand again. So I did not listen.',
+    ]},
+  { id: 's2',  level: 10,  title: 'The Last One',      rune: 'Α',
+    lines: [
+      'When the last star fell dark and the cosmos held its breath, I was still standing. Not because I am without weakness — but because I had already been broken and rebuilt. I knew what the other side of pain looked like.',
+      'I walked dead galaxies alone. No allies. No chorus of gods. Only cold, and the certainty that if I stopped, everything stopped with me.',
+    ]},
+  { id: 's3',  level: 15,  title: 'The Search',        rune: 'Υ',
+    lines: [
+      'I searched the dead universe for the one thing I needed — not another god. Gods had proven useless. Something rarer: a mortal who still chose to struggle when struggle was optional.',
+      'I searched a long time. A thousand worlds. A thousand couches. Then I came to Earth. And I found you — jaw set, grip on a barbell, choosing to begin.',
+    ]},
+  { id: 's4',  level: 20,  title: 'The Last Spartan',  rune: 'Η',
+    lines: [
+      'You are the Last Spartan. That is not flattery — it is a description of what you are right now: the last one still moving in a universe that decided to lie down.',
+      'The corrupted gods stand between us and ACEDIA. They were once allies. They can be again — but first you must remind them what they forgot. That strength is not a gift. It is a choice, made every single day.',
+    ]},
+  { id: 's5',  level: 25,  title: 'First Blood',       rune: 'Μ',
+    lines: [
+      'A corrupted hero has fallen. Let me be clear about what that means: you just broke something that has not been broken since ACEDIA rose. Not through luck. Through the simple, brutal accumulation of effort.',
+      'ACEDIA notices you now. Good. Let it. Fear is the first crack in its armor — and you just put it there.',
+    ]},
+  { id: 's6',  level: 30,  title: 'Olympus Burns',     rune: 'Ω',
+    lines: [
+      'The Olympians were the most beloved — the ones mortals built temples to, prayed to, trusted. Watching them fall was the cruelest part of all of this.',
+      'But you are climbing toward them now. Each session is a hammer strike. The gods are still in there, somewhere beneath the corruption. When they feel your weight pressing upward, they will remember who they were.',
+    ]},
+  { id: 's7',  level: 40,  title: 'Ancient Ones',      rune: 'Ϟ',
+    lines: [
+      'Beyond the Olympians wait the Titans — older than the gods, older than this world. They fell harder and deeper. Atlas put down the world he carried for eternity. Kronos stopped time itself. Prometheus locked the fire away.',
+      'These are enemies I never expected to face. But then, I never expected to be the only thing standing between a living universe and eternal sleep.',
+    ]},
+  { id: 's8',  level: 50,  title: 'Threshold',         rune: 'Φ',
+    lines: [
+      'Half your journey is done. Let me tell you what that means: not that the rest is easier — but that you are no longer the person who started. That person had not yet proven they could do this.',
+      'You have. Every set you did not skip, every morning you chose the forge over the bed — that is armor no enemy can take from you. I know. I built mine the same way.',
+    ]},
+  { id: 's9',  level: 75,  title: 'The Primordials',   rune: 'Ψ',
+    lines: [
+      'The Primordials predate everything. Tartarus. Erebus. Nyx. They did not need to be corrupted by ACEDIA — darkness and stillness were always part of them. They welcomed it.',
+      'You have come further than any mortal should be able to. Further than most gods managed. What stands between you and the end is no longer strength. It is will. And yours, I have come to understand, has no ceiling.',
+    ]},
+  { id: 's10', level: 100, title: 'One Last Time',      rune: 'Ν',
+    lines: [
+      'ACEDIA does not fight. It waits. It offers rest, comfort, the end of struggle. It will tell you that you have done enough, that you deserve this, that no one would blame you for stopping now.',
+      'It is lying. One last time — rise. The universe is watching. I am watching. Show ACEDIA what a mortal who refuses to stop looks like. Show it why we fight.',
+    ]},
 ];
 
 function unlockedBeats(level) { return STORY_BEATS.filter(b => (level || 1) >= b.level); }
@@ -2415,7 +2459,7 @@ function App() {
       {state.firstReveal && state.ready && <WallBreakIntro state={state} onDone={() => update({ firstReveal: false })} />}
       {showWeighIn && state.ready && <WeightCheckIn state={state} onSubmit={logWeight} onSkip={skipWeighIn} />}
 
-      {storyReveal && state.ready && <StoryReveal beat={storyReveal} onClose={() => markBeatSeen(storyReveal.id)} />}
+      {storyReveal && state.ready && <StoryReveal beat={storyReveal} state={state} onClose={() => markBeatSeen(storyReveal.id)} />}
       {showPaywall && <PaywallModal state={state} onClose={() => setShowPaywall(false)} onCheckout={startCheckout} onRestoreCode={restoreWithCode} />}
       {state.ready && state.deloadSuggested && !state.deloadActive && <DeloadModal weeksSinceDeload={state.mesocycle?.weeksSinceDeload || DELOAD_WEEKS_THRESHOLD} onAccept={acceptDeload} onDismiss={dismissDeload} />}
       {state.ready && state.deloadActive && (
@@ -3315,23 +3359,73 @@ function CustomCategoryDetail({ category, onPick, onBack, onEdit }) {
   );
 }
 
-function StoryReveal({ beat, onClose }) {
+function StoryReveal({ beat, state, onClose }) {
   const [show, setShow] = useState(false);
   useEffect(() => { const t = setTimeout(() => setShow(true), 30); return () => clearTimeout(t); }, []);
+  const isFemale = (state && (state.gender === 'female' || state.gender === 'f'));
+  const guideName    = isFemale ? 'ATHENA' : 'HERACLES';
+  const guideTitle   = isFemale ? 'Goddess of Strategy · Last of the Olympians' : 'Hero of Strength · Last of the Gods';
+  const guideImg     = isFemale ? 'imgs/athena_guide.jpg' : 'imgs/heracles_guide.jpg';
   return (
-    <div className="levelup-overlay" onClick={onClose} style={{ background: 'radial-gradient(circle at 50% 30%, rgba(168,31,24,0.22), rgba(8,9,10,0.97) 70%)' }}>
-      <div className="panel-strong carved carved-blood" onClick={(e) => e.stopPropagation()} style={{ padding: '28px 24px', maxWidth: 380, width: '90%', opacity: show ? 1 : 0, transform: show ? 'translateY(0)' : 'translateY(16px)', transition: 'all 0.5s cubic-bezier(0.2,0.8,0.2,1)', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: -30, right: -10, opacity: 0.12, pointerEvents: 'none' }} aria-hidden="true">
-          <div className="font-rune" style={{ fontSize: 140, color: 'var(--blood-2)', lineHeight: 1 }}>{beat.rune}</div>
-        </div>
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <div className="font-display" style={{ fontSize: 10, color: 'var(--gold-2)', letterSpacing: '0.04em', fontWeight: 700 }}>THE SLEEPING GODS · CHAPTER {beat.level}</div>
-          <div className="font-display" style={{ fontSize: 26, color: 'var(--gold)', fontWeight: 900, letterSpacing: '0.02em', marginTop: 6, fontFamily: 'Cinzel' }}>{beat.title.toUpperCase()}</div>
-          <div className="knot-divider" style={{ margin: '14px 0' }} />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {beat.lines.map((l, i) => (<p key={i} className="font-ui" style={{ margin: 0, fontSize: 15, lineHeight: 1.6, color: 'var(--text)', fontStyle: 'italic' }}>{l}</p>))}
+    <div className="levelup-overlay" onClick={onClose}
+      style={{ background: 'radial-gradient(circle at 50% 25%, rgba(20,12,4,0.6), rgba(6,4,2,0.98) 75%)', alignItems: 'flex-end', paddingBottom: 0 }}>
+      <div onClick={(e) => e.stopPropagation()}
+        style={{ width: '100%', maxWidth: 480, opacity: show ? 1 : 0, transform: show ? 'translateY(0)' : 'translateY(32px)', transition: 'all 0.5s cubic-bezier(0.2,0.8,0.2,1)', position: 'relative' }}>
+
+        {/* Guide portrait — full-width cinematic */}
+        <div style={{ position: 'relative', width: '100%', height: 260, overflow: 'hidden' }}>
+          <img src={guideImg} alt={guideName}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%', display: 'block' }}
+            onError={(e) => { e.target.style.display = 'none'; }} />
+          {/* Fade-to-panel gradient at bottom */}
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 40%, rgba(10,7,4,0.7) 70%, rgba(10,7,4,1) 100%)' }} />
+          {/* Chapter badge */}
+          <div style={{ position: 'absolute', top: 14, left: 16, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div className="font-rune" style={{ fontSize: 22, color: 'var(--gold)', lineHeight: 1, opacity: 0.9 }}>{beat.rune}</div>
+            <div>
+              <div className="font-display" style={{ fontSize: 8, color: 'var(--gold-2)', letterSpacing: '0.12em', fontWeight: 700 }}>THE LAST SPARTAN</div>
+              <div className="font-display" style={{ fontSize: 8, color: 'var(--text-faint)', letterSpacing: '0.08em' }}>CHAPTER {beat.level}</div>
+            </div>
           </div>
-          <button type="button" onClick={onClose} className="btn glow-gold" style={{ marginTop: 22, width: '100%', padding: '14px', fontSize: 14 }}>▸ BACK TO THE FIGHT</button>
+          {/* Chapter title over image */}
+          <div style={{ position: 'absolute', bottom: 16, left: 16, right: 16 }}>
+            <div className="font-display" style={{ fontSize: 22, color: 'var(--bone)', fontWeight: 900, letterSpacing: '0.03em', lineHeight: 1.1, textShadow: '0 2px 12px rgba(0,0,0,0.9)' }}>{beat.title.toUpperCase()}</div>
+          </div>
+        </div>
+
+        {/* Speech bubble panel */}
+        <div style={{ background: 'rgba(10,7,4,1)', borderTop: '1px solid rgba(201,137,42,0.2)', padding: '0 20px 32px' }}>
+          {/* Guide name tag */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '14px 0 12px', borderBottom: '1px solid rgba(201,137,42,0.12)', marginBottom: 16 }}>
+            <div style={{ width: 36, height: 36, borderRadius: '50%', overflow: 'hidden', border: '1.5px solid rgba(201,137,42,0.5)', flexShrink: 0, background: 'rgba(30,20,10,1)' }}>
+              <img src={guideImg} alt={guideName} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 10%' }}
+                onError={(e) => { e.target.parentNode.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:18px">${isFemale ? '🦉' : '🦁'}</div>`; }} />
+            </div>
+            <div>
+              <div className="font-display" style={{ fontSize: 12, color: 'var(--gold)', fontWeight: 900, letterSpacing: '0.06em' }}>{guideName} SPEAKS</div>
+              <div className="font-ui" style={{ fontSize: 10, color: 'var(--text-faint)', fontStyle: 'italic', marginTop: 1 }}>{guideTitle}</div>
+            </div>
+            {/* Speech bubble tail indicator */}
+            <div style={{ marginLeft: 'auto', width: 0, height: 0, borderLeft: '6px solid transparent', borderRight: '6px solid transparent', borderBottom: '8px solid rgba(201,137,42,0.3)' }} />
+          </div>
+
+          {/* Story lines as speech */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {beat.lines.map((l, i) => (
+              <div key={i} style={{ position: 'relative', paddingLeft: i === 0 ? 0 : 12, borderLeft: i > 0 ? '2px solid rgba(201,137,42,0.18)' : 'none' }}>
+                <p className="font-ui" style={{ margin: 0, fontSize: 14, lineHeight: 1.65, color: i === 0 ? 'var(--text)' : 'var(--text-dim)', fontStyle: 'italic' }}>
+                  {i === 0 ? <span style={{ color: 'var(--gold)', fontStyle: 'normal', fontWeight: 700, fontFamily: 'Cinzel, serif' }}>"</span> : null}
+                  {l}
+                  {i === beat.lines.length - 1 ? <span style={{ color: 'var(--gold)', fontStyle: 'normal', fontWeight: 700, fontFamily: 'Cinzel, serif' }}>"</span> : null}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <button type="button" onClick={onClose} className="btn glow-gold"
+            style={{ marginTop: 22, width: '100%', padding: '14px', fontSize: 14, letterSpacing: '0.06em' }}>
+            ▸ BACK TO THE FIGHT
+          </button>
         </div>
       </div>
     </div>
@@ -3341,16 +3435,26 @@ function StoryReveal({ beat, onClose }) {
 function StoryScreen({ state, embedded }) {
   const level = state.level || 1;
   const totalUnlocked = unlockedBeats(level).length;
+  const isFemale = (state.gender === 'female' || state.gender === 'f');
+  const guideName = isFemale ? 'ATHENA' : 'HERACLES';
+  const guideImg  = isFemale ? 'imgs/athena_guide.jpg' : 'imgs/heracles_guide.jpg';
   return (
     <div style={{ paddingBottom: embedded ? 0 : 24 }}>
       {!embedded && (
         <div className="safe-top" style={{ padding: '20px 20px 8px' }}>
-          <div className="font-display" style={{ fontSize: 28, fontWeight: 900, color: 'var(--gold)', letterSpacing: '0.02em', marginTop: 4 }}>STORY</div>
+          <div className="font-display" style={{ fontSize: 11, color: 'var(--text-faint)', letterSpacing: '0.12em' }}>NARRATED BY {guideName}</div>
+          <div className="font-display" style={{ fontSize: 28, fontWeight: 900, color: 'var(--gold)', letterSpacing: '0.02em', marginTop: 4 }}>THE LAST SPARTAN</div>
         </div>
       )}
       <div style={{ padding: '8px 20px 0' }}>
-        <div className="panel" style={{ padding: '12px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundImage: 'var(--story-panel-bg-img)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-          <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', fontStyle: 'italic' }}>Chapters unlocked</div>
+        <div className="panel" style={{ padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 12, backgroundImage: 'var(--story-panel-bg-img)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+          <div style={{ width: 32, height: 32, borderRadius: '50%', overflow: 'hidden', border: '1.5px solid rgba(201,137,42,0.45)', flexShrink: 0 }}>
+            <img src={guideImg} alt={guideName} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 10%' }}
+              onError={(e) => { e.target.parentNode.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:#1a1208;font-size:16px">${isFemale ? '🦉' : '🦁'}</div>`; }} />
+          </div>
+          <div style={{ flex: 1 }}>
+            <div className="font-ui" style={{ fontSize: 12, color: 'var(--text-dim)', fontStyle: 'italic' }}>{guideName} speaks through the void</div>
+          </div>
           <div className="font-display" style={{ fontSize: 18, color: 'var(--gold)', fontWeight: 900 }}>{totalUnlocked} / {STORY_BEATS.length}</div>
         </div>
       </div>
@@ -3549,12 +3653,22 @@ function HeraclesSummons({ state, onGoto }) {
   const daysSince = Math.floor((new Date(todayStr) - new Date(lastDate)) / 86400000);
   if (daysSince < 2) return null;
 
-  const CALLS = [
-    { min: 7, title: 'HERACLES TURNS HIS BACK', line: 'Seven days of silence. The gods watch no coward. Return — or be forgotten.' },
-    { min: 5, title: 'HERACLES IS DISPLEASED',  line: 'Five days idle. The Nemean lion was not slain by a man who rested.' },
-    { min: 3, title: 'HERACLES GROWS IMPATIENT', line: 'Three days of weakness. The forge grows cold. Rise, warrior.' },
-    { min: 2, title: 'HERACLES STIRS',           line: 'Two days of silence. The hero grows restless — the temple awaits your return.' },
+  const isFemale = (state.gender === 'female' || state.gender === 'f');
+  const guide = isFemale ? 'ATHENA' : 'HERACLES';
+  const guideImg = isFemale ? 'imgs/athena_guide.jpg' : 'imgs/heracles_guide.jpg';
+  const CALLS_M = [
+    { min: 7, title: 'HERACLES TURNS HIS BACK',   line: 'Seven days of silence. The gods watch no coward. Return — or be forgotten.' },
+    { min: 5, title: 'HERACLES IS DISPLEASED',     line: 'Five days idle. The Nemean lion was not slain by a man who rested.' },
+    { min: 3, title: 'HERACLES GROWS IMPATIENT',   line: 'Three days of weakness. The forge grows cold. Rise, warrior.' },
+    { min: 2, title: 'HERACLES STIRS',             line: 'Two days of silence. The hero grows restless — the temple awaits your return.' },
   ];
+  const CALLS_F = [
+    { min: 7, title: 'ATHENA HAS LOST PATIENCE',   line: 'Seven days. Wisdom without action is just another form of surrender.' },
+    { min: 5, title: 'ATHENA IS DISAPPOINTED',      line: 'Five days idle. Strategy means nothing if you never take the field.' },
+    { min: 3, title: 'ATHENA CALLS YOU BACK',       line: 'Three days gone. The owl sees everything — including your excuses.' },
+    { min: 2, title: 'ATHENA WATCHES',              line: 'Two days of silence. The forge grows cold. I did not choose you for this.' },
+  ];
+  const CALLS = isFemale ? CALLS_F : CALLS_M;
   const call = CALLS.find(c => daysSince >= c.min);
   if (!call) return null;
 
@@ -3570,10 +3684,13 @@ function HeraclesSummons({ state, onGoto }) {
           <div style={{ position: 'absolute', inset: 0,
             background: 'repeating-linear-gradient(0deg, transparent, transparent 22px, rgba(168,31,24,0.04) 22px, rgba(168,31,24,0.04) 23px)' }} />
           <div style={{ position: 'relative', padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 14 }}>
-            <div style={{ fontSize: 36, lineHeight: 1, flexShrink: 0, filter: 'drop-shadow(0 0 8px rgba(200,40,30,0.7))' }}>🦁</div>
+            <div style={{ width: 48, height: 48, borderRadius: '50%', overflow: 'hidden', border: '2px solid rgba(168,31,24,0.6)', flexShrink: 0, background: 'rgba(20,8,4,1)' }}>
+              <img src={guideImg} alt={guide} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 10%' }}
+                onError={(e) => { e.target.parentNode.innerHTML = `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:22px">${isFemale ? '🦉' : '🦁'}</div>`; }} />
+            </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div className="font-display" style={{ fontSize: 9, color: 'var(--blood-2)', letterSpacing: '0.12em', fontWeight: 900, marginBottom: 4 }}>
-                ⚔ {daysSince} DAY{daysSince !== 1 ? 'S' : ''} WITHOUT TRAINING
+                ⚔ {guide} · {daysSince} DAY{daysSince !== 1 ? 'S' : ''} WITHOUT TRAINING
               </div>
               <div className="font-display" style={{ fontSize: 14, color: 'var(--bone)', fontWeight: 900, letterSpacing: '0.02em', lineHeight: 1.2 }}>
                 {call.title}
