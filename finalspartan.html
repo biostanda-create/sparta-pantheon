@@ -13,10 +13,25 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Inter:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Rajdhani:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 <script src="react.min.js"></script>
 <script src="react-dom.min.js"></script>
 <script src="babel.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+  firebase.initializeApp({
+    apiKey: "AIzaSyDJ1KIHPoKefvP2CCRr3_U_WRD0H6TfTMw",
+    authDomain: "pantheon-ac9a6.firebaseapp.com",
+    projectId: "pantheon-ac9a6",
+    storageBucket: "pantheon-ac9a6.firebasestorage.app",
+    messagingSenderId: "389667210332",
+    appId: "1:389667210332:web:a07299ae58afd46ba31299"
+  });
+  window._fbAuth = firebase.auth();
+  window._fbDb  = firebase.firestore();
+</script>
 <style>
   script { display: none !important; }
   :root {
@@ -40,7 +55,7 @@
     --line-2:    rgba(190, 158, 110, 0.42);
 
     /* === Bronze/Gold (PRIMARY accent — UI, XP, ranks) === */
-    --gold:      #c9892a;          /* Sun-touched bronze */
+    --gold:      #d87a18;          /* Fire amber */
     --gold-2:    #e8a93a;          /* Brighter solar gold */
     --bronze:    #8a5a23;          /* Aged bronze */
 
@@ -102,7 +117,8 @@
     margin: 0; padding: 0;
     background-color: var(--bg);
     color: var(--text);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
     overflow-x: hidden;
     min-height: 100vh;
     min-height: 100dvh;
@@ -279,9 +295,9 @@
     @media (prefers-reduced-motion: reduce) {
     .ambient-bg::before, .ambient-bg::after, .embers span, .rays-layer, .fog-layer, .lightning-flash, .dust-particles span { animation: none; }
   }
-  .font-display { font-family: 'Cinzel', serif; letter-spacing: 0.02em; font-weight: 700; }
-  .font-ui      { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-  .font-rune    { font-family: 'Cinzel', 'Inter', serif; }
+  .font-display { font-family: 'Cinzel', serif; letter-spacing: 0.02em; font-weight: 700; color: #e07a18; text-shadow: 0 0 8px rgba(255,118,8,0.85), 0 0 22px rgba(235,88,4,0.6), 0 0 48px rgba(195,58,0,0.35), 0 1px 3px rgba(0,0,0,0.9); }
+  .font-ui      { font-family: 'Rajdhani', sans-serif; font-weight: 500; }
+  .font-rune    { font-family: 'Cinzel', serif; }
   .font-saga    { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; letter-spacing: 0.02em; }
   .carved { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; }
   .carved-blood { border-color: rgba(184, 38, 28, 0.35); }
@@ -326,7 +342,7 @@
   button { font-family: inherit; touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; outline: none; }
   img { image-rendering: -webkit-optimize-contrast; }
   .btn {
-    font-family: 'Inter', -apple-system, sans-serif; font-weight: 600; letter-spacing: 0.01em; padding: 12px 22px;
+    font-family: 'Rajdhani', sans-serif; font-weight: 600; letter-spacing: 0.06em; padding: 12px 22px;
     background: linear-gradient(rgba(0,0,0,0.42), rgba(0,0,0,0.60)), var(--btn-bg-img) center/cover no-repeat; border: 1px solid rgba(201, 137, 42, 0.45); border-radius: 8px;
     color: var(--gold-2); cursor: pointer; position: relative; font-size: 14px;
     min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center;
@@ -368,7 +384,7 @@
   .nav-btn {
     flex: 1; background: transparent; border: none; color: var(--text-faint); padding: 14px 4px 12px; cursor: pointer;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    font-family: 'Inter', -apple-system, sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.01em;
+    font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.04em;
     transition: color 0.18s; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
   }
   .nav-btn.active { color: var(--gold-2); }
@@ -379,7 +395,7 @@
   .toast {
     position: fixed; top: calc(20px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); z-index: 100;
     padding: 12px 24px; background: rgba(10, 13, 18, 0.96); border: 1px solid var(--gold); color: var(--gold);
-    font-family: 'Cinzel', serif; font-weight: 700; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+    font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase;
     box-shadow: 0 0 28px rgba(201, 137, 42, 0.55); animation: rise 0.4s ease-out; max-width: 90vw; text-align: center;
   }
   .toast.success { color: var(--moss); border-color: var(--moss); box-shadow: 0 0 28px rgba(90, 128, 80, 0.6); }
@@ -404,7 +420,7 @@
   .btn { border-width: 2px; box-shadow: 3px 3px 0 rgba(0,0,0,0.5); }
   .btn:active { box-shadow: 1px 1px 0 rgba(0,0,0,0.5); }
   .toast { border-width: 2px; box-shadow: 4px 4px 0 rgba(0,0,0,0.55), 0 0 28px rgba(190,44,36,0.5); }
-  .font-display { text-shadow: 1px 1px 0 rgba(0,0,0,0.4); }
+  .font-display { text-shadow: 0 0 8px rgba(255,118,8,0.85), 0 0 22px rgba(235,88,4,0.6), 0 0 48px rgba(195,58,0,0.35), 0 1px 3px rgba(0,0,0,0.9); }
   @keyframes cg-sparkle { 0%, 100% { transform: scale(0.5); opacity: 0.25; } 50% { transform: scale(1.15); opacity: 1; } }
   @keyframes cg-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   @keyframes cg-gleam { 0% { transform: translateX(-44px); opacity: 0; } 18% { opacity: 0.5; } 50% { transform: translateX(150px); opacity: 0.5; } 64%, 100% { transform: translateX(150px); opacity: 0; } }
@@ -467,7 +483,7 @@ const PREMIUM_XP_BONUS = 0.10; // +10% XP for PANTHEON+ members
 
 // Public half of the worker's VAPID keypair (see worker/README.md) — safe to ship client-side.
 // Pushes are free for everyone; this is independent of MONETIZATION_LIVE.
-const VAPID_PUBLIC_KEY = 'BM4uuYSx9DMbTFZUdHhi_wTQ8bwuHk3hPnBX-URZ7pz4cbuLV8EbQyBQelAztfxbl3A_FWAFUw8HDgFOYpSthaI';
+const VAPID_PUBLIC_KEY = 'BNCzJa3kcyIppuv3Px6kPxzleQf2LI_B_vTMtSwhDbfIvhD0cjydeWY6BEcPsjWm4O0NqzKfR_GeZHXEhjgP4Wc';
 
 function urlBase64ToUint8Array(base64) {
   const padded = (base64 + '='.repeat((4 - (base64.length % 4)) % 4)).replace(/-/g, '+').replace(/_/g, '/');
@@ -504,12 +520,21 @@ function trackEvent(name) { api('/api/event', { method: 'POST', headers: { 'Cont
 
 const storage = {
   async get(key) {
-    try { if (typeof window !== 'undefined' && window.storage && typeof window.storage.get === 'function') { try { const r = await window.storage.get(key); return r ? r.value : null; } catch { return null; } } } catch {}
+    const user = window._fbAuth && window._fbAuth.currentUser;
+    if (user) {
+      try {
+        const doc = await window._fbDb.collection('users').doc(user.uid).get();
+        if (doc.exists && doc.data()[key]) return doc.data()[key];
+      } catch {}
+    }
     try { return localStorage.getItem(key); } catch { return null; }
   },
   async set(key, value) {
-    try { if (typeof window !== 'undefined' && window.storage && typeof window.storage.set === 'function') { try { await window.storage.set(key, value); return; } catch {} } } catch {}
     try { localStorage.setItem(key, value); } catch {}
+    const user = window._fbAuth && window._fbAuth.currentUser;
+    if (user) {
+      try { window._fbDb.collection('users').doc(user.uid).set({ [key]: value }, { merge: true }); } catch {}
+    }
   }
 };
 
@@ -526,7 +551,7 @@ function rankFor(bossesDefeated) {
   const idx = Math.min(bossesDefeated || 0, RANKS.length - 1);
   return RANKS[idx];
 }
-function xpForLevel(level) { return Math.floor(150 + Math.pow(level, 1.65) * 0.9); }
+function xpForLevel(level) { return Math.floor(200 + Math.pow(level, 1.85) * 1.2); }
 
 const BOSSES = [
   { level: 4,  name: 'ARES',     title: 'God of War',            emoji: '⚔️' },
@@ -942,6 +967,103 @@ const FREQUENCIES = [
   { id: 'high', label: '5× / WEEK',   desc: 'The king path — peak progress' },
 ];
 
+// ── Training intelligence (pure, deterministic, no AI) ─────────────────────
+function estimate1RM(weight, reps) {
+  if (reps <= 0 || weight <= 0) return 0;
+  return weight * (1 + reps / 30);
+}
+const REPS_PCT = [[1,1.00],[3,0.93],[5,0.87],[8,0.80],[10,0.75],[12,0.70],[15,0.65]];
+function getWorkingWeight(oneRM, targetReps) {
+  const best = REPS_PCT.reduce((a,b) => Math.abs(b[0]-targetReps) < Math.abs(a[0]-targetReps) ? b : a);
+  return Math.round(oneRM * best[1] / 2.5) * 2.5;
+}
+function getWarmupRamp(workingWeight) {
+  return [
+    { weight: Math.round(workingWeight * 0.4 / 2.5) * 2.5, reps: 8 },
+    { weight: Math.round(workingWeight * 0.6 / 2.5) * 2.5, reps: 5 },
+    { weight: Math.round(workingWeight * 0.8 / 2.5) * 2.5, reps: 3 },
+  ];
+}
+const UPPER_BODY_CATS = new Set(['chest','back','shoulders','biceps','triceps','calisthenics']);
+function nextWorkingWeightMap(exerciseId, categoryId, newHistory, prevWW) {
+  const ww = (prevWW || {})[exerciseId];
+  const relevant = (newHistory || []).filter(h => h.exerciseId === exerciseId && h.source !== 'onboarding');
+  if (relevant.length === 0) return prevWW || {};
+  const last = relevant[0];
+  const lastSets = (last.sets||[]).filter(s => Number(s.reps) > 0 || Number(s.time) > 0);
+  if (lastSets.length === 0) return prevWW || {};
+  const lastSet = lastSets[lastSets.length - 1];
+  const w = Number(lastSet.weight) || 0;
+  const r = Number(lastSet.reps) || 0;
+  const t = Number(lastSet.time) || 0;
+  // Bootstrap: first time this exercise is logged — create tracking entry from actual performance
+  if (!ww) {
+    if (w > 0 && r > 0) return { ...prevWW, [exerciseId]: { weight: w, targetReps: r, failCount: 0, calibrating: false } };
+    if (r > 0) return { ...prevWW, [exerciseId]: { weight: 0, targetReps: r, failCount: 0, calibrating: false } };
+    if (t > 0) return { ...prevWW, [exerciseId]: { weight: 0, targetTime: Math.round(t), failCount: 0, calibrating: false } };
+    return prevWW || {};
+  }
+  if (ww.calibrating) {
+    if (w > 0 && r > 0) {
+      const oneRM = estimate1RM(w, r);
+      const workW = getWorkingWeight(oneRM, ww.targetReps || 5);
+      return { ...prevWW, [exerciseId]: { ...ww, weight: workW, calibrating: false, failCount: 0 } };
+    } else if (w === 0 && r > 0) {
+      return { ...prevWW, [exerciseId]: { ...ww, targetReps: Math.max(r - 2, 1), calibrating: false, failCount: 0 } };
+    } else if (t > 0) {
+      return { ...prevWW, [exerciseId]: { ...ww, targetTime: Math.round(t), calibrating: false, failCount: 0 } };
+    }
+    return prevWW;
+  }
+  // Timed exercises: progress by +10s when target held, deload 10% after 2 misses
+  if (ww.targetTime) {
+    if (t >= ww.targetTime) return { ...prevWW, [exerciseId]: { ...ww, targetTime: ww.targetTime + 10, failCount: 0 } };
+    const fails = (ww.failCount || 0) + 1;
+    if (fails >= 2) return { ...prevWW, [exerciseId]: { ...ww, targetTime: Math.max(Math.round(ww.targetTime * 0.9), 5), failCount: 0 } };
+    return { ...prevWW, [exerciseId]: { ...ww, failCount: fails } };
+  }
+  const target = ww.targetReps || 8;
+  const inc = UPPER_BODY_CATS.has(categoryId) ? 2.5 : 5;
+  if (r >= target) {
+    // Bodyweight exercises: progress by +1 rep instead of adding weight
+    if (w === 0 && ww.weight === 0) return { ...prevWW, [exerciseId]: { ...ww, targetReps: target + 1, failCount: 0 } };
+    return { ...prevWW, [exerciseId]: { ...ww, weight: ww.weight + inc, failCount: 0 } };
+  }
+  const fails = (ww.failCount || 0) + 1;
+  if (fails >= 2) {
+    if (w === 0 && ww.weight === 0) return { ...prevWW, [exerciseId]: { ...ww, targetReps: Math.max(target - 2, 1), failCount: 0 } };
+    return { ...prevWW, [exerciseId]: { ...ww, weight: Math.round(ww.weight * 0.9 / 2.5) * 2.5, failCount: 0 } };
+  }
+  return { ...prevWW, [exerciseId]: { ...ww, failCount: fails } };
+}
+function buildGraphPoints(history, exerciseId, win) {
+  const msDay = 86400000;
+  const now = Date.now();
+  const cuts = { '30d': now - 30*msDay, '3m': now - 90*msDay, '1y': now - 365*msDay };
+  const cutoff = cuts[win] || null;
+  const relevant = (history||[])
+    .filter(h => h.exerciseId === exerciseId && h.source !== 'onboarding')
+    .filter(h => !cutoff || new Date(h.date).getTime() >= cutoff)
+    .sort((a,b) => a.date.localeCompare(b.date));
+  if (!relevant.length) return [];
+  const isW = relevant.some(h => h.sets?.some(s => Number(s.weight) > 0));
+  function best(h) {
+    if (isW) { const vs = h.sets.filter(s=>Number(s.weight)>0&&Number(s.reps)>0).map(s=>Number(s.weight)); return vs.length ? Math.max(...vs) : 0; }
+    const vs = h.sets.filter(s=>Number(s.reps)>0).map(s=>Number(s.reps)); return vs.length ? Math.max(...vs) : 0;
+  }
+  if (win === '30d') return relevant.map(h => ({ date: h.date, value: best(h) })).filter(p=>p.value>0);
+  const buckets = new Map();
+  relevant.forEach(h => {
+    const d = new Date(h.date);
+    const key = win === 'all'
+      ? `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`
+      : (() => { const s=new Date(d.getFullYear(),0,1); const wk=Math.ceil(((d-s)/msDay+s.getDay()+1)/7); return `${d.getFullYear()}-W${String(wk).padStart(2,'0')}`; })();
+    const v = best(h);
+    if (v > 0 && (!buckets.has(key) || v > buckets.get(key).value)) buckets.set(key, { date: h.date, value: v });
+  });
+  return Array.from(buckets.values()).sort((a,b)=>a.date.localeCompare(b.date));
+}
+
 const CAT_IMGS = {
   chest:       { m: 'imgs/img49.png', f: 'imgs/cat_chest_f.png' },
   back:        { m: 'imgs/img50.png', f: 'imgs/cat_back_f.png' },
@@ -957,33 +1079,33 @@ const CAT_IMGS = {
 };
 const EX_IMGS = {
   bench:        { m: 'imgs/img60.jpg', f: 'imgs/img61.jpg' },
-  deadlift:     { m: 'imgs/img62.jpg', f: 'imgs/img63.jpg' },
-  ohp:          { m: 'imgs/img64.jpg', f: 'imgs/img65.jpg' },
+  deadlift:     { m: 'imgs/ex_deadlift_m.png', f: 'imgs/img63.jpg' },
+  ohp:          { m: 'imgs/ex_ohp_m.png', f: 'imgs/img65.jpg' },
   frontsquat:   { m: 'imgs/img66.jpg', f: 'imgs/img67.jpg' },
-  pushpress:    { m: 'imgs/img68.jpg', f: 'imgs/img69.jpg' },
-  barbellrow:   { m: 'imgs/img70.jpg', f: 'imgs/img71.jpg' },
+  pushpress:    { m: 'imgs/ex_pushpress_m.png', f: 'imgs/img69.jpg' },
+  barbellrow:   { m: 'imgs/ex_barbellrow_m.png', f: 'imgs/img71.jpg' },
   db_lunge:     { m: 'imgs/img72.jpg' },
   squat:        { f: 'imgs/img73.jpg' },
   sumodeadlift: { m: 'imgs/img74.jpg', f: 'imgs/img75.jpg' },
   inclinebench: { m: 'imgs/img76.jpg', f: 'imgs/img77.jpg' },
-  barbellrdl:   { m: 'imgs/img78.jpg', f: 'imgs/img79.jpg' },
-  barbellcurl:  { m: 'imgs/img80.jpg', f: 'imgs/img81.jpg' },
+  barbellrdl:   { m: 'imgs/ex_barbellrdl_m.png', f: 'imgs/img79.jpg' },
+  barbellcurl:  { m: 'imgs/ex_barbellcurl_m.png', f: 'imgs/img81.jpg' },
   yoga_sun:     { m: 'imgs/img82.jpg' },
   wdip:      { m: 'imgs/img83.jpg' },
-  wpullup:   { m: 'imgs/img84.jpg' },  pushup:      { m: 'imgs/img85.jpg' },
+  wpullup:   { m: 'imgs/ex_wpullup_m.png' },  pushup:      { m: 'imgs/img85.jpg' },
   pistol:      { m: 'imgs/img86.jpg' },
-  pullup:   { m: 'imgs/img87.jpg' },
-  latpull:  { m: 'imgs/img88.jpg' },
-  cablerow: { m: 'imgs/img89.jpg' },
-  shoulderm: { m: 'imgs/img90.jpg' },
-  facepull: { m: 'imgs/img91.jpg' },
-  db_frontrise: { m: 'imgs/img92.jpg' },
+  pullup:   { m: 'imgs/ex_pullup_m.png' },
+  latpull:  { m: 'imgs/ex_latpull_m.png' },
+  cablerow: { m: 'imgs/ex_cablerow_m.png' },
+  shoulderm: { m: 'imgs/ex_shoulderm_m.png' },
+  facepull:   { m: 'imgs/ex_facepull_m.png' },
+  revpecdeck: { m: 'imgs/ex_revpecdeck_m.png' },
+  db_frontrise: { m: 'imgs/ex_db_frontrise_m.png' },
   hspu: { m: 'imgs/img93.jpg' },
-  db_shrug: { m: 'imgs/img94.jpg' },
-  db_arnold: { m: 'imgs/img95.jpg' },
-  db_curl: { m: 'imgs/img96.jpg' },
-  db_hammer: { m: 'imgs/img97.jpg' },
-  db_conccurl: { m: 'imgs/img98.jpg' },
+  db_shrug: { m: 'imgs/ex_db_shrug_m.png' },
+  db_arnold: { m: 'imgs/ex_db_arnold_m.png' },
+  db_curl: { m: 'imgs/ex_db_curl_m.png' },
+  db_conccurl: { m: 'imgs/ex_db_conccurl_m.png' },
   dip: { m: 'imgs/img99.jpg' },
   yoke: { m: 'imgs/img100.jpg' },
   atlas: { m: 'imgs/img101.jpg' },
@@ -993,14 +1115,19 @@ const EX_IMGS = {
   sandbag: { m: 'imgs/img105.jpg' },
   legcurl: { m: 'imgs/img106.jpg' },
   legext: { m: 'imgs/img107.jpg' },
-  backext: { m: 'imgs/img108.jpg' },
+  backext: { m: 'imgs/ex_backext_m.png' },
   frontlever: { m: 'imgs/img109.jpg' },
-  db_shoulder: { m: 'imgs/img110.jpg' },
-  db_lateral: { m: 'imgs/img111.jpg' },
-  cablecurl: { m: 'imgs/img112.jpg' },
-  preachercurl: { m: 'imgs/img113.jpg' },
-  logpress: { m: 'imgs/img114.jpg' },
-  axledeadlift: { m: 'imgs/img115.jpg' },
+  db_shoulder: { m: 'imgs/ex_db_shoulder_m.png' },
+  db_lateral: { m: 'imgs/ex_db_lateral_m.png' },
+  cablecurl: { m: 'imgs/ex_cablecurl_m.png' },
+  preachercurl: { m: 'imgs/ex_preachercurl_m.png' },
+  logpress: { m: 'imgs/ex_logpress_m.png' },
+  axledeadlift: { m: 'imgs/ex_axledeadlift_m.png' },
+  tricdpush:    { m: 'imgs/ex_tricdpush_m.png' },
+  db_tricep:    { m: 'imgs/ex_db_tricep_m.png' },
+  db_kickback:  { m: 'imgs/ex_db_kickback_m.png' },
+  dip:          { m: 'imgs/ex_dip_m.png' },
+  wdip:         { m: 'imgs/ex_wdip_m.png' },
 };
 const EXERCISE_CATEGORIES = [
   { id: 'back', name: 'BACK', sub: 'Zada', rune: 'B', color: 'var(--jade)', desc: 'The foundation of power.', statBonus: 'strength', xpType: 'weight', exercises: [
@@ -1031,7 +1158,6 @@ const EXERCISE_CATEGORIES = [
   { id: 'biceps', name: 'BICEPS', sub: 'Biceps', rune: 'Bi', color: 'var(--blue)', desc: 'The arm of the conqueror.', statBonus: 'strength', xpType: 'weight', exercises: [
     { id: 'barbellcurl',   name: 'Barbell Curl',             weighted: true,  unit: 'kg', sigil: 'BC', info: 'Standing, bar at hip level, palms up. Curl to chin keeping upper arms pinned to the sides. Lower slowly without rocking the body.' },
     { id: 'db_curl',       name: 'Dumbbell Curl',            weighted: true,  unit: 'kg', sigil: 'DC', info: 'Stand tall, dumbbells at the sides, palms forward. Curl up by bending the elbows, keep the upper arms still. Lower slowly.' },
-    { id: 'db_hammer',     name: 'Hammer Curl',              weighted: true,  unit: 'kg', sigil: 'HC', info: 'Like a curl but palms face each other the whole time. Works the brachialis and forearms. Keep the elbows pinned to the sides.' },
     { id: 'db_conccurl',   name: 'Concentration Curl',       weighted: true,  unit: 'kg', sigil: 'CC', info: 'Seated, elbow on the inner thigh. Curl the dumbbell to the shoulder, squeeze at the top, lower slowly. Maximum isolation.' },
     { id: 'cablecurl',     name: 'Cable Curl',               weighted: true,  unit: 'kg', sigil: 'CA', info: 'Cable set low. Curl to chin keeping the upper arms still. The cable keeps constant tension throughout the movement.' },
     { id: 'preachercurl',  name: 'Preacher Curl',            weighted: true,  unit: 'kg', sigil: 'PC', info: 'Upper arms on the preacher bench. Lower fully to stretch the bicep, then curl up. The bench prevents cheating.' },
@@ -1177,7 +1303,7 @@ const QUEST_POOL = [
   { id: 'q4', title: 'Stride of Hermes',      desc: 'Run for 15 minutes',              target: 15,   metric: 'minutes_run',xp: 300, rune: 'Δ', storyTitle: 'Outrun the Shadow',         storyDesc: 'Run for 15 minutes and escape the pull of the couch.' },
   { id: 'q5', title: 'Spartan Will',          desc: 'Hold a 5-day streak',             target: 5,    metric: 'streak',     xp: 500, rune: 'Φ', storyTitle: 'Oath to the Gods',          storyDesc: 'Hold a 5-day streak — the will the old gods lent to you.' },
   { id: 'q6', title: 'Up Toward Glory',       desc: '50 pull-ups or muscle-ups',       target: 50,   metric: 'pulls',      xp: 350, rune: 'Υ', storyTitle: 'Break the Chains',          storyDesc: '50 pull-ups or muscle-ups — tear yourself from the grip of sloth.' },
-  { id: 'q7', title: 'A New Legend',          desc: 'PR on one big lift',              target: 1,    metric: 'pr',         xp: 600, rune: 'Ω', storyTitle: 'Spark of the Divine',       storyDesc: 'Beat a personal record — for a moment you touch the strength of the gods.' },
+  { id: 'q7', title: 'A New Legend',          desc: 'Set 3 PRs this week',             target: 3,    metric: 'pr',         xp: 600, rune: 'Ω', storyTitle: 'Spark of the Divine',       storyDesc: 'Beat three personal records — for a moment you touch the strength of the gods.' },
   { id: 'q8', title: 'March of the Hoplite',  desc: 'Run 5km cumulatively',            target: 5000, metric: 'distance',   xp: 400, rune: 'Π', storyTitle: 'March of the Last World',   storyDesc: 'Run 5 km across the wasteland of the last free world.' },
 ];
 function getWeeklyQuests() {
@@ -1565,6 +1691,9 @@ function Toast({ message, type, onClose }) {
 }
 
 const STREAK_FREEZE_MAX = 2;
+const DELOAD_WEEKS_THRESHOLD = 4;   // suggest deload after this many successful progression weeks
+const DELOAD_MIN_HISTORY_WEEKS = 3; // don't suggest before user has this much history
+const DELOAD_WEIGHT_FACTOR = 0.55;  // deload at 55% of working weight
 const DEFAULT_STATE = {
   ready: false, step: 'intro', hub: 'hub', name: '', consent: null, firstReveal: false,
   gender: null, hair: null, eye: null, class: null, frequency: 3, mode: 'story',
@@ -1578,6 +1707,7 @@ const DEFAULT_STATE = {
   workoutDates: [],
   stats: { totalVolume: 0, totalPulls: 0, totalRunMinutes: 0, totalDistance: 0, prs: {} },
   questProgress: {}, questWeek: null, bossProgress: 0, bossWeek: null, history: [],
+  workingWeights: {},
   // PANTHEON+ — licenseKey is a random per-install id, never an email/password.
   // It doubles as the "recovery code" used to restore premium + cloud backup on a new device.
   licenseKey: null, premium: false, premiumUntil: null, premiumCheckedAt: null,
@@ -1595,6 +1725,13 @@ const DEFAULT_STATE = {
   bossCurrentHP: null,
   bossWeekLevel: null,
   weekRotationIndex: 0,
+  // Mesocycle / deload tracking
+  mesocycle: { weeksSinceDeload: 0, lastDeloadDate: null },
+  weeklyProgress: { progressed: 0, stalled: 0 },
+  deloadSuggested: false,
+  deloadActive: false,
+  deloadWeekKey: null,
+  preDeloadWeights: null,
 };
 
 function getMondayDate() {
@@ -1614,8 +1751,10 @@ function App() {
   const [view, setView] = useState({ screen: null, data: null });
   const [storyReveal, setStoryReveal] = useState(null);
   const [showPaywall, setShowPaywall] = useState(false);
+  const [authUser, setAuthUser] = useState(null);
+  const [authChecked, setAuthChecked] = useState(false);
 
-  useEffect(() => { (async () => {
+  async function loadAppState() {
     const raw = await storage.get('jomsviking_state_v1');
     let parsed = null;
     if (raw) { try { parsed = JSON.parse(raw); } catch {} }
@@ -1623,7 +1762,16 @@ function App() {
     setState({ ...DEFAULT_STATE, ...parsed, licenseKey });
     setLoaded(true);
     trackEvent('app_open');
-  })(); }, []);
+  }
+
+  useEffect(() => {
+    const unsub = window._fbAuth.onAuthStateChanged(async (user) => {
+      setAuthUser(user);
+      setAuthChecked(true);
+      if (user) await loadAppState();
+    });
+    return unsub;
+  }, []);
 
   useEffect(() => { if (!loaded) return; storage.set('jomsviking_state_v1', JSON.stringify(state)); }, [state, loaded]);
 
@@ -1812,6 +1960,33 @@ function App() {
     });
   }
 
+  function acceptDeload() {
+    setState(s => {
+      const pre = { ...(s.workingWeights || {}) };
+      const deloaded = Object.fromEntries(Object.entries(pre).map(([id, ww]) => {
+        const n = { ...ww };
+        if (n.weight > 0) n.weight = Math.round(n.weight * DELOAD_WEIGHT_FACTOR / 2.5) * 2.5;
+        if (n.targetTime) n.targetTime = Math.round(n.targetTime * DELOAD_WEIGHT_FACTOR);
+        return [id, n];
+      }));
+      return {
+        ...s,
+        preDeloadWeights: pre,
+        workingWeights: deloaded,
+        deloadActive: true,
+        deloadWeekKey: getISOWeek(),
+        deloadSuggested: false,
+        mesocycle: { ...(s.mesocycle || {}), weeksSinceDeload: 0, lastDeloadDate: new Date().toISOString().slice(0, 10) },
+      };
+    });
+    showToast('DELOAD WEEK — TRAIN AT 55% WEIGHT', 'success');
+  }
+
+  function dismissDeload() {
+    // weeksSinceDeload stays at threshold → will re-suggest next week
+    update({ deloadSuggested: false });
+  }
+
   function logWorkout(payload) {
     setState(s => {
       const today = new Date(); const todayStr = today.toISOString().slice(0,10);
@@ -1940,7 +2115,8 @@ function App() {
       const afterThisCount = todayCount + 1;
 
       const prBonus = prHit ? 75 : 0;
-      let xpFinal = prBonus + completionBonus;
+      const baseXP = 15;
+      let xpFinal = baseXP + prBonus + completionBonus;
 
       let awardSessionXp = false;
       if (!sessionXpAwardedToday && afterThisCount >= 3) {
@@ -2004,10 +2180,82 @@ function App() {
       }
 
       const newWorkoutsCompleted = isNewSessionDay ? (s.workoutsCompleted || 0) + 1 : (s.workoutsCompleted || 0);
+      const prevWWAll = s.workingWeights || {};
+
+      // ===== Mesocycle / deload mechanics =====
+      let deloadActive = s.deloadActive || false;
+      let deloadWeekKey = s.deloadWeekKey || null;
+      let preDeloadWeights = s.preDeloadWeights || null;
+      const mesocycle = { ...(s.mesocycle || { weeksSinceDeload: 0, lastDeloadDate: null }) };
+      let weeklyProgress = { ...(s.weeklyProgress || { progressed: 0, stalled: 0 }) };
+      let deloadSuggested = s.deloadSuggested || false;
+
+      // Choose base weights: restore pre-deload weights if deload week just ended
+      const currentISOWeek = getISOWeek();
+      let baseWW = prevWWAll;
+      if (deloadActive && preDeloadWeights && isNewWeek && currentISOWeek !== deloadWeekKey) {
+        // Deload week over: restore snapshot, keep any NEW exercises logged during deload
+        baseWW = { ...preDeloadWeights, ...Object.fromEntries(
+          Object.entries(prevWWAll).filter(([k]) => !preDeloadWeights[k])
+        )};
+        preDeloadWeights = null;
+        deloadActive = false;
+        deloadWeekKey = null;
+        setTimeout(() => showToast('DELOAD COMPLETE — BACK TO FULL POWER', 'success'), 400);
+      }
+
+      const workingWeights = nextWorkingWeightMap(payload.exerciseId, category.id, history, baseWW);
+
+      // On week rollover: evaluate previous week, update mesocycle counter & check deload trigger
+      if (isNewWeek) {
+        const prev = weeklyProgress;
+        const total = prev.progressed + prev.stalled;
+        if (total > 0) {
+          if (prev.progressed > prev.stalled) {
+            mesocycle.weeksSinceDeload = (mesocycle.weeksSinceDeload || 0) + 1;
+          } else {
+            // Majority stalled → accumulated fatigue, trigger deload immediately
+            mesocycle.weeksSinceDeload = DELOAD_WEEKS_THRESHOLD;
+          }
+          // Count distinct ISO weeks in history to gate early-use false positives
+          const distinctWeeks = new Set((s.history || []).map(h => {
+            if (!h.date) return null;
+            const d = new Date(h.date + 'T12:00:00Z');
+            const day = d.getUTCDay() || 7;
+            d.setUTCDate(d.getUTCDate() + 4 - day);
+            const ys = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+            return `${d.getUTCFullYear()}-W${Math.ceil(((d - ys) / 86400000 + 1) / 7)}`;
+          }).filter(Boolean)).size;
+          const lastDeloadOld = !mesocycle.lastDeloadDate ||
+            (Date.now() - new Date(mesocycle.lastDeloadDate).getTime() > 7 * 24 * 60 * 60 * 1000);
+          if (mesocycle.weeksSinceDeload >= DELOAD_WEEKS_THRESHOLD
+              && distinctWeeks >= DELOAD_MIN_HISTORY_WEEKS
+              && lastDeloadOld && !deloadActive) {
+            deloadSuggested = true;
+          }
+        }
+        weeklyProgress = { progressed: 0, stalled: 0 };
+      }
+
+      // Track this exercise's progression delta for the current week
+      const prevWWEntry = baseWW[payload.exerciseId];
+      const newWWEntry = workingWeights[payload.exerciseId];
+      if (prevWWEntry && newWWEntry && !newWWEntry.calibrating && !prevWWEntry.calibrating) {
+        const gained = (newWWEntry.weight || 0) > (prevWWEntry.weight || 0)
+          || (newWWEntry.targetReps || 0) > (prevWWEntry.targetReps || 0)
+          || (newWWEntry.targetTime || 0) > (prevWWEntry.targetTime || 0);
+        const regressed = (newWWEntry.failCount || 0) > (prevWWEntry.failCount || 0)
+          || (newWWEntry.weight || 0) < (prevWWEntry.weight || 0)
+          || (newWWEntry.targetReps || 0) < (prevWWEntry.targetReps || 0)
+          || (newWWEntry.targetTime || 0) < (prevWWEntry.targetTime || 0);
+        if (gained) weeklyProgress = { ...weeklyProgress, progressed: weeklyProgress.progressed + 1 };
+        else if (regressed) weeklyProgress = { ...weeklyProgress, stalled: weeklyProgress.stalled + 1 };
+      }
+
       return {
         ...s, streak, lastWorkoutDate: today.toISOString(), workoutsCompleted: newWorkoutsCompleted, workoutDates,
         stats: { ...s.stats, totalVolume, totalPulls, totalRunMinutes: totalRunMin, totalDistance: totalDist, prs },
-        questProgress, bossProgress, history,
+        questProgress, bossProgress, history, workingWeights,
         sessionXpAwardedToday: awardSessionXp ? true : sessionXpAwardedToday,
         lastSessionDate: todayStr,
         weekStartDate: isNewWeek ? currentMonday : (s.weekStartDate || currentMonday),
@@ -2016,10 +2264,13 @@ function App() {
         bossCurrentHP: bossJustDefeated ? null : newBossHP,
         bossWeekLevel: bossJustDefeated ? null : bossWeekLevel,
         bossesDefeated,
+        mesocycle, weeklyProgress, deloadSuggested, deloadActive, deloadWeekKey, preDeloadWeights,
       };
     });
   }
 
+  if (!authChecked) return <LoadingScreen />;
+  if (!authUser) return <AuthScreen onAuth={async (user) => { setAuthUser(user); await loadAppState(); }} />;
   if (!loaded) return <LoadingScreen />;
 
   if (!state.ready) {
@@ -2029,8 +2280,9 @@ function App() {
     if (state.step === 'gender')   return <GenderScreen onSelect={(g) => update({ gender: g, step: 'class' })} onBack={() => update({ step: 'name' })} />;
     if (state.step === 'class')    return <ClassScreen onSelect={(c) => update({ class: c, step: 'goal' })} onBack={() => update({ step: 'gender' })} />;
     if (state.step === 'goal')      return <GoalScreen onSubmit={({ goal, kg }) => { const week = getISOWeek(); update({ goal, weightLog: kg > 0 ? [{ week, date: new Date().toISOString().slice(0,10), kg }] : [], lastWeightWeek: kg > 0 ? week : null, step: 'fitnesslevel' }); }} onBack={() => update({ step: 'class' })} />;
-    if (state.step === 'fitnesslevel') return <FitnessLevelScreen onSelect={(level) => update({ trainingProfile: { level }, step: 'difficulty' })} onBack={() => update({ step: 'goal' })} />;
-    if (state.step === 'difficulty') return <DifficultyScreen onSelect={(d) => update({ difficulty: d, step: 'trainfreq' })} onBack={() => update({ step: 'fitnesslevel' })} />;
+    if (state.step === 'fitnesslevel') return <FitnessLevelScreen onSelect={(level) => update({ trainingProfile: { level }, step: 'strengthtest' })} onBack={() => update({ step: 'goal' })} />;
+    if (state.step === 'strengthtest') return <StrengthTestScreen bodyweightKg={(state.weightLog && state.weightLog[0] && state.weightLog[0].kg) || 70} onSubmit={({ workingWeights, onboardingHistory }) => update({ workingWeights, history: [...onboardingHistory, ...(state.history || [])], step: 'difficulty' })} onBack={() => update({ step: 'fitnesslevel' })} />;
+    if (state.step === 'difficulty') return <DifficultyScreen onSelect={(d) => update({ difficulty: d, step: 'trainfreq' })} onBack={() => update({ step: 'strengthtest' })} />;
     if (state.step === 'trainfreq') return <TrainFreqScreen onSelect={(f) => update({ frequency: f, step: 'avatar' })} onBack={() => update({ step: 'difficulty' })} />;
     if (state.step === 'avatar')    return <CharacterSelectScreen state={state} onSelect={(id) => update({ characterVariant: id, step: 'creating' })} onBack={() => update({ step: 'trainfreq' })} />;
     if (state.step === 'creating')  return <CreatingScreen state={state} onDone={() => update({ ready: true, step: 'done', hub: 'hub', firstReveal: true })} />;
@@ -2068,7 +2320,7 @@ function App() {
           const customCats = state.customCategories || [];
           const resolveCustomCat = (cc) => cc && { ...cc, exercises: (cc.exerciseIds || []).map(id => getExerciseById(id)?.exercise).filter(Boolean) };
           if (view.screen === 'logger') {
-            return <ExerciseLogger exerciseId={view.data.exerciseId} categoryId={view.data.categoryId} currentPR={state.stats?.prs?.[view.data.exerciseId]} onCancel={() => setView(view.data.returnTo || { screen: null })} onSave={(payload) => { logWorkout(payload); setView({ screen: null }); update({ hub: 'hub' }); }} />;
+            return <ExerciseLogger exerciseId={view.data.exerciseId} categoryId={view.data.categoryId} currentPR={state.stats?.prs?.[view.data.exerciseId]} onCancel={() => setView(view.data.returnTo || { screen: null })} onSave={(payload) => { logWorkout(payload); setView({ screen: null }); update({ hub: 'hub' }); }} onNavigate={(newExId) => setView({ screen: 'logger', data: { exerciseId: newExId, categoryId: view.data.categoryId, returnTo: view.data.returnTo } })} history={state.history} workingWeight={state.workingWeights?.[view.data.exerciseId]} />;
           }
           if (view.screen === 'exercises') {
             const _catIds = EXERCISE_CATEGORIES.map(c => c.id);
@@ -2104,7 +2356,38 @@ function App() {
 
       {storyReveal && state.ready && <StoryReveal beat={storyReveal} onClose={() => markBeatSeen(storyReveal.id)} />}
       {showPaywall && <PaywallModal state={state} onClose={() => setShowPaywall(false)} onCheckout={startCheckout} onRestoreCode={restoreWithCode} />}
+      {state.ready && state.deloadSuggested && !state.deloadActive && <DeloadModal weeksSinceDeload={state.mesocycle?.weeksSinceDeload || DELOAD_WEEKS_THRESHOLD} onAccept={acceptDeload} onDismiss={dismissDeload} />}
+      {state.ready && state.deloadActive && (
+        <div style={{ position: 'fixed', top: 'calc(env(safe-area-inset-top) + 4px)', left: '50%', transform: 'translateX(-50%)', zIndex: 80, background: 'rgba(80,50,8,0.92)', border: '1px solid var(--gold)', padding: '6px 16px', pointerEvents: 'none', maxWidth: 280, textAlign: 'center' }}>
+          <div className="font-display" style={{ fontSize: 11, color: 'var(--gold-2)', letterSpacing: '0.06em' }}>⚓ DELOAD TÝDEN — 55% VÁHY</div>
+        </div>
+      )}
     </>
+  );
+}
+
+function DeloadModal({ weeksSinceDeload, onAccept, onDismiss }) {
+  const [show, setShow] = React.useState(false);
+  React.useEffect(() => { const t = setTimeout(() => setShow(true), 40); return () => clearTimeout(t); }, []);
+  return (
+    <div className="levelup-overlay" style={{ background: 'radial-gradient(circle at 50% 30%, rgba(80,50,8,0.28), rgba(6,5,3,0.97) 70%)', zIndex: 150 }}>
+      <div className="panel-strong carved" onClick={e => e.stopPropagation()} style={{ padding: '28px 24px', maxWidth: 380, width: '90%', opacity: show ? 1 : 0, transform: show ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.45s cubic-bezier(0.2,0.8,0.2,1)', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', top: -18, right: -8, opacity: 0.07, pointerEvents: 'none' }} aria-hidden="true">
+          <div className="font-rune" style={{ fontSize: 140, color: 'var(--gold)', lineHeight: 1 }}>Ω</div>
+        </div>
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div className="font-display" style={{ fontSize: 10, color: 'var(--gold-2)', letterSpacing: '0.04em', fontWeight: 700 }}>MEZOCYKLUS · {weeksSinceDeload} {weeksSinceDeload === 1 ? 'TÝDEN' : weeksSinceDeload < 5 ? 'TÝDNY' : 'TÝDNŮ'} PROGRESE</div>
+          <div className="font-display" style={{ fontSize: 24, color: 'var(--gold)', fontWeight: 900, letterSpacing: '0.02em', marginTop: 6, lineHeight: 1.15 }}>CHRÁM ŽÁDÁ ODPOČINEK</div>
+          <div className="knot-divider" style={{ margin: '14px 0' }} />
+          <p className="font-ui" style={{ margin: '0 0 10px', fontSize: 14, lineHeight: 1.6, color: 'var(--text)', fontStyle: 'italic' }}>Tvé tělo nabralo dost únavy. Odlehčovací týden není slabost — je to strategie. Spartský válečník ví, kdy šetřit sílu.</p>
+          <p className="font-ui" style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: 'var(--text-dim)', fontStyle: 'italic' }}>Příští týden: 55% pracovní váhy, 1 série méně. Po návratu budeš silnější.</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 20 }}>
+            <button type="button" className="btn glow-gold" onClick={onAccept} style={{ width: '100%', padding: '14px', fontSize: 14 }}>⚔ PŘIJMOUT ODLEHČOVACÍ TÝDEN</button>
+            <button type="button" className="btn btn-iron" onClick={onDismiss} style={{ width: '100%', padding: '12px', fontSize: 13, color: 'var(--text-dim)' }}>Ještě ne — pokračovat bez deloadu</button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -2119,13 +2402,95 @@ function LoadingScreen() {
   );
 }
 
+function AuthScreen({ onAuth }) {
+  const [mode, setMode] = React.useState('login');
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [password2, setPassword2] = React.useState('');
+  const [error, setError] = React.useState('');
+  const [info, setInfo] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
+
+  const ERR = {
+    'auth/invalid-email': 'Invalid email address.',
+    'auth/user-not-found': 'No account found with this email.',
+    'auth/wrong-password': 'Incorrect password.',
+    'auth/email-already-in-use': 'This email is already registered.',
+    'auth/weak-password': 'Password must be at least 6 characters.',
+    'auth/too-many-requests': 'Too many attempts. Please try again later.',
+    'auth/invalid-credential': 'Incorrect email or password.',
+  };
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setError(''); setInfo(''); setLoading(true);
+    if (mode === 'forgot') {
+      try {
+        await window._fbAuth.sendPasswordResetEmail(email);
+        setInfo('Reset link sent — check your inbox.');
+      } catch (err) {
+        setError(ERR[err.code] || 'Could not send reset email.');
+      } finally { setLoading(false); }
+      return;
+    }
+    if (mode === 'register' && password !== password2) { setError('Passwords do not match.'); setLoading(false); return; }
+    try {
+      let cred;
+      if (mode === 'register') {
+        cred = await window._fbAuth.createUserWithEmailAndPassword(email, password);
+      } else {
+        cred = await window._fbAuth.signInWithEmailAndPassword(email, password);
+      }
+      onAuth(cred.user);
+    } catch (err) {
+      setError(ERR[err.code] || 'Something went wrong. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const iStyle = { width: '100%', boxSizing: 'border-box', background: 'rgba(4,3,1,0.7)', border: '1px solid rgba(180,140,60,0.35)', borderRadius: 8, padding: '13px 14px', color: 'var(--bone)', fontSize: 15, fontFamily: 'Rajdhani,sans-serif', outline: 'none' };
+
+  return (
+    <div className="container-app safe-top" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100dvh', padding: '32px 28px', position: 'relative', overflow: 'hidden', background: 'var(--bg)' }}>
+      <img src="imgs/auth_bg.png" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top', opacity: 0.45, pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(6,4,2,0.5) 0%, rgba(6,4,2,0.3) 40%, rgba(6,4,2,0.75) 80%, rgba(6,4,2,0.97) 100%)', pointerEvents: 'none' }} />
+      <div style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+      <div className="rise" style={{ animationDelay: '0.05s', marginBottom: 28 }}>
+        <img src="imgs/logo.png" alt="SPARTA" style={{ width: 72, height: 72, borderRadius: 18, objectFit: 'cover', boxShadow: '0 8px 28px rgba(0,0,0,0.6)' }} />
+      </div>
+      <div className="rise" style={{ animationDelay: '0.12s', textAlign: 'center', marginBottom: 32 }}>
+        <h1 className="font-display" style={{ fontSize: 28, fontWeight: 900, color: 'var(--gold)', margin: 0, letterSpacing: '0.06em' }}>PANTHEON</h1>
+        <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', marginTop: 6 }}>{mode === 'login' ? 'Sign in and continue your campaign.' : mode === 'register' ? 'Create an account and begin your journey.' : 'Enter your email to reset your password.'}</div>
+      </div>
+      <form onSubmit={handleSubmit} className="rise" style={{ animationDelay: '0.2s', width: '100%', maxWidth: 360, display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <input type="email" placeholder="E-mail" value={email} onChange={e => setEmail(e.target.value)} required style={iStyle} autoComplete="email" />
+        {mode !== 'forgot' && <input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required style={iStyle} autoComplete={mode === 'register' ? 'new-password' : 'current-password'} />}
+        {mode === 'register' && <input type="password" placeholder="Confirm password" value={password2} onChange={e => setPassword2(e.target.value)} required style={iStyle} autoComplete="new-password" />}
+        {error && <div className="font-ui" style={{ fontSize: 13, color: 'var(--blood-2)', textAlign: 'center', padding: '6px 0' }}>{error}</div>}
+        {info  && <div className="font-ui" style={{ fontSize: 13, color: 'var(--moss)',    textAlign: 'center', padding: '6px 0' }}>{info}</div>}
+        <button type="submit" className="btn glow-gold" disabled={loading} style={{ width: '100%', padding: '14px', fontSize: 15, marginTop: 4, opacity: loading ? 0.6 : 1 }}>
+          {loading ? '...' : mode === 'login' ? '⚔ SIGN IN' : mode === 'register' ? '✦ CREATE ACCOUNT' : '✉ SEND RESET LINK'}
+        </button>
+      </form>
+      {mode === 'login' && (
+        <button type="button" onClick={() => { setMode('forgot'); setError(''); setInfo(''); }} style={{ marginTop: 10, background: 'transparent', border: 'none', color: 'var(--text-faint)', fontSize: 12, cursor: 'pointer', fontFamily: 'Rajdhani,sans-serif' }}>
+          Forgot password?
+        </button>
+      )}
+      <button type="button" onClick={() => { setMode(m => m === 'register' ? 'login' : m === 'forgot' ? 'login' : 'register'); setError(''); setInfo(''); setPassword2(''); }} className="rise" style={{ animationDelay: '0.28s', marginTop: 10, background: 'transparent', border: 'none', color: 'var(--text-dim)', fontSize: 13, cursor: 'pointer', fontFamily: 'Rajdhani,sans-serif' }}>
+        {mode === 'login' ? "Don't have an account? Register" : 'Back to sign in'}
+      </button>
+      </div>
+    </div>
+  );
+}
+
 function IntroScreen({ onAwaken }) {
   return (
     <div className="container-app safe-top" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', minHeight: '100dvh', padding: '40px 28px 80px', textAlign: 'center', position: 'relative' }}>
-      <div className="rise" style={{ animationDelay: '0.05s', position: 'absolute', top: '8vh', left: '50%', transform: 'translateX(-50%)' }}>
-        <div style={{ width: 56, height: 56, borderRadius: 14, background: 'linear-gradient(135deg, #9aa1a8, #2c3034)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}>
-          <div className="font-rune" style={{ fontSize: 30, color: '#161210', fontWeight: 900, lineHeight: 1 }}>Λ</div>
-        </div>
+      <div className="rise" style={{ animationDelay: '0.05s', position: 'absolute', top: '15vh', left: '50%', transform: 'translateX(-50%)' }}>
+        <img src="imgs/logo.png" alt="SPARTA" style={{ width: 96, height: 96, borderRadius: 22, objectFit: 'cover', boxShadow: '0 12px 36px rgba(0,0,0,0.6)' }} />
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24, width: '100%' }}>
         <div className="rise" style={{ animationDelay: '0.15s' }}>
@@ -2140,13 +2505,40 @@ function IntroScreen({ onAwaken }) {
   );
 }
 
-function StepHeader({ step, total, title, subtitle, onBack }) {
+// trainingStep: 1=FITNESS LEVEL, 2=STRENGTH TEST, 3=DIFFICULTY, 4=FREQ (5=avatar/done)
+function StepHeader({ step, total, title, subtitle, onBack, trainingStep }) {
+  const TR_LABELS = ['FITNESS', 'STRENGTH', 'DIFFICULTY', 'FREQ'];
   return (
     <div style={{ padding: '24px 20px 16px' }} className="safe-top">
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: trainingStep != null ? 10 : 16 }}>
         {onBack ? <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding: '6px 14px', fontSize: 11 }}>◂ BACK</button> : <div />}
-        {step && total ? <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em' }}>STEP {String(step).padStart(2,'0')} / {String(total).padStart(2,'0')}</div> : <div />}
+        {trainingStep != null ? (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 5 }}>
+            <div className="font-display" style={{ fontSize: 9, color: 'var(--text-faint)', letterSpacing: '0.1em' }}>TRAINING PROFILE</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
+              {TR_LABELS.map((lbl, i) => (
+                <div key={i} title={lbl} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+                  <div style={{ width: 30, height: 4, borderRadius: 2, background: i < trainingStep - 1 ? 'var(--gold)' : i === trainingStep - 1 ? 'var(--gold-2)' : 'rgba(190,158,110,0.18)', transition: 'background 0.3s' }} />
+                </div>
+              ))}
+              <div style={{ width: 1, height: 12, background: 'var(--line-2)', margin: '0 2px' }} />
+              <div className="font-rune" style={{ fontSize: 13, color: trainingStep > 4 ? 'var(--gold)' : 'var(--text-faint)', lineHeight: 1 }}>Λ</div>
+            </div>
+          </div>
+        ) : step && total ? (
+          <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em' }}>STEP {String(step).padStart(2,'0')} / {String(total).padStart(2,'0')}</div>
+        ) : <div />}
       </div>
+      {trainingStep != null && (
+        <div style={{ marginBottom: 8 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            {TR_LABELS.map((lbl, i) => (
+              <div key={i} className="font-display" style={{ fontSize: 8, color: i === trainingStep - 1 ? 'var(--gold-2)' : i < trainingStep - 1 ? 'var(--gold)' : 'var(--text-faint)', letterSpacing: '0.06em', opacity: i > trainingStep - 1 ? 0.4 : 1 }}>{lbl}</div>
+            ))}
+            <div className="font-display" style={{ fontSize: 8, color: 'var(--text-faint)', letterSpacing: '0.06em', opacity: 0.4 }}>AVATAR</div>
+          </div>
+        </div>
+      )}
       <div className="font-display" style={{ fontSize: 22, fontWeight: 900, color: 'var(--gold)', letterSpacing: '0.02em' }}>{title}</div>
       {subtitle && <div className="font-ui" style={{ fontSize: 14, color: 'var(--text-dim)', marginTop: 6, fontStyle: 'italic' }}>{subtitle}</div>}
     </div>
@@ -2162,7 +2554,7 @@ const LEGAL = {
       { h: '1. Introduction', body: ['These terms of use govern the use of the Pantheon mobile application (the “app”), operated by [OPERATOR, Ltd.], company no. [REG. NO.], registered at [ADDRESS] (the “operator”).', 'By downloading, installing or using the app you confirm that you have read these terms, understand them and agree to them. If you do not agree, do not use the app.'] },
       { h: '2. Service description', body: ['The app is a gamified training journal: it lets you log exercises, sets, weight and performances, complete tasks and progress through levels and ranks.', 'The app is NOT a medical device or a health service and does not provide medical, nutritional or diagnostic advice. The content is for informational and motivational purposes only.'] },
       { h: '3. Health notice', body: ['You perform all exercises at your own responsibility and risk. Before starting a training program, especially if you have health issues, are pregnant or are recovering from an injury, consult a doctor.', 'If you feel pain, nausea, dizziness or other warning signs, stop exercising immediately and seek professional help. The operator is not liable for injuries or health consequences arising in connection with use of the app.'] },
-      { h: '4. Account and user data', body: ['The app requires no registration or account. Your nickname and all training data are stored exclusively locally on your device.', 'You are responsible for backing up your own data. Uninstalling the app or clearing the device data may permanently lose the data.'] },
+      { h: '4. Account and user data', body: ['The app requires registration with an email address and password to use its features. Your training data is stored in your account on Firebase (Google Cloud) and locally on your device.', 'You are responsible for keeping your login credentials secure. You can delete your account and all associated data at any time via the Reset function in the profile.'] },
       { h: '5. Rules of use', body: ['You undertake to use the app in accordance with the law and not to interfere with its functionality, misuse it, or attempt to bypass its security.'] },
       { h: '6. Intellectual property', body: ['The app, its appearance, texts, graphics and source code are protected by copyright and belong to the operator unless stated otherwise. You may not copy or further distribute them without the operator’s consent.'] },
       { h: '7. Limitation of liability', body: ['The app is provided “as is”. To the extent permitted by law, the operator is not liable for damage arising from use or inability to use the app, loss of data, or decisions made on the basis of its outputs.'] },
@@ -2177,11 +2569,11 @@ const LEGAL = {
     sections: [
       { h: '1. Data controller', body: ['The controller of personal data is [OPERATOR, Ltd.], company no. [REG. NO.], registered at [ADDRESS], contact e-mail [E-MAIL].'] },
       { h: '2. What data we process', body: ['Data you enter into the app yourself: your nickname, gender (to display the character), body weight and its records, training logs, performances, goals and settings.', 'The app does not collect location data, contacts or advertising identifiers.'] },
-      { h: '3. Where the data is stored', body: ['All of the above data is stored exclusively locally on your device (the app storage). We do not send it to our servers, we have no access to it and we create no user account.'] },
+      { h: '3. Where the data is stored', body: ['Your data is stored in your account on Firebase (Google Cloud, operated by Google LLC) and locally on your device. Firebase is used solely to store and sync your training data between devices. Google may process your data in accordance with their privacy policy.'] },
       { h: '4. Purpose and legal basis', body: ['We process the data to provide the app features (keeping a training journal, calculating progress). The legal basis is performance of the service and the legitimate interest in the app working (Art. 6(1)(b) and (f) GDPR).', 'Data about your physical condition and weight may constitute health data (a special category under Art. 9 GDPR). We process it only on the basis of your explicit consent (Art. 9(2)(a) GDPR), which you can withdraw at any time.'] },
       { h: '5. Recipients and third parties', body: ['On startup the app loads code libraries and fonts from public content delivery networks (CDNs, e.g. Google Fonts and Cloudflare). Their operators may process your IP address during this loading as independent controllers.', 'We use no analytics tools, tracking or advertising systems.'] },
       { h: '6. Transfers outside the EU', body: ['The operators of the CDNs above may process data outside the EU, usually on the basis of standard contractual clauses or an adequacy decision.'] },
-      { h: '7. Retention period', body: ['The data is stored on your device until you delete it yourself (e.g. via the reset function in the profile) or until you uninstall the app.'] },
+      { h: '7. Retention period', body: ['The data is stored in your account until you delete it yourself (via the reset function in the profile) or request account deletion. Uninstalling the app does not delete your cloud data — you must sign in and use the reset function to erase it.'] },
       { h: '8. Your rights', body: ['You have the right of access to your data, rectification, erasure, restriction of processing, portability, the right to object and to withdraw any consent at any time. Because the data is stored locally, you exercise most of these rights directly in the app (editing your data or deleting it).', 'You also have the right to lodge a complaint with a supervisory authority — your national data protection authority.'] },
       { h: '9. Children', body: ['The app is intended for people aged 15 and over. Younger people may use it only with the consent of a legal guardian.'] },
       { h: '10. Changes and contact', body: ['We may update this policy; you will be informed of material changes in the app. Send questions to [E-MAIL]. Effective from ' + LEGAL_VERSION + '.'] },
@@ -2435,6 +2827,184 @@ function GoalScreen({ onSubmit, onBack }) {
   );
 }
 
+function StrengthTestScreen({ onSubmit, onBack, bodyweightKg }) {
+  const TESTS = [
+    { id: 'squat',    name: 'Squat',       cat: 'legs',  weighted: true,  bwPct: 0.50, sigil: 'SQ', targetReps: 5, titleImg: './title_squat.png' },
+    { id: 'bench',    name: 'Bench Press', cat: 'chest', weighted: true,  bwPct: 0.35, sigil: 'BP', targetReps: 5, titleImg: './title_bench.png' },
+    { id: 'deadlift', name: 'Deadlift',    cat: 'back',  weighted: true,  bwPct: 0.60, sigil: 'DL', targetReps: 5, titleImg: './title_deadlift.png' },
+    { id: 'pullup',   name: 'Pull-ups',    cat: 'back',  weighted: false, bwPct: 0,    sigil: 'PU', targetReps: 5, titleImg: './title_pullups.png' },
+  ];
+  const [vals, setVals] = React.useState(() =>
+    Object.fromEntries(TESTS.map(t => [t.id, { weight: '', reps: '', skip: false }]))
+  );
+  function setV(id, field, v) { setVals(p => ({ ...p, [id]: { ...p[id], [field]: v } })); }
+  function toggleSkip(id) { setVals(p => ({ ...p, [id]: { ...p[id], skip: !p[id].skip, weight: '', reps: '' } })); }
+
+  function handleSubmit() {
+    const today = new Date().toISOString().slice(0, 10);
+    const bw = (bodyweightKg > 0 ? bodyweightKg : 70);
+    const workingWeights = {};
+    const onboardingHistory = [];
+    TESTS.forEach(t => {
+      const v = vals[t.id];
+      const w = Number(v.weight) || 0;
+      const r = Number(v.reps) || 0;
+      if (v.skip || (t.weighted && !(w > 0 && r > 0)) || (!t.weighted && !(r > 0))) {
+        if (t.weighted) {
+          const startW = Math.round(bw * t.bwPct / 2.5) * 2.5;
+          workingWeights[t.id] = { weight: startW, targetReps: t.targetReps, failCount: 0, calibrating: true };
+        } else {
+          workingWeights[t.id] = { weight: 0, targetReps: t.targetReps, failCount: 0, calibrating: true };
+        }
+      } else if (t.weighted && w > 0 && r > 0) {
+        const oneRM = estimate1RM(w, r);
+        const workW = getWorkingWeight(oneRM, t.targetReps);
+        workingWeights[t.id] = { weight: workW, targetReps: t.targetReps, failCount: 0, calibrating: false };
+        onboardingHistory.push({ date: today, time: new Date().toISOString(), exerciseId: t.id, exerciseName: t.name, categoryId: t.cat, sets: [{ weight: String(w), reps: String(r), time: '' }], xp: 0, totalReps: r, totalKg: r*w, totalSeconds: 0, distanceM: 0, prHit: false, source: 'onboarding' });
+      } else if (!t.weighted && r > 0) {
+        workingWeights[t.id] = { weight: 0, targetReps: Math.max(r - 2, 1), failCount: 0, calibrating: false };
+        onboardingHistory.push({ date: today, time: new Date().toISOString(), exerciseId: t.id, exerciseName: t.name, categoryId: t.cat, sets: [{ weight: '', reps: String(r), time: '' }], xp: 0, totalReps: r, totalKg: 0, totalSeconds: 0, distanceM: 0, prHit: false, source: 'onboarding' });
+      }
+    });
+    onSubmit({ workingWeights, onboardingHistory });
+  }
+
+  const lStyle = { fontSize:10, color:'rgba(155,125,48,0.88)', fontFamily:'Rajdhani,sans-serif', letterSpacing:'0.08em', textTransform:'uppercase', marginBottom:4, display:'block' };
+
+  return (
+    <div style={{ position:'relative', minHeight:'100dvh', display:'flex', flexDirection:'column', paddingBottom:44,
+      backgroundImage:"url('./strength_bg.png')", backgroundSize:'cover', backgroundPosition:'center center', backgroundRepeat:'no-repeat' }}>
+
+      <div style={{ position:'fixed', inset:0, background:'rgba(0,0,0,0.18)', pointerEvents:'none', zIndex:0 }}/>
+
+      <div style={{ position:'relative', zIndex:1, display:'flex', flexDirection:'column', flex:1 }}>
+        <div className="safe-top" style={{ padding:'12px 18px 0', display:'flex', alignItems:'center', justifyContent:'space-between' }}>
+          <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding:'5px 13px', fontSize:10, background:'rgba(0,0,0,0.55)' }}>◂ BACK</button>
+          <div style={{ display:'flex', gap:3 }}>
+            {[0,1,2,3].map(i => <div key={i} style={{ width:24, height:3, borderRadius:2, background:i<1?'var(--gold)':i===1?'var(--gold-2)':'rgba(190,158,110,0.22)' }}/>)}
+          </div>
+        </div>
+
+        <div style={{ textAlign:'center', padding:'18px 18px 14px' }}>
+          <h1 className="font-display" style={{ fontSize:34, fontWeight:700, color:'rgba(224,192,78,0.98)', margin:0, letterSpacing:'0.03em', textShadow:'0 2px 16px rgba(0,0,0,0.9), 0 0 40px rgba(160,110,20,0.5)' }}>Test of Strength</h1>
+        </div>
+
+        <div style={{ padding:'0 14px', display:'flex', flexDirection:'column', gap:12, flex:1 }}>
+          {TESTS.map((t, i) => {
+            const v = vals[t.id];
+            const img = (typeof EX_IMGS !== 'undefined') && EX_IMGS[t.id];
+            return (
+              <div key={t.id} className="rise" style={{ animationDelay:`${0.04+i*0.08}s`, borderRadius:14,
+                backgroundImage:"url('./card_bg.png')", backgroundSize:'cover', backgroundPosition:'center center',
+                border:'1px solid rgba(165,128,36,0.45)',
+                boxShadow:'0 6px 32px rgba(0,0,0,0.85)',
+                overflow:'hidden', position:'relative' }}>
+
+                <div style={{ display:'flex', alignItems:'stretch', minHeight:148 }}>
+                  <div style={{ width:82, flexShrink:0, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'flex-end', padding:'8px 0 8px 6px' }}>
+                    <img src={t.titleImg} alt={t.name} style={{ width:82, height:28, objectFit:'contain', objectPosition:'center bottom', marginBottom:4, display:'block' }}/>
+                    {img?.m
+                      ? <img src={img.m} alt="" style={{ width:76, height:96, objectFit:'contain', objectPosition:'bottom center', filter:'drop-shadow(0 3px 10px rgba(170,110,20,0.5)) contrast(1.08)' }}/>
+                      : <div className="font-display" style={{ fontSize:24, color:'rgba(218,178,68,0.95)', fontWeight:900 }}>{t.sigil}</div>}
+                  </div>
+
+                  <div style={{ flex:1, padding:'12px 12px 12px 8px', display:'flex', flexDirection:'column', justifyContent:'center', gap:10 }}>
+                    {!v.skip ? (
+                      <div style={{ display:'flex', alignItems:'flex-end', gap:7 }}>
+                        {t.weighted && (
+                          <div style={{ flex:1.6 }}>
+                            <span style={lStyle}>weight in kg</span>
+                            <input type="number" inputMode="decimal" value={v.weight} onChange={e=>setV(t.id,'weight',e.target.value)} placeholder="kg" min="0" step="2.5" style={{ padding:'8px 10px', fontSize:16 }}/>
+                          </div>
+                        )}
+                        <div style={{ flex:1 }}>
+                          <span style={lStyle}>reps</span>
+                          <input type="number" inputMode="numeric" value={v.reps} onChange={e=>setV(t.id,'reps',e.target.value)} placeholder={t.weighted?'1':'max'} min="1" style={{ padding:'8px 10px', fontSize:16 }}/>
+                        </div>
+                        <button type="button" onClick={()=>toggleSkip(t.id)} style={{ flexShrink:0, alignSelf:'flex-end', padding:'7px 10px', background:'rgba(18,14,5,0.92)', border:'1px solid rgba(140,108,32,0.65)', borderRadius:50, fontSize:9, color:'rgba(198,158,62,0.92)', fontFamily:'Rajdhani,sans-serif', fontWeight:700, cursor:'pointer', whiteSpace:'nowrap', marginBottom:2 }}>I Don't Know</button>
+                      </div>
+                    ) : (
+                      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', gap:8 }}>
+                        <div style={{ fontSize:11, color:'var(--text-faint)', fontStyle:'italic', fontFamily:'Rajdhani,sans-serif' }}>Calibration — bodyweight start</div>
+                        <button type="button" onClick={()=>toggleSkip(t.id)} style={{ flexShrink:0, padding:'7px 10px', background:'rgba(68,48,12,0.97)', border:'1px solid rgba(192,128,34,0.78)', borderRadius:50, fontSize:9, color:'var(--gold)', fontFamily:'Rajdhani,sans-serif', fontWeight:700, cursor:'pointer', whiteSpace:'nowrap' }}>✓ Skip</button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div style={{ padding:'22px 16px 0' }}>
+          <button type="button" onClick={handleSubmit} style={{ width:'100%', background:'none', border:'none', padding:0, cursor:'pointer', display:'block' }}>
+            <img src="./btn_continue.png" alt="Continue" style={{ width:'100%', height:'auto', display:'block' }}/>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ExerciseProgressGraph({ history, exerciseId, categoryColor }) {
+  const [win, setWin] = React.useState('30d');
+  const [tip, setTip] = React.useState(null);
+  const WINS = [{ id:'30d',label:'30D' },{ id:'3m',label:'3M' },{ id:'1y',label:'1Y' },{ id:'all',label:'ALL' }];
+  const pts = buildGraphPoints(history || [], exerciseId, win);
+  if (pts.length < 2) return (
+    <div style={{ padding: '8px 20px' }}>
+      <div className="font-display" style={{ fontSize:10, color:'var(--text-faint)', letterSpacing:'0.02em', marginBottom:6 }}>PROGRESS</div>
+      <div className="panel" style={{ padding:'16px', textAlign:'center' }}>
+        <div className="font-ui" style={{ fontSize:12, color:'var(--text-faint)', fontStyle:'italic' }}>Log more sessions to see your progress chart.</div>
+      </div>
+    </div>
+  );
+  const W=320, H=140, pl=36, pr=10, pt=10, pb=28;
+  const iw=W-pl-pr, ih=H-pt-pb;
+  const vals=pts.map(p=>p.value);
+  const minV=Math.min(...vals), maxV=Math.max(...vals), rng=maxV-minV||1;
+  const dates=pts.map(p=>new Date(p.date).getTime());
+  const minD=Math.min(...dates), maxD=Math.max(...dates), rngD=maxD-minD||1;
+  const tx=d=>pl+((new Date(d).getTime()-minD)/rngD)*iw;
+  const ty=v=>pt+(1-(v-minV)/rng)*ih;
+  const poly=pts.map(p=>`${tx(p.date).toFixed(1)},${ty(p.value).toFixed(1)}`).join(' ');
+  const clr=categoryColor||'var(--gold)';
+  return (
+    <div style={{ padding:'8px 20px' }}>
+      <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:6 }}>
+        <div className="font-display" style={{ fontSize:10, color:'var(--text-faint)', letterSpacing:'0.02em' }}>PROGRESS</div>
+        <div style={{ display:'flex', gap:3 }}>
+          {WINS.map(w=>(
+            <button key={w.id} type="button" onClick={()=>{setWin(w.id);setTip(null);}} className={win===w.id?'btn':'btn btn-iron'} style={{ padding:'3px 7px', fontSize:9 }}>{w.label}</button>
+          ))}
+        </div>
+      </div>
+      <div className="panel" style={{ padding:0, overflow:'hidden', position:'relative' }}>
+        <svg viewBox={`0 0 ${W} ${H}`} style={{ width:'100%', height:'auto', display:'block' }}>
+          {[0,0.5,1].map(f=><line key={f} x1={pl} y1={pt+f*ih} x2={pl+iw} y2={pt+f*ih} stroke="rgba(190,158,110,0.1)" strokeWidth="1"/>)}
+          {[0,0.5,1].map(f=><text key={f} x={pl-3} y={pt+f*ih+4} textAnchor="end" fontSize="9" fill="rgba(144,135,116,0.8)" fontFamily="Rajdhani">{Math.round(maxV-f*rng)}</text>)}
+          <text x={tx(pts[0].date)} y={H-5} textAnchor="start" fontSize="9" fill="rgba(144,135,116,0.8)" fontFamily="Rajdhani">{pts[0].date.slice(5).replace('-','/')}</text>
+          <text x={tx(pts[pts.length-1].date)} y={H-5} textAnchor="end" fontSize="9" fill="rgba(144,135,116,0.8)" fontFamily="Rajdhani">{pts[pts.length-1].date.slice(5).replace('-','/')}</text>
+          <polygon points={`${pl},${pt+ih} ${poly} ${tx(pts[pts.length-1].date).toFixed(1)},${pt+ih}`} fill={clr} opacity="0.08"/>
+          <polyline points={poly} fill="none" stroke={clr} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" opacity="0.85"/>
+          {pts.map((p,i)=>(
+            <circle key={i} cx={tx(p.date)} cy={ty(p.value)} r={tip?.i===i?5:3.5} fill={clr} opacity="0.9" style={{ cursor:'pointer' }}
+              onClick={()=>setTip(tip?.i===i?null:{i, date:p.date, value:p.value, cx:tx(p.date), cy:ty(p.value)})}/>
+          ))}
+          {tip&&(()=>{
+            const bx=Math.min(Math.max(tip.cx-38,pl),W-80), by=Math.max(tip.cy-42,2);
+            return <g>
+              <rect x={bx} y={by} width="78" height="34" rx="4" fill="rgba(18,14,8,0.96)" stroke="rgba(201,137,42,0.45)" strokeWidth="1"/>
+              <text x={bx+39} y={by+13} textAnchor="middle" fontSize="11" fill="#e8a93a" fontFamily="Cinzel" fontWeight="700">{tip.value} kg</text>
+              <text x={bx+39} y={by+26} textAnchor="middle" fontSize="9" fill="rgba(192,181,156,0.85)" fontFamily="Rajdhani">{tip.date}</text>
+            </g>;
+          })()}
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 function FitnessLevelScreen({ onSelect, onBack }) {
   const LEVELS = [
     { id: 'beginner',     label: 'BEGINNER',     rune: 'I',   color: 'var(--jade)',    bonus: 'Safe progressive overload', desc: 'Getting started or returning after a break.' },
@@ -2443,7 +3013,7 @@ function FitnessLevelScreen({ onSelect, onBack }) {
   ];
   return (
     <div className="container-app">
-      <StepHeader step={8} total={10} title="FITNESS LEVEL" subtitle="Your training plans will be built around this." onBack={onBack} />
+      <StepHeader trainingStep={1} title="FITNESS LEVEL" subtitle="Your training plans will be built around this." onBack={onBack} />
       <div style={{ padding: '8px 20px 40px', display: 'flex', flexDirection: 'column', gap: 14 }}>
         {LEVELS.map((l, i) => (
           <button key={l.id} type="button" className="card carved rise"
@@ -2472,7 +3042,7 @@ function DifficultyScreen({ onSelect, onBack }) {
   ];
   return (
     <div className="container-app">
-      <StepHeader step={9} total={10} title="DIFFICULTY" subtitle="Sets how demanding each session is. You can change this later." onBack={onBack} />
+      <StepHeader trainingStep={3} title="DIFFICULTY" subtitle="Sets how demanding each session is. You can change this later." onBack={onBack} />
       <div style={{ padding: '8px 20px 40px', display: 'flex', flexDirection: 'column', gap: 14 }}>
         {DIFFICULTIES.map((d, i) => (
           <button key={d.id} type="button" className="card carved rise"
@@ -2500,7 +3070,7 @@ function TrainFreqScreen({ onSelect, onBack }) {
   ];
   return (
     <div className="container-app">
-      <StepHeader step={10} total={10} title="WEEKLY SESSIONS" subtitle="How many times per week you train." onBack={onBack} />
+      <StepHeader trainingStep={4} title="WEEKLY SESSIONS" subtitle="How many times per week you train." onBack={onBack} />
       <div style={{ padding: '8px 20px 40px', display: 'flex', flexDirection: 'column', gap: 14 }}>
         {OPTIONS.map((o, i) => (
           <button key={o.id} type="button" className="card carved rise"
@@ -2645,13 +3215,18 @@ function CustomCategoryDetail({ category, onPick, onBack, onEdit }) {
   if (!category) return null;
   return (
     <div style={{ paddingBottom: 24 }}>
-      <div className="safe-top" style={{ padding: '20px 20px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding: '6px 12px', fontSize: 12 }}>◂</button>
-        <div style={{ flex: 1 }}>
-          <div className="font-display" style={{ fontSize: 20, fontWeight: 900, color: category.color, letterSpacing: '0.02em', marginTop: 2 }}>{category.name.toUpperCase()}</div>
-          <div className="font-ui" style={{ fontSize: 12, color: 'var(--text-dim)', marginTop: 2, fontStyle: 'italic' }}>Your own template · {category.exercises.length} exercises</div>
+      <div className="safe-top" style={{ padding: '16px 20px 8px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <button type="button" className="btn btn-iron" onClick={onBack} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', padding: '6px 12px', fontSize: 12 }}>◂</button>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+          <div style={{ width: 52, height: 52, borderRadius: '50%', background: `radial-gradient(circle at 35% 35%, ${category.color}44, rgba(0,0,0,0.8))`, border: `2px solid ${category.color}`, display: 'flex', alignItems: 'center', justifyContent: 'center', filter: `drop-shadow(0 0 8px ${category.color})` }}>
+            <div className="font-rune" style={{ fontSize: 22, color: category.color, fontWeight: 900, lineHeight: 1 }}>{category.icon || '⚔'}</div>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <div className="font-display" style={{ fontSize: 18, fontWeight: 900, color: category.color, letterSpacing: '0.02em', lineHeight: 1.1 }}>{category.name.toUpperCase()}</div>
+            <div className="font-ui" style={{ fontSize: 11, color: 'var(--text-dim)', marginTop: 1 }}>Your template · {category.exercises.length} exercises</div>
+          </div>
         </div>
-        <button type="button" className="btn btn-iron" onClick={onEdit} style={{ padding: '6px 12px', fontSize: 11 }}>✎ EDIT</button>
+        <button type="button" className="btn btn-iron" onClick={onEdit} style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', padding: '6px 12px', fontSize: 11 }}>✎ EDIT</button>
       </div>
       <div style={{ padding: '12px 20px', display: 'flex', flexDirection: 'column', gap: 8 }}>
         {category.exercises.length === 0 ? (
@@ -2912,6 +3487,7 @@ function HubScreen({ state, onGoto, onOpenPaywall }) {
   const [showRecap, setShowRecap] = useState(false);
   const todayStr = new Date().toISOString().slice(0, 10);
   const hasToday = (state.history || []).some(h => h.date === todayStr);
+  const todayWorkout = getTodayWorkout(state.trainingProfile, state);
   return (
     <div style={{ padding: '0 0 24px', position: 'relative' }}>
       <div style={{ position: 'relative', zIndex: 2 }}>
@@ -3002,6 +3578,36 @@ function HubScreen({ state, onGoto, onOpenPaywall }) {
         </div>
       )}
       {showRecap && <WorkoutSummaryModal state={state} onClose={() => setShowRecap(false)} />}
+      {todayWorkout && (
+        <div style={{ padding: '12px 20px 0' }}>
+          <button type="button" onClick={() => onGoto('train')} style={{ width: '100%', background: 'transparent', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left' }}>
+            <div className="card carved">
+              <div style={{ padding: '12px 16px 10px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <div className="font-display" style={{ fontSize: 10, color: 'var(--gold)', letterSpacing: '0.08em', fontWeight: 900 }}>⚡ TODAY'S WORKOUT</div>
+                <div className="font-ui" style={{ fontSize: 10, color: 'var(--text-faint)' }}>{['MON','TUE','WED','THU','FRI','SAT','SUN'][(new Date().getDay()+6)%7]}</div>
+              </div>
+              {todayWorkout.map(function(item) {
+                return (
+                  <div key={item.catId} style={{ padding: '8px 16px 6px', borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
+                    <div className="font-saga" style={{ fontSize: 18, color: item.color, letterSpacing: '0.04em', marginBottom: 6, lineHeight: 1 }}>{item.name}</div>
+                    {item.exercises.map(function(ex, i) {
+                      return (
+                        <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '4px 0', borderBottom: i < item.exercises.length - 1 ? '1px solid rgba(255,255,255,0.03)' : 'none' }}>
+                          <span className="font-ui" style={{ fontSize: 12, color: 'var(--text)' }}>{ex.n}</span>
+                          <span className="font-display" style={{ fontSize: 11, color: 'var(--text-dim)', fontWeight: 700 }}>{ex.s} × {ex.r}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+              <div style={{ padding: '8px 16px', display: 'flex', justifyContent: 'flex-end' }}>
+                <span className="font-display" style={{ fontSize: 11, color: 'var(--gold)', opacity: 0.7, fontWeight: 700 }}>TAP TO START ›</span>
+              </div>
+            </div>
+          </button>
+        </div>
+      )}
       <div style={{ padding: '16px 20px 0' }}>
         <div className="panel" style={{ padding: '12px 8px', display: 'flex', justifyContent: 'space-around', textAlign: 'center', backgroundImage: 'var(--statbar-bg-img)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
           <div><div className="font-ui" style={{ fontSize: 11, color: 'var(--text-faint)' }}>Workouts</div><div style={{ fontSize: 20, fontWeight: 700, color: 'var(--gold)' }}>{state.workoutsCompleted || 0}</div></div>
@@ -3322,18 +3928,15 @@ const WORKOUT_DB = {
   biceps: {
     beginner:     [
       {id:'barbellcurl',  cat:'biceps',    n:'Barbell Curl',          s:3, r:'10–12', rest:'60s'},
-      {id:'db_hammer',    cat:'biceps',    n:'Hammer Curl',           s:3, r:'12',         rest:'60s'},
     ],
     intermediate: [
       {id:'barbellcurl',  cat:'biceps',    n:'Barbell Curl',          s:4, r:'8–10',  rest:'60s'},
       {id:'db_curl',      cat:'biceps',    n:'Dumbbell Curl',         s:3, r:'10–12', rest:'60s'},
-      {id:'db_hammer',    cat:'biceps',    n:'Hammer Curl',           s:3, r:'12',         rest:'60s'},
     ],
     advanced:     [
       {id:'barbellcurl',  cat:'biceps',    n:'Barbell Curl',          s:4, r:'6–8',   rest:'60s'},
       {id:'preachercurl', cat:'biceps',    n:'Preacher Curl',         s:3, r:'8–10',  rest:'60s'},
       {id:'db_curl',      cat:'biceps',    n:'Dumbbell Curl',         s:3, r:'10–12', rest:'60s'},
-      {id:'db_hammer',    cat:'biceps',    n:'Hammer Curl',           s:3, r:'12',         rest:'60s'},
       {id:'cablecurl',    cat:'biceps',    n:'Cable Curl',            s:3, r:'12–15', rest:'60s'},
     ],
   },
@@ -3597,7 +4200,7 @@ function TrainScreen({ state, onPickCategory, onPickExercise, onPickCustomCatego
             searchResults.map(({ exercise, category }, i) => (
               <button key={exercise.id} type="button" className="card rise" style={{ animationDelay: `${0.02 + Math.min(i, 10)*0.03}s`, padding: '12px 14px', borderLeft: `3px solid ${category.color}` }} onClick={() => onPickExercise(exercise.id, category.id)}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div className="font-display two-step-anim" style={{ fontSize: 18, color: category.color, width: 30, textAlign: 'center', fontWeight: 900 }}>{exercise.sigil}</div>
+                  {EX_IMGS[exercise.id] ? <img src={EX_IMGS[exercise.id].m || EX_IMGS[exercise.id].f} alt={exercise.name} style={{ width: 44, height: 44, borderRadius: 8, objectFit: 'cover', objectPosition: 'top', flexShrink: 0, border: `1px solid ${category.color}44` }} /> : <div className="font-display two-step-anim" style={{ fontSize: 18, color: category.color, width: 36, textAlign: 'center', fontWeight: 900 }}>{exercise.sigil}</div>}
                   <div style={{ flex: 1, textAlign: 'left' }}>
                     <div className="font-display" style={{ fontSize: 14, color: 'var(--text)', letterSpacing: '0.02em', fontWeight: 700 }}>{exercise.name}</div>
                     <div className="font-ui" style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 2 }}>{category.name.charAt(0) + category.name.slice(1).toLowerCase()}</div>
@@ -3647,7 +4250,7 @@ function TrainScreen({ state, onPickCategory, onPickExercise, onPickCustomCatego
               style={{ animationDelay: `${0.03 + i*0.04}s`, position: 'relative', borderRadius: 12, overflow: 'hidden', border: `2px solid ${c.color}`, padding: 0, cursor: 'pointer', background: '#0b0c0d', boxShadow: `0 0 18px ${c.color}44`, display: 'flex', flexDirection: 'column' }}>
               <div style={{ position: 'relative', height: 115, overflow: 'hidden', flexShrink: 0 }}>
                 <img src={state.gender === 'female' ? (CAT_IMGS[c.id]?.f || CAT_IMGS[c.id]?.m) : CAT_IMGS[c.id]?.m} alt={c.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.55) 100%)' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 15%, rgba(0,0,0,0.85) 70%, rgba(0,0,0,1) 100%)' }} />
                 {recommended && <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(190,44,36,0.85)', color: '#fff', fontSize: 9, fontWeight: 700, padding: '2px 6px', borderRadius: 4, letterSpacing: '0.05em' }}>★ REC</div>}
               </div>
               <div style={{ padding: '6px 12px 10px', background: 'rgba(8,6,4,0.97)', borderTop: `1px solid ${c.color}33` }}>
@@ -3693,24 +4296,30 @@ function ExerciseList({ categoryId, prevCatId, nextCatId, onNavigate, onPick, on
   function handleTouchCancel() { touchStartX.current = null; setSwiping(false); setDragX(0); }
   return (
     <div style={{ transform: dragX !== 0 ? `translateX(${dragX}px)` : undefined, transition: swiping ? 'none' : 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)' }} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} onTouchCancel={handleTouchCancel}>
-      <div className="safe-top" style={{ padding: '20px 20px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding: '6px 12px', fontSize: 12 }}>◂</button>
-        <div style={{ flex: 1 }}>
-          <div className="font-display" style={{ fontSize: 22, fontWeight: 900, color: cat.color, letterSpacing: '0.02em', marginTop: 2, lineHeight: 1.1 }}>{cat.name}</div>
-          <div className="font-ui" style={{ fontSize: 12, color: 'var(--text-dim)', marginTop: 2, fontStyle: 'italic' }}>{cat.sub}</div>
+      <div className="safe-top" style={{ padding: '16px 20px 8px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <button type="button" className="btn btn-iron" onClick={onBack} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', padding: '6px 12px', fontSize: 12 }}>◂</button>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+          {CAT_IMGS[cat.id]?.m ? <img src={CAT_IMGS[cat.id].m} alt={cat.name} style={{ width: 52, height: 52, borderRadius: '50%', objectFit: 'cover', border: `2px solid ${cat.color}`, filter: `drop-shadow(0 0 8px ${cat.color})` }} /> : <div className="font-rune" style={{ fontSize: 30, color: cat.color }}>{cat.rune}</div>}
+          <div style={{ textAlign: 'center' }}>
+            <div className="font-display" style={{ fontSize: 18, fontWeight: 900, color: cat.color, letterSpacing: '0.02em', lineHeight: 1.1 }}>{cat.name}</div>
+            <div className="font-ui" style={{ fontSize: 11, color: 'var(--text-dim)', marginTop: 1 }}>{cat.sub}</div>
+          </div>
         </div>
-        {CAT_IMGS[cat.id] ? <img src={CAT_IMGS[cat.id]} alt={cat.name} style={{ width: 48, height: 48, borderRadius: '50%', objectFit: 'cover', border: `2px solid ${cat.color}`, filter: `drop-shadow(0 0 6px ${cat.color})` }} /> : <div className="font-rune" style={{ fontSize: 30, color: cat.color }}>{cat.rune}</div>}
       </div>
       {(prevCat || nextCat) && (
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 20px 4px' }}>
           {prevCat ? (
-            <button type="button" onClick={() => onNavigate(prevCatId)} style={{ background: 'transparent', border: 'none', color: 'var(--text-faint)', fontSize: 11, cursor: 'pointer', padding: '4px 0', display: 'flex', alignItems: 'center', gap: 4 }}>
-              <span>◂</span><span className="font-display" style={{ fontWeight: 700, letterSpacing: '0.02em' }}>{prevCat.name}</span>
+            <button type="button" onClick={() => onNavigate(prevCatId)} style={{ background: 'transparent', border: 'none', color: 'var(--text-faint)', fontSize: 11, cursor: 'pointer', padding: '4px 0', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span>◂</span>
+              {CAT_IMGS[prevCatId]?.m && <img src={CAT_IMGS[prevCatId].m} alt={prevCat.name} style={{ width: 28, height: 28, borderRadius: '50%', objectFit: 'cover', border: `1px solid ${prevCat.color}88` }} />}
+              <span className="font-display" style={{ fontWeight: 700, letterSpacing: '0.02em' }}>{prevCat.name}</span>
             </button>
           ) : <div />}
           {nextCat ? (
-            <button type="button" onClick={() => onNavigate(nextCatId)} style={{ background: 'transparent', border: 'none', color: 'var(--text-faint)', fontSize: 11, cursor: 'pointer', padding: '4px 0', display: 'flex', alignItems: 'center', gap: 4 }}>
-              <span className="font-display" style={{ fontWeight: 700, letterSpacing: '0.02em' }}>{nextCat.name}</span><span>▸</span>
+            <button type="button" onClick={() => onNavigate(nextCatId)} style={{ background: 'transparent', border: 'none', color: 'var(--text-faint)', fontSize: 11, cursor: 'pointer', padding: '4px 0', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span className="font-display" style={{ fontWeight: 700, letterSpacing: '0.02em' }}>{nextCat.name}</span>
+              {CAT_IMGS[nextCatId]?.m && <img src={CAT_IMGS[nextCatId].m} alt={nextCat.name} style={{ width: 28, height: 28, borderRadius: '50%', objectFit: 'cover', border: `1px solid ${nextCat.color}88` }} />}
+              <span>▸</span>
             </button>
           ) : <div />}
         </div>
@@ -3746,11 +4355,14 @@ function ExerciseList({ categoryId, prevCatId, nextCatId, onNavigate, onPick, on
   );
 }
 
-function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave }) {
+function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave, onNavigate, history, workingWeight }) {
   const info = getExerciseById(exerciseId);
   if (!info) return null;
   const { exercise, category } = info;
   const isTimed = !!exercise.timed;
+  const _exIdx = category.exercises.findIndex(e => e.id === exerciseId);
+  const prevExercise = _exIdx > 0 ? category.exercises[_exIdx - 1] : null;
+  const nextExercise = _exIdx >= 0 && _exIdx < category.exercises.length - 1 ? category.exercises[_exIdx + 1] : null;
   const [showFemale, setShowFemale] = React.useState(false);
   const [sets, setSets] = useState([{ reps: '', weight: '', time: '' }]);
   const [timerRunning, setTimerRunning] = useState(false);
@@ -3826,9 +4438,28 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave })
   const prLine = (() => { if (!currentPR) return null; return currentPR.detail; })();
   return (
     <div style={{ paddingBottom: 24 }}>
-      <div className="safe-top" style={{ padding: '20px 20px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <button type="button" className="btn btn-iron" onClick={handleCancel} style={{ padding: '6px 12px', fontSize: 12 }}>◂</button>
-        <div style={{ flex: 1 }}><div className="font-display" style={{ fontSize: 18, fontWeight: 900, color: category.color, letterSpacing: '0.02em', marginTop: 2 }}>{exercise.name.toUpperCase()}</div></div>
+      <div className="safe-top" style={{ padding: '16px 20px 8px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <button type="button" className="btn btn-iron" onClick={handleCancel} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', padding: '6px 12px', fontSize: 12 }}>◂</button>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
+          {CAT_IMGS[category.id]?.m && <img src={CAT_IMGS[category.id].m} alt={category.name} style={{ width: 44, height: 44, borderRadius: '50%', objectFit: 'cover', border: `2px solid ${category.color}`, filter: `drop-shadow(0 0 6px ${category.color})` }} />}
+          <div className="font-display" style={{ fontSize: 17, fontWeight: 900, color: category.color, letterSpacing: '0.02em', lineHeight: 1.1 }}>{exercise.name.toUpperCase()}</div>
+        </div>
+        {prevExercise && onNavigate && (
+          <button type="button" onClick={() => onNavigate(prevExercise.id)} style={{ position: 'absolute', left: 70, top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, padding: 4 }}>
+            {EX_IMGS[prevExercise.id]?.m
+              ? <img src={EX_IMGS[prevExercise.id].m} alt={prevExercise.name} style={{ width: 36, height: 36, borderRadius: 8, objectFit: 'cover', objectPosition: 'top', border: `1px solid ${category.color}55`, opacity: 0.85 }} />
+              : <div className="font-display" style={{ fontSize: 16, color: category.color, opacity: 0.7 }}>{prevExercise.sigil}</div>}
+            <div className="font-ui" style={{ fontSize: 9, color: 'var(--text-faint)', letterSpacing: '0.04em', maxWidth: 52, textAlign: 'center', lineHeight: 1.2 }}>◂ {prevExercise.name.toUpperCase()}</div>
+          </button>
+        )}
+        {nextExercise && onNavigate && (
+          <button type="button" onClick={() => onNavigate(nextExercise.id)} style={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, padding: 4 }}>
+            {EX_IMGS[nextExercise.id]?.m
+              ? <img src={EX_IMGS[nextExercise.id].m} alt={nextExercise.name} style={{ width: 36, height: 36, borderRadius: 8, objectFit: 'cover', objectPosition: 'top', border: `1px solid ${category.color}55`, opacity: 0.85 }} />
+              : <div className="font-display" style={{ fontSize: 16, color: category.color, opacity: 0.7 }}>{nextExercise.sigil}</div>}
+            <div className="font-ui" style={{ fontSize: 9, color: 'var(--text-faint)', letterSpacing: '0.04em', maxWidth: 52, textAlign: 'center', lineHeight: 1.2 }}>{nextExercise.name.toUpperCase()} ▸</div>
+          </button>
+        )}
       </div>
       {prLine && (
         <div style={{ padding: '0 20px 8px' }}>
@@ -3851,6 +4482,53 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave })
           )}
         </div>
       )}
+      {workingWeight && !workingWeight.calibrating && (workingWeight.targetReps || workingWeight.targetTime) && (
+        <div style={{ padding: '8px 20px 4px' }}>
+          <div className="panel carved" style={{ padding: '14px 16px' }}>
+            <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 10 }}>TODAY'S PRESCRIPTION</div>
+            {workingWeight.targetTime ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div className="font-display" style={{ fontSize: 28, fontWeight: 900, color: 'var(--gold)' }}>{formatTimePR(workingWeight.targetTime)}</div>
+                <div className="font-display" style={{ fontSize: 14, color: 'var(--text-dim)' }}>target hold</div>
+              </div>
+            ) : exercise.weighted && workingWeight.weight > 0 ? (
+              <>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+                  <div className="font-display" style={{ fontSize: 28, fontWeight: 900, color: 'var(--gold)' }}>{workingWeight.weight} kg</div>
+                  <div className="font-display" style={{ fontSize: 14, color: 'var(--text-dim)' }}>× {workingWeight.targetReps || 5} reps</div>
+                </div>
+                <div style={{ display: 'flex', gap: 6 }}>
+                  {getWarmupRamp(workingWeight.weight).map((w, i) => (
+                    <div key={i} className="panel" style={{ flex: 1, padding: '6px 4px', textAlign: 'center', background: 'rgba(0,0,0,0.4)' }}>
+                      <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', marginBottom: 2 }}>WARMUP {i+1}</div>
+                      <div className="font-display" style={{ fontSize: 14, color: 'var(--text)', fontWeight: 700 }}>{w.weight}kg</div>
+                      <div className="font-ui" style={{ fontSize: 10, color: 'var(--text-faint)' }}>×{w.reps}</div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <div className="font-display" style={{ fontSize: 28, fontWeight: 900, color: 'var(--gold)' }}>{workingWeight.targetReps}</div>
+                <div className="font-display" style={{ fontSize: 14, color: 'var(--text-dim)' }}>reps target</div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+      {workingWeight && workingWeight.calibrating && (
+        <div style={{ padding: '8px 20px 4px' }}>
+          <div className="panel carved" style={{ padding: '14px 16px' }}>
+            <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 6 }}>CALIBRATION SESSION</div>
+            <div className="font-ui" style={{ fontSize: 12, color: 'var(--text-dim)', fontStyle: 'italic', lineHeight: 1.5 }}>
+              {exercise.weighted
+                ? `Start with ${workingWeight.weight} kg and do as many reps as possible (AMRAP). We'll compute your working weight from this.`
+                : 'Do as many reps as you can. We\'ll calibrate your target reps from this session.'}
+            </div>
+          </div>
+        </div>
+      )}
+      <ExerciseProgressGraph history={history} exerciseId={exerciseId} categoryColor={category.color} />
       <div style={{ padding: '8px 20px' }}>
         <div className="panel carved" style={{ padding: '16px', borderColor: timerRunning ? 'var(--blood)' : 'var(--line)' }}>
           <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 8 }}>STOPWATCH</div>
@@ -3867,25 +4545,46 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave })
           </div>
         </div>
       </div>
-      <div style={{ padding: '8px 20px 12px' }}>
+      <div style={{ padding: '8px 20px 12px', background: '#000' }}>
         <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 8 }}>SETS · {sets.length}</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {sets.map((set, idx) => (
-            <div key={idx} className="panel" style={{ padding: '12px', backgroundImage: 'var(--tasks-panel-bg-img)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                <div className="font-display" style={{ fontSize: 13, color: 'var(--gold)', letterSpacing: '0.02em', fontWeight: 900 }}>SET {idx + 1}</div>
+            <div key={idx} style={{ background: '#000' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                <div className="font-display" style={{ fontSize: 13, color: 'var(--gold)', letterSpacing: '0.08em', fontWeight: 900 }}>SET {idx + 1}</div>
                 {sets.length > 1 && (<button type="button" className="btn btn-iron" onClick={() => removeSet(idx)} style={{ padding: '4px 8px', fontSize: 10 }}>✕</button>)}
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: isTimed ? '1fr 1fr' : exercise.weighted ? '1fr 1fr 1fr' : '1fr 1fr', gap: 8 }}>
-                {!isTimed && (<div><div className="font-display" style={{ fontSize: 11, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 4, textAlign: 'center', fontWeight: 700 }}>REPS</div><input type="number" inputMode="numeric" value={set.reps} onChange={(e) => updateSet(idx, 'reps', e.target.value)} placeholder="0" min="0" /></div>)}
-                {exercise.weighted && (<div><div className="font-display" style={{ fontSize: 11, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 4, textAlign: 'center', fontWeight: 700 }}>WEIGHT (KG)</div><input type="number" inputMode="decimal" value={set.weight} onChange={(e) => updateSet(idx, 'weight', e.target.value)} placeholder="0" min="0" step="0.5" /></div>)}
-                <div><div className="font-display" style={{ fontSize: 11, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 4, textAlign: 'center', fontWeight: 700 }}>TIME (S){isTimed ? ' *' : ''}</div><input type="number" inputMode="decimal" value={set.time} onChange={(e) => updateSet(idx, 'time', e.target.value)} placeholder="0" min="0" step="0.1" /></div>
+              <div style={{ display: 'flex', alignItems: 'stretch', overflow: 'visible' }}>
+                {!isTimed && (<>
+                  <div style={{ flex: 1, background: 'linear-gradient(160deg,#1c1a12 0%,#0f0d07 100%)', border: '1px solid rgba(201,137,42,0.5)', borderRadius: 10, padding: '14px 8px', display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center' }}>
+                    <div className="font-display" style={{ fontSize: 11, color: 'rgba(201,137,42,0.9)', letterSpacing: '0.14em', textAlign: 'center', fontWeight: 700 }}>REPS</div>
+                    <input type="number" inputMode="numeric" value={set.reps} onChange={(e) => updateSet(idx, 'reps', e.target.value)} placeholder="0" min="0" style={{ fontSize: 36, color: 'var(--gold)', fontWeight: 900, padding: '10px 0', border: '1px solid rgba(201,137,42,0.3)', borderRadius: 8, background: 'rgba(0,0,0,0.9)', width: '100%', boxShadow: 'inset 0 0 16px rgba(0,0,0,0.8)' }} />
+                  </div>
+                  <div style={{ width: 44, flexShrink: 0, margin: '-16px 0', alignSelf: 'stretch', position: 'relative', background: 'radial-gradient(ellipse at 40% 50%, #2e2610 0%, #181308 55%, #060502 100%)', borderLeft: '1.5px solid rgba(201,137,42,0.8)', borderRight: '1.5px solid rgba(201,137,42,0.8)', boxShadow: 'inset 6px 0 14px rgba(0,0,0,0.95), inset -6px 0 14px rgba(0,0,0,0.95)' }}>
+                    <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(158deg, transparent 0px, transparent 18px, rgba(201,137,42,0.13) 18px, rgba(201,137,42,0.13) 19px, transparent 19px, transparent 36px, rgba(201,137,42,0.07) 36px, rgba(201,137,42,0.07) 37px)', pointerEvents: 'none' }} />
+                  </div>
+                </>)}
+                {exercise.weighted && (<>
+                  <div style={{ flex: 1, background: 'linear-gradient(160deg,#1c1a12 0%,#0f0d07 100%)', border: '1px solid rgba(201,137,42,0.5)', borderRadius: 10, padding: '14px 8px', display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center' }}>
+                    <div className="font-display" style={{ fontSize: 11, color: 'rgba(201,137,42,0.9)', letterSpacing: '0.14em', textAlign: 'center', fontWeight: 700 }}>WEIGHT (KG)</div>
+                    <input type="number" inputMode="decimal" value={set.weight} onChange={(e) => updateSet(idx, 'weight', e.target.value)} placeholder="0" min="0" step="0.5" style={{ fontSize: 36, color: 'var(--gold)', fontWeight: 900, padding: '10px 0', border: '1px solid rgba(201,137,42,0.3)', borderRadius: 8, background: 'rgba(0,0,0,0.9)', width: '100%', boxShadow: 'inset 0 0 16px rgba(0,0,0,0.8)' }} />
+                  </div>
+                  <div style={{ width: 44, flexShrink: 0, margin: '-16px 0', alignSelf: 'stretch', position: 'relative', background: 'radial-gradient(ellipse at 40% 50%, #2e2610 0%, #181308 55%, #060502 100%)', borderLeft: '1.5px solid rgba(201,137,42,0.8)', borderRight: '1.5px solid rgba(201,137,42,0.8)', boxShadow: 'inset 6px 0 14px rgba(0,0,0,0.95), inset -6px 0 14px rgba(0,0,0,0.95)' }}>
+                    <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(158deg, transparent 0px, transparent 18px, rgba(201,137,42,0.13) 18px, rgba(201,137,42,0.13) 19px, transparent 19px, transparent 36px, rgba(201,137,42,0.07) 36px, rgba(201,137,42,0.07) 37px)', pointerEvents: 'none' }} />
+                  </div>
+                </>)}
+                <div style={{ flex: 1, background: 'linear-gradient(160deg,#1c1a12 0%,#0f0d07 100%)', border: '1px solid rgba(201,137,42,0.5)', borderRadius: 10, padding: '14px 8px', display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center' }}>
+                  <div className="font-display" style={{ fontSize: 11, color: 'rgba(201,137,42,0.9)', letterSpacing: '0.14em', textAlign: 'center', fontWeight: 700 }}>TIME (S){isTimed ? ' *' : ''}</div>
+                  <input type="number" inputMode="decimal" value={set.time} onChange={(e) => updateSet(idx, 'time', e.target.value)} placeholder="0" min="0" step="0.1" style={{ fontSize: 36, color: 'var(--gold)', fontWeight: 900, padding: '10px 0', border: '1px solid rgba(201,137,42,0.3)', borderRadius: 8, background: 'rgba(0,0,0,0.9)', width: '100%', boxShadow: 'inset 0 0 16px rgba(0,0,0,0.8)' }} />
+                </div>
               </div>
               {!timerRunning && (<button type="button" className="btn btn-iron" onClick={() => startTimerFor(idx)} style={{ marginTop: 8, padding: '6px 10px', fontSize: 11, width: '100%' }}>⌛ STOPWATCH → SET {idx + 1}</button>)}
             </div>
           ))}
         </div>
-        <button type="button" className="btn btn-iron" onClick={addSet} style={{ width: '100%', marginTop: 10, padding: '10px', fontSize: 12 }}>+ ADD SET</button>
+        <div style={{ marginTop: 24, boxShadow: '0 0 28px rgba(201,137,42,0.5), 0 0 55px rgba(201,137,42,0.22), 0 0 90px rgba(201,137,42,0.08)', borderRadius: 4 }}>
+          <button type="button" onClick={addSet} style={{ display: 'block', width: '100%', padding: '22px 20px', fontSize: 22, letterSpacing: '0.18em', fontWeight: 900, color: 'rgba(215,165,55,0.95)', background: 'linear-gradient(180deg,#1c1810 0%,#0d0a05 100%)', border: '2px solid rgba(201,137,42,0.85)', borderRadius: 4, clipPath: 'polygon(18px 0%, calc(100% - 18px) 0%, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0% calc(100% - 18px), 0% 18px)', cursor: 'pointer', fontFamily: 'inherit' }}>LOG SET</button>
+        </div>
       </div>
       <div style={{ padding: '12px 20px 0' }}>
         <button type="button" onClick={() => setMarkAsPR(p => !p)} className={markAsPR ? 'btn' : 'btn btn-iron'} style={{ width: '100%', padding: '12px', fontSize: 12, letterSpacing: '0.02em' }}>{markAsPR ? '★ MARKED AS PR' : '☆ MARK AS NEW PR'}</button>
@@ -4595,6 +5294,7 @@ function ProfileScreen({ state, onChangeClass, onChangeGoal, onGotoTrain, onLogW
           </div>
           <div className="panel" style={{ padding: 16, borderColor: 'var(--blood-2)' }}>
             <div className="font-display" style={{ fontSize: 10, color: 'var(--blood-2)', letterSpacing: '0.02em', marginBottom: 8, fontWeight: 700 }}>DANGER ZONE</div>
+            <button type="button" className="btn btn-iron" onClick={async () => { await window._fbAuth.signOut(); window.location.reload(); }} style={{ width: '100%', marginBottom: 8 }}>→ SIGN OUT</button>
             {!confirmReset ? (
               <button type="button" className="btn btn-blood" onClick={() => setConfirmReset(true)} style={{ width: '100%' }}>↺ RESET CHARACTER</button>
             ) : (
@@ -4681,7 +5381,7 @@ function WallBreakIntro({ state, onDone }) {
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 200, background: '#0b0c0d', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: phase < 1 ? 1 : 0, transition: 'opacity 0.7s ease-out', pointerEvents: phase < 1 ? 'auto' : 'none' }}>
       <div style={{ textAlign: 'center', padding: 24 }}>
-        <div className="rise" style={{ animationDelay: '0.05s' }}><div style={{ width: 56, height: 56, borderRadius: 14, background: 'linear-gradient(135deg, #9aa1a8, #2c3034)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}><div className="font-rune" style={{ fontSize: 30, color: '#161210', fontWeight: 900 }}>Λ</div></div></div>
+        <div className="rise" style={{ animationDelay: '0.05s' }}><img src="imgs/logo.png" alt="SPARTA" style={{ width: 96, height: 96, borderRadius: 22, objectFit: 'cover', boxShadow: '0 12px 36px rgba(0,0,0,0.6)' }} /></div>
         <div className="rise" style={{ animationDelay: '0.2s', marginTop: 20 }}>
           <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--bone)', letterSpacing: '-0.01em' }}>Welcome, {(state.name || 'Spartan').toUpperCase()}</div>
           <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', marginTop: 4 }}>{rank.label} · Lv {state.level || 1}</div>
@@ -4700,16 +5400,16 @@ async function shareLevelCard({ name, level, rankLabel, accent }) {
   ctx.fillStyle = grad; ctx.fillRect(0, 0, 1080, 1080);
   ctx.textAlign = 'center';
   ctx.fillStyle = accent || '#c9892a';
-  ctx.font = '700 38px Inter, sans-serif';
+  ctx.font = '700 38px Rajdhani, sans-serif';
   ctx.fillText('PANTHEON', 540, 220);
   ctx.font = '900 64px Cinzel, serif';
   ctx.fillText((name || 'SPARTAN').toUpperCase(), 540, 480);
   ctx.font = '900 220px Cinzel, serif';
   ctx.fillText(`Lv.${level}`, 540, 720);
-  ctx.font = '700 34px Inter, sans-serif';
+  ctx.font = '700 34px Rajdhani, sans-serif';
   ctx.fillStyle = '#f2eadc';
   ctx.fillText(rankLabel || '', 540, 800);
-  ctx.font = 'italic 28px Inter, sans-serif';
+  ctx.font = 'italic 28px Rajdhani, sans-serif';
   ctx.fillStyle = '#c0b59c';
   ctx.fillText('Training you remember.', 540, 940);
 

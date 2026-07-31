@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Inter:wght@400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Rajdhani:wght@400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 <script src="react.min.js"></script>
 <script src="react-dom.min.js"></script>
 <script src="babel.min.js"></script>
@@ -102,7 +102,8 @@
     margin: 0; padding: 0;
     background-color: var(--bg);
     color: var(--text);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 500;
     overflow-x: hidden;
     min-height: 100vh;
     min-height: 100dvh;
@@ -280,8 +281,8 @@
     .ambient-bg::before, .ambient-bg::after, .embers span, .rays-layer, .fog-layer, .lightning-flash, .dust-particles span { animation: none; }
   }
   .font-display { font-family: 'Cinzel', serif; letter-spacing: 0.02em; font-weight: 700; }
-  .font-ui      { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
-  .font-rune    { font-family: 'Cinzel', 'Inter', serif; }
+  .font-ui      { font-family: 'Rajdhani', sans-serif; font-weight: 500; }
+  .font-rune    { font-family: 'Cinzel', serif; }
   .font-saga    { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; letter-spacing: 0.02em; }
   .carved { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; }
   .carved-blood { border-color: rgba(184, 38, 28, 0.35); }
@@ -326,7 +327,7 @@
   button { font-family: inherit; touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none; outline: none; }
   img { image-rendering: -webkit-optimize-contrast; }
   .btn {
-    font-family: 'Inter', -apple-system, sans-serif; font-weight: 600; letter-spacing: 0.01em; padding: 12px 22px;
+    font-family: 'Rajdhani', sans-serif; font-weight: 600; letter-spacing: 0.06em; padding: 12px 22px;
     background: linear-gradient(rgba(0,0,0,0.42), rgba(0,0,0,0.60)), var(--btn-bg-img) center/cover no-repeat; border: 1px solid rgba(201, 137, 42, 0.45); border-radius: 8px;
     color: var(--gold-2); cursor: pointer; position: relative; font-size: 14px;
     min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center;
@@ -368,7 +369,7 @@
   .nav-btn {
     flex: 1; background: transparent; border: none; color: var(--text-faint); padding: 14px 4px 12px; cursor: pointer;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    font-family: 'Inter', -apple-system, sans-serif; font-weight: 600; font-size: 12px; letter-spacing: 0.01em;
+    font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.04em;
     transition: color 0.18s; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
   }
   .nav-btn.active { color: var(--gold-2); }
@@ -379,7 +380,7 @@
   .toast {
     position: fixed; top: calc(20px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); z-index: 100;
     padding: 12px 24px; background: rgba(10, 13, 18, 0.96); border: 1px solid var(--gold); color: var(--gold);
-    font-family: 'Cinzel', serif; font-weight: 700; font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase;
+    font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase;
     box-shadow: 0 0 28px rgba(201, 137, 42, 0.55); animation: rise 0.4s ease-out; max-width: 90vw; text-align: center;
   }
   .toast.success { color: var(--moss); border-color: var(--moss); box-shadow: 0 0 28px rgba(90, 128, 80, 0.6); }
@@ -957,33 +958,33 @@ const CAT_IMGS = {
 };
 const EX_IMGS = {
   bench:        { m: 'imgs/img60.jpg', f: 'imgs/img61.jpg' },
-  deadlift:     { m: 'imgs/img62.jpg', f: 'imgs/img63.jpg' },
-  ohp:          { m: 'imgs/img64.jpg', f: 'imgs/img65.jpg' },
+  deadlift:     { m: 'imgs/ex_deadlift_m.png', f: 'imgs/img63.jpg' },
+  ohp:          { m: 'imgs/ex_ohp_m.png', f: 'imgs/img65.jpg' },
   frontsquat:   { m: 'imgs/img66.jpg', f: 'imgs/img67.jpg' },
-  pushpress:    { m: 'imgs/img68.jpg', f: 'imgs/img69.jpg' },
-  barbellrow:   { m: 'imgs/img70.jpg', f: 'imgs/img71.jpg' },
+  pushpress:    { m: 'imgs/ex_pushpress_m.png', f: 'imgs/img69.jpg' },
+  barbellrow:   { m: 'imgs/ex_barbellrow_m.png', f: 'imgs/img71.jpg' },
   db_lunge:     { m: 'imgs/img72.jpg' },
   squat:        { f: 'imgs/img73.jpg' },
   sumodeadlift: { m: 'imgs/img74.jpg', f: 'imgs/img75.jpg' },
   inclinebench: { m: 'imgs/img76.jpg', f: 'imgs/img77.jpg' },
-  barbellrdl:   { m: 'imgs/img78.jpg', f: 'imgs/img79.jpg' },
-  barbellcurl:  { m: 'imgs/img80.jpg', f: 'imgs/img81.jpg' },
+  barbellrdl:   { m: 'imgs/ex_barbellrdl_m.png', f: 'imgs/img79.jpg' },
+  barbellcurl:  { m: 'imgs/ex_barbellcurl_m.png', f: 'imgs/img81.jpg' },
   yoga_sun:     { m: 'imgs/img82.jpg' },
   wdip:      { m: 'imgs/img83.jpg' },
-  wpullup:   { m: 'imgs/img84.jpg' },  pushup:      { m: 'imgs/img85.jpg' },
+  wpullup:   { m: 'imgs/ex_wpullup_m.png' },  pushup:      { m: 'imgs/img85.jpg' },
   pistol:      { m: 'imgs/img86.jpg' },
-  pullup:   { m: 'imgs/img87.jpg' },
-  latpull:  { m: 'imgs/img88.jpg' },
-  cablerow: { m: 'imgs/img89.jpg' },
-  shoulderm: { m: 'imgs/img90.jpg' },
-  facepull: { m: 'imgs/img91.jpg' },
-  db_frontrise: { m: 'imgs/img92.jpg' },
+  pullup:   { m: 'imgs/ex_pullup_m.png' },
+  latpull:  { m: 'imgs/ex_latpull_m.png' },
+  cablerow: { m: 'imgs/ex_cablerow_m.png' },
+  shoulderm: { m: 'imgs/ex_shoulderm_m.png' },
+  facepull:   { m: 'imgs/ex_facepull_m.png' },
+  revpecdeck: { m: 'imgs/ex_revpecdeck_m.png' },
+  db_frontrise: { m: 'imgs/ex_db_frontrise_m.png' },
   hspu: { m: 'imgs/img93.jpg' },
-  db_shrug: { m: 'imgs/img94.jpg' },
-  db_arnold: { m: 'imgs/img95.jpg' },
-  db_curl: { m: 'imgs/img96.jpg' },
-  db_hammer: { m: 'imgs/img97.jpg' },
-  db_conccurl: { m: 'imgs/img98.jpg' },
+  db_shrug: { m: 'imgs/ex_db_shrug_m.png' },
+  db_arnold: { m: 'imgs/ex_db_arnold_m.png' },
+  db_curl: { m: 'imgs/ex_db_curl_m.png' },
+  db_conccurl: { m: 'imgs/ex_db_conccurl_m.png' },
   dip: { m: 'imgs/img99.jpg' },
   yoke: { m: 'imgs/img100.jpg' },
   atlas: { m: 'imgs/img101.jpg' },
@@ -993,14 +994,14 @@ const EX_IMGS = {
   sandbag: { m: 'imgs/img105.jpg' },
   legcurl: { m: 'imgs/img106.jpg' },
   legext: { m: 'imgs/img107.jpg' },
-  backext: { m: 'imgs/img108.jpg' },
+  backext: { m: 'imgs/ex_backext_m.png' },
   frontlever: { m: 'imgs/img109.jpg' },
-  db_shoulder: { m: 'imgs/img110.jpg' },
-  db_lateral: { m: 'imgs/img111.jpg' },
-  cablecurl: { m: 'imgs/img112.jpg' },
-  preachercurl: { m: 'imgs/img113.jpg' },
-  logpress: { m: 'imgs/img114.jpg' },
-  axledeadlift: { m: 'imgs/img115.jpg' },
+  db_shoulder: { m: 'imgs/ex_db_shoulder_m.png' },
+  db_lateral: { m: 'imgs/ex_db_lateral_m.png' },
+  cablecurl: { m: 'imgs/ex_cablecurl_m.png' },
+  preachercurl: { m: 'imgs/ex_preachercurl_m.png' },
+  logpress: { m: 'imgs/ex_logpress_m.png' },
+  axledeadlift: { m: 'imgs/ex_axledeadlift_m.png' },
 };
 const EXERCISE_CATEGORIES = [
   { id: 'back', name: 'BACK', sub: 'Zada', rune: 'B', color: 'var(--jade)', desc: 'The foundation of power.', statBonus: 'strength', xpType: 'weight', exercises: [
@@ -1031,7 +1032,6 @@ const EXERCISE_CATEGORIES = [
   { id: 'biceps', name: 'BICEPS', sub: 'Biceps', rune: 'Bi', color: 'var(--blue)', desc: 'The arm of the conqueror.', statBonus: 'strength', xpType: 'weight', exercises: [
     { id: 'barbellcurl',   name: 'Barbell Curl',             weighted: true,  unit: 'kg', sigil: 'BC', info: 'Standing, bar at hip level, palms up. Curl to chin keeping upper arms pinned to the sides. Lower slowly without rocking the body.' },
     { id: 'db_curl',       name: 'Dumbbell Curl',            weighted: true,  unit: 'kg', sigil: 'DC', info: 'Stand tall, dumbbells at the sides, palms forward. Curl up by bending the elbows, keep the upper arms still. Lower slowly.' },
-    { id: 'db_hammer',     name: 'Hammer Curl',              weighted: true,  unit: 'kg', sigil: 'HC', info: 'Like a curl but palms face each other the whole time. Works the brachialis and forearms. Keep the elbows pinned to the sides.' },
     { id: 'db_conccurl',   name: 'Concentration Curl',       weighted: true,  unit: 'kg', sigil: 'CC', info: 'Seated, elbow on the inner thigh. Curl the dumbbell to the shoulder, squeeze at the top, lower slowly. Maximum isolation.' },
     { id: 'cablecurl',     name: 'Cable Curl',               weighted: true,  unit: 'kg', sigil: 'CA', info: 'Cable set low. Curl to chin keeping the upper arms still. The cable keeps constant tension throughout the movement.' },
     { id: 'preachercurl',  name: 'Preacher Curl',            weighted: true,  unit: 'kg', sigil: 'PC', info: 'Upper arms on the preacher bench. Lower fully to stretch the bicep, then curl up. The bench prevents cheating.' },
@@ -2068,7 +2068,7 @@ function App() {
           const customCats = state.customCategories || [];
           const resolveCustomCat = (cc) => cc && { ...cc, exercises: (cc.exerciseIds || []).map(id => getExerciseById(id)?.exercise).filter(Boolean) };
           if (view.screen === 'logger') {
-            return <ExerciseLogger exerciseId={view.data.exerciseId} categoryId={view.data.categoryId} currentPR={state.stats?.prs?.[view.data.exerciseId]} onCancel={() => setView(view.data.returnTo || { screen: null })} onSave={(payload) => { logWorkout(payload); setView({ screen: null }); update({ hub: 'hub' }); }} />;
+            return <ExerciseLogger exerciseId={view.data.exerciseId} categoryId={view.data.categoryId} currentPR={state.stats?.prs?.[view.data.exerciseId]} onCancel={() => setView(view.data.returnTo || { screen: null })} onSave={(payload) => { logWorkout(payload); setView({ screen: null }); update({ hub: 'hub' }); }} onNavigate={(newExId) => setView({ screen: 'logger', data: { exerciseId: newExId, categoryId: view.data.categoryId, returnTo: view.data.returnTo } })} />;
           }
           if (view.screen === 'exercises') {
             const _catIds = EXERCISE_CATEGORIES.map(c => c.id);
@@ -2122,10 +2122,8 @@ function LoadingScreen() {
 function IntroScreen({ onAwaken }) {
   return (
     <div className="container-app safe-top" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', minHeight: '100dvh', padding: '40px 28px 80px', textAlign: 'center', position: 'relative' }}>
-      <div className="rise" style={{ animationDelay: '0.05s', position: 'absolute', top: '8vh', left: '50%', transform: 'translateX(-50%)' }}>
-        <div style={{ width: 56, height: 56, borderRadius: 14, background: 'linear-gradient(135deg, #9aa1a8, #2c3034)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}>
-          <div className="font-rune" style={{ fontSize: 30, color: '#161210', fontWeight: 900, lineHeight: 1 }}>Λ</div>
-        </div>
+      <div className="rise" style={{ animationDelay: '0.05s', position: 'absolute', top: '15vh', left: '50%', transform: 'translateX(-50%)' }}>
+        <img src="imgs/logo.png" alt="SPARTA" style={{ width: 96, height: 96, borderRadius: 22, objectFit: 'cover', boxShadow: '0 12px 36px rgba(0,0,0,0.6)' }} />
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24, width: '100%' }}>
         <div className="rise" style={{ animationDelay: '0.15s' }}>
@@ -2645,13 +2643,18 @@ function CustomCategoryDetail({ category, onPick, onBack, onEdit }) {
   if (!category) return null;
   return (
     <div style={{ paddingBottom: 24 }}>
-      <div className="safe-top" style={{ padding: '20px 20px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding: '6px 12px', fontSize: 12 }}>◂</button>
-        <div style={{ flex: 1 }}>
-          <div className="font-display" style={{ fontSize: 20, fontWeight: 900, color: category.color, letterSpacing: '0.02em', marginTop: 2 }}>{category.name.toUpperCase()}</div>
-          <div className="font-ui" style={{ fontSize: 12, color: 'var(--text-dim)', marginTop: 2, fontStyle: 'italic' }}>Your own template · {category.exercises.length} exercises</div>
+      <div className="safe-top" style={{ padding: '16px 20px 8px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <button type="button" className="btn btn-iron" onClick={onBack} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', padding: '6px 12px', fontSize: 12 }}>◂</button>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+          <div style={{ width: 52, height: 52, borderRadius: '50%', background: `radial-gradient(circle at 35% 35%, ${category.color}44, rgba(0,0,0,0.8))`, border: `2px solid ${category.color}`, display: 'flex', alignItems: 'center', justifyContent: 'center', filter: `drop-shadow(0 0 8px ${category.color})` }}>
+            <div className="font-rune" style={{ fontSize: 22, color: category.color, fontWeight: 900, lineHeight: 1 }}>{category.icon || '⚔'}</div>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <div className="font-display" style={{ fontSize: 18, fontWeight: 900, color: category.color, letterSpacing: '0.02em', lineHeight: 1.1 }}>{category.name.toUpperCase()}</div>
+            <div className="font-ui" style={{ fontSize: 11, color: 'var(--text-dim)', marginTop: 1 }}>Your template · {category.exercises.length} exercises</div>
+          </div>
         </div>
-        <button type="button" className="btn btn-iron" onClick={onEdit} style={{ padding: '6px 12px', fontSize: 11 }}>✎ EDIT</button>
+        <button type="button" className="btn btn-iron" onClick={onEdit} style={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)', padding: '6px 12px', fontSize: 11 }}>✎ EDIT</button>
       </div>
       <div style={{ padding: '12px 20px', display: 'flex', flexDirection: 'column', gap: 8 }}>
         {category.exercises.length === 0 ? (
@@ -3322,18 +3325,15 @@ const WORKOUT_DB = {
   biceps: {
     beginner:     [
       {id:'barbellcurl',  cat:'biceps',    n:'Barbell Curl',          s:3, r:'10–12', rest:'60s'},
-      {id:'db_hammer',    cat:'biceps',    n:'Hammer Curl',           s:3, r:'12',         rest:'60s'},
     ],
     intermediate: [
       {id:'barbellcurl',  cat:'biceps',    n:'Barbell Curl',          s:4, r:'8–10',  rest:'60s'},
       {id:'db_curl',      cat:'biceps',    n:'Dumbbell Curl',         s:3, r:'10–12', rest:'60s'},
-      {id:'db_hammer',    cat:'biceps',    n:'Hammer Curl',           s:3, r:'12',         rest:'60s'},
     ],
     advanced:     [
       {id:'barbellcurl',  cat:'biceps',    n:'Barbell Curl',          s:4, r:'6–8',   rest:'60s'},
       {id:'preachercurl', cat:'biceps',    n:'Preacher Curl',         s:3, r:'8–10',  rest:'60s'},
       {id:'db_curl',      cat:'biceps',    n:'Dumbbell Curl',         s:3, r:'10–12', rest:'60s'},
-      {id:'db_hammer',    cat:'biceps',    n:'Hammer Curl',           s:3, r:'12',         rest:'60s'},
       {id:'cablecurl',    cat:'biceps',    n:'Cable Curl',            s:3, r:'12–15', rest:'60s'},
     ],
   },
@@ -3597,7 +3597,7 @@ function TrainScreen({ state, onPickCategory, onPickExercise, onPickCustomCatego
             searchResults.map(({ exercise, category }, i) => (
               <button key={exercise.id} type="button" className="card rise" style={{ animationDelay: `${0.02 + Math.min(i, 10)*0.03}s`, padding: '12px 14px', borderLeft: `3px solid ${category.color}` }} onClick={() => onPickExercise(exercise.id, category.id)}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                  <div className="font-display two-step-anim" style={{ fontSize: 18, color: category.color, width: 30, textAlign: 'center', fontWeight: 900 }}>{exercise.sigil}</div>
+                  {EX_IMGS[exercise.id] ? <img src={EX_IMGS[exercise.id].m || EX_IMGS[exercise.id].f} alt={exercise.name} style={{ width: 44, height: 44, borderRadius: 8, objectFit: 'cover', objectPosition: 'top', flexShrink: 0, border: `1px solid ${category.color}44` }} /> : <div className="font-display two-step-anim" style={{ fontSize: 18, color: category.color, width: 36, textAlign: 'center', fontWeight: 900 }}>{exercise.sigil}</div>}
                   <div style={{ flex: 1, textAlign: 'left' }}>
                     <div className="font-display" style={{ fontSize: 14, color: 'var(--text)', letterSpacing: '0.02em', fontWeight: 700 }}>{exercise.name}</div>
                     <div className="font-ui" style={{ fontSize: 11, color: 'var(--text-faint)', marginTop: 2 }}>{category.name.charAt(0) + category.name.slice(1).toLowerCase()}</div>
@@ -3647,7 +3647,7 @@ function TrainScreen({ state, onPickCategory, onPickExercise, onPickCustomCatego
               style={{ animationDelay: `${0.03 + i*0.04}s`, position: 'relative', borderRadius: 12, overflow: 'hidden', border: `2px solid ${c.color}`, padding: 0, cursor: 'pointer', background: '#0b0c0d', boxShadow: `0 0 18px ${c.color}44`, display: 'flex', flexDirection: 'column' }}>
               <div style={{ position: 'relative', height: 115, overflow: 'hidden', flexShrink: 0 }}>
                 <img src={state.gender === 'female' ? (CAT_IMGS[c.id]?.f || CAT_IMGS[c.id]?.m) : CAT_IMGS[c.id]?.m} alt={c.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
-                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.55) 100%)' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 15%, rgba(0,0,0,0.85) 70%, rgba(0,0,0,1) 100%)' }} />
                 {recommended && <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(190,44,36,0.85)', color: '#fff', fontSize: 9, fontWeight: 700, padding: '2px 6px', borderRadius: 4, letterSpacing: '0.05em' }}>★ REC</div>}
               </div>
               <div style={{ padding: '6px 12px 10px', background: 'rgba(8,6,4,0.97)', borderTop: `1px solid ${c.color}33` }}>
@@ -3693,24 +3693,30 @@ function ExerciseList({ categoryId, prevCatId, nextCatId, onNavigate, onPick, on
   function handleTouchCancel() { touchStartX.current = null; setSwiping(false); setDragX(0); }
   return (
     <div style={{ transform: dragX !== 0 ? `translateX(${dragX}px)` : undefined, transition: swiping ? 'none' : 'transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)' }} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} onTouchCancel={handleTouchCancel}>
-      <div className="safe-top" style={{ padding: '20px 20px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <button type="button" className="btn btn-iron" onClick={onBack} style={{ padding: '6px 12px', fontSize: 12 }}>◂</button>
-        <div style={{ flex: 1 }}>
-          <div className="font-display" style={{ fontSize: 22, fontWeight: 900, color: cat.color, letterSpacing: '0.02em', marginTop: 2, lineHeight: 1.1 }}>{cat.name}</div>
-          <div className="font-ui" style={{ fontSize: 12, color: 'var(--text-dim)', marginTop: 2, fontStyle: 'italic' }}>{cat.sub}</div>
+      <div className="safe-top" style={{ padding: '16px 20px 8px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <button type="button" className="btn btn-iron" onClick={onBack} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', padding: '6px 12px', fontSize: 12 }}>◂</button>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
+          {CAT_IMGS[cat.id]?.m ? <img src={CAT_IMGS[cat.id].m} alt={cat.name} style={{ width: 52, height: 52, borderRadius: '50%', objectFit: 'cover', border: `2px solid ${cat.color}`, filter: `drop-shadow(0 0 8px ${cat.color})` }} /> : <div className="font-rune" style={{ fontSize: 30, color: cat.color }}>{cat.rune}</div>}
+          <div style={{ textAlign: 'center' }}>
+            <div className="font-display" style={{ fontSize: 18, fontWeight: 900, color: cat.color, letterSpacing: '0.02em', lineHeight: 1.1 }}>{cat.name}</div>
+            <div className="font-ui" style={{ fontSize: 11, color: 'var(--text-dim)', marginTop: 1 }}>{cat.sub}</div>
+          </div>
         </div>
-        {CAT_IMGS[cat.id] ? <img src={CAT_IMGS[cat.id]} alt={cat.name} style={{ width: 48, height: 48, borderRadius: '50%', objectFit: 'cover', border: `2px solid ${cat.color}`, filter: `drop-shadow(0 0 6px ${cat.color})` }} /> : <div className="font-rune" style={{ fontSize: 30, color: cat.color }}>{cat.rune}</div>}
       </div>
       {(prevCat || nextCat) && (
         <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 20px 4px' }}>
           {prevCat ? (
-            <button type="button" onClick={() => onNavigate(prevCatId)} style={{ background: 'transparent', border: 'none', color: 'var(--text-faint)', fontSize: 11, cursor: 'pointer', padding: '4px 0', display: 'flex', alignItems: 'center', gap: 4 }}>
-              <span>◂</span><span className="font-display" style={{ fontWeight: 700, letterSpacing: '0.02em' }}>{prevCat.name}</span>
+            <button type="button" onClick={() => onNavigate(prevCatId)} style={{ background: 'transparent', border: 'none', color: 'var(--text-faint)', fontSize: 11, cursor: 'pointer', padding: '4px 0', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span>◂</span>
+              {CAT_IMGS[prevCatId]?.m && <img src={CAT_IMGS[prevCatId].m} alt={prevCat.name} style={{ width: 28, height: 28, borderRadius: '50%', objectFit: 'cover', border: `1px solid ${prevCat.color}88` }} />}
+              <span className="font-display" style={{ fontWeight: 700, letterSpacing: '0.02em' }}>{prevCat.name}</span>
             </button>
           ) : <div />}
           {nextCat ? (
-            <button type="button" onClick={() => onNavigate(nextCatId)} style={{ background: 'transparent', border: 'none', color: 'var(--text-faint)', fontSize: 11, cursor: 'pointer', padding: '4px 0', display: 'flex', alignItems: 'center', gap: 4 }}>
-              <span className="font-display" style={{ fontWeight: 700, letterSpacing: '0.02em' }}>{nextCat.name}</span><span>▸</span>
+            <button type="button" onClick={() => onNavigate(nextCatId)} style={{ background: 'transparent', border: 'none', color: 'var(--text-faint)', fontSize: 11, cursor: 'pointer', padding: '4px 0', display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span className="font-display" style={{ fontWeight: 700, letterSpacing: '0.02em' }}>{nextCat.name}</span>
+              {CAT_IMGS[nextCatId]?.m && <img src={CAT_IMGS[nextCatId].m} alt={nextCat.name} style={{ width: 28, height: 28, borderRadius: '50%', objectFit: 'cover', border: `1px solid ${nextCat.color}88` }} />}
+              <span>▸</span>
             </button>
           ) : <div />}
         </div>
@@ -3746,11 +3752,14 @@ function ExerciseList({ categoryId, prevCatId, nextCatId, onNavigate, onPick, on
   );
 }
 
-function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave }) {
+function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave, onNavigate }) {
   const info = getExerciseById(exerciseId);
   if (!info) return null;
   const { exercise, category } = info;
   const isTimed = !!exercise.timed;
+  const _exIdx = category.exercises.findIndex(e => e.id === exerciseId);
+  const prevExercise = _exIdx > 0 ? category.exercises[_exIdx - 1] : null;
+  const nextExercise = _exIdx >= 0 && _exIdx < category.exercises.length - 1 ? category.exercises[_exIdx + 1] : null;
   const [showFemale, setShowFemale] = React.useState(false);
   const [sets, setSets] = useState([{ reps: '', weight: '', time: '' }]);
   const [timerRunning, setTimerRunning] = useState(false);
@@ -3826,9 +3835,28 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave })
   const prLine = (() => { if (!currentPR) return null; return currentPR.detail; })();
   return (
     <div style={{ paddingBottom: 24 }}>
-      <div className="safe-top" style={{ padding: '20px 20px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <button type="button" className="btn btn-iron" onClick={handleCancel} style={{ padding: '6px 12px', fontSize: 12 }}>◂</button>
-        <div style={{ flex: 1 }}><div className="font-display" style={{ fontSize: 18, fontWeight: 900, color: category.color, letterSpacing: '0.02em', marginTop: 2 }}>{exercise.name.toUpperCase()}</div></div>
+      <div className="safe-top" style={{ padding: '16px 20px 8px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <button type="button" className="btn btn-iron" onClick={handleCancel} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', padding: '6px 12px', fontSize: 12 }}>◂</button>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
+          {CAT_IMGS[category.id]?.m && <img src={CAT_IMGS[category.id].m} alt={category.name} style={{ width: 44, height: 44, borderRadius: '50%', objectFit: 'cover', border: `2px solid ${category.color}`, filter: `drop-shadow(0 0 6px ${category.color})` }} />}
+          <div className="font-display" style={{ fontSize: 17, fontWeight: 900, color: category.color, letterSpacing: '0.02em', lineHeight: 1.1 }}>{exercise.name.toUpperCase()}</div>
+        </div>
+        {prevExercise && onNavigate && (
+          <button type="button" onClick={() => onNavigate(prevExercise.id)} style={{ position: 'absolute', left: 70, top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, padding: 4 }}>
+            {EX_IMGS[prevExercise.id]?.m
+              ? <img src={EX_IMGS[prevExercise.id].m} alt={prevExercise.name} style={{ width: 36, height: 36, borderRadius: 8, objectFit: 'cover', objectPosition: 'top', border: `1px solid ${category.color}55`, opacity: 0.85 }} />
+              : <div className="font-display" style={{ fontSize: 16, color: category.color, opacity: 0.7 }}>{prevExercise.sigil}</div>}
+            <div className="font-ui" style={{ fontSize: 9, color: 'var(--text-faint)', letterSpacing: '0.04em', maxWidth: 52, textAlign: 'center', lineHeight: 1.2 }}>◂ {prevExercise.name.toUpperCase()}</div>
+          </button>
+        )}
+        {nextExercise && onNavigate && (
+          <button type="button" onClick={() => onNavigate(nextExercise.id)} style={{ position: 'absolute', right: 16, top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, padding: 4 }}>
+            {EX_IMGS[nextExercise.id]?.m
+              ? <img src={EX_IMGS[nextExercise.id].m} alt={nextExercise.name} style={{ width: 36, height: 36, borderRadius: 8, objectFit: 'cover', objectPosition: 'top', border: `1px solid ${category.color}55`, opacity: 0.85 }} />
+              : <div className="font-display" style={{ fontSize: 16, color: category.color, opacity: 0.7 }}>{nextExercise.sigil}</div>}
+            <div className="font-ui" style={{ fontSize: 9, color: 'var(--text-faint)', letterSpacing: '0.04em', maxWidth: 52, textAlign: 'center', lineHeight: 1.2 }}>{nextExercise.name.toUpperCase()} ▸</div>
+          </button>
+        )}
       </div>
       {prLine && (
         <div style={{ padding: '0 20px 8px' }}>
@@ -3867,25 +3895,46 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave })
           </div>
         </div>
       </div>
-      <div style={{ padding: '8px 20px 12px' }}>
+      <div style={{ padding: '8px 20px 12px', background: '#000' }}>
         <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 8 }}>SETS · {sets.length}</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {sets.map((set, idx) => (
-            <div key={idx} className="panel" style={{ padding: '12px', backgroundImage: 'var(--tasks-panel-bg-img)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                <div className="font-display" style={{ fontSize: 13, color: 'var(--gold)', letterSpacing: '0.02em', fontWeight: 900 }}>SET {idx + 1}</div>
+            <div key={idx} style={{ background: '#000' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                <div className="font-display" style={{ fontSize: 13, color: 'var(--gold)', letterSpacing: '0.08em', fontWeight: 900 }}>SET {idx + 1}</div>
                 {sets.length > 1 && (<button type="button" className="btn btn-iron" onClick={() => removeSet(idx)} style={{ padding: '4px 8px', fontSize: 10 }}>✕</button>)}
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: isTimed ? '1fr 1fr' : exercise.weighted ? '1fr 1fr 1fr' : '1fr 1fr', gap: 8 }}>
-                {!isTimed && (<div><div className="font-display" style={{ fontSize: 11, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 4, textAlign: 'center', fontWeight: 700 }}>REPS</div><input type="number" inputMode="numeric" value={set.reps} onChange={(e) => updateSet(idx, 'reps', e.target.value)} placeholder="0" min="0" /></div>)}
-                {exercise.weighted && (<div><div className="font-display" style={{ fontSize: 11, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 4, textAlign: 'center', fontWeight: 700 }}>WEIGHT (KG)</div><input type="number" inputMode="decimal" value={set.weight} onChange={(e) => updateSet(idx, 'weight', e.target.value)} placeholder="0" min="0" step="0.5" /></div>)}
-                <div><div className="font-display" style={{ fontSize: 11, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 4, textAlign: 'center', fontWeight: 700 }}>TIME (S){isTimed ? ' *' : ''}</div><input type="number" inputMode="decimal" value={set.time} onChange={(e) => updateSet(idx, 'time', e.target.value)} placeholder="0" min="0" step="0.1" /></div>
+              <div style={{ display: 'flex', alignItems: 'stretch', overflow: 'visible' }}>
+                {!isTimed && (<>
+                  <div style={{ flex: 1, background: 'linear-gradient(160deg,#1c1a12 0%,#0f0d07 100%)', border: '1px solid rgba(201,137,42,0.5)', borderRadius: 10, padding: '14px 8px', display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center' }}>
+                    <div className="font-display" style={{ fontSize: 11, color: 'rgba(201,137,42,0.9)', letterSpacing: '0.14em', textAlign: 'center', fontWeight: 700 }}>REPS</div>
+                    <input type="number" inputMode="numeric" value={set.reps} onChange={(e) => updateSet(idx, 'reps', e.target.value)} placeholder="0" min="0" style={{ fontSize: 36, color: 'var(--gold)', fontWeight: 900, padding: '10px 0', border: '1px solid rgba(201,137,42,0.3)', borderRadius: 8, background: 'rgba(0,0,0,0.9)', width: '100%', boxShadow: 'inset 0 0 16px rgba(0,0,0,0.8)' }} />
+                  </div>
+                  <div style={{ width: 44, flexShrink: 0, margin: '-16px 0', alignSelf: 'stretch', position: 'relative', background: 'radial-gradient(ellipse at 40% 50%, #2e2610 0%, #181308 55%, #060502 100%)', borderLeft: '1.5px solid rgba(201,137,42,0.8)', borderRight: '1.5px solid rgba(201,137,42,0.8)', boxShadow: 'inset 6px 0 14px rgba(0,0,0,0.95), inset -6px 0 14px rgba(0,0,0,0.95)' }}>
+                    <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(158deg, transparent 0px, transparent 18px, rgba(201,137,42,0.13) 18px, rgba(201,137,42,0.13) 19px, transparent 19px, transparent 36px, rgba(201,137,42,0.07) 36px, rgba(201,137,42,0.07) 37px)', pointerEvents: 'none' }} />
+                  </div>
+                </>)}
+                {exercise.weighted && (<>
+                  <div style={{ flex: 1, background: 'linear-gradient(160deg,#1c1a12 0%,#0f0d07 100%)', border: '1px solid rgba(201,137,42,0.5)', borderRadius: 10, padding: '14px 8px', display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center' }}>
+                    <div className="font-display" style={{ fontSize: 11, color: 'rgba(201,137,42,0.9)', letterSpacing: '0.14em', textAlign: 'center', fontWeight: 700 }}>WEIGHT (KG)</div>
+                    <input type="number" inputMode="decimal" value={set.weight} onChange={(e) => updateSet(idx, 'weight', e.target.value)} placeholder="0" min="0" step="0.5" style={{ fontSize: 36, color: 'var(--gold)', fontWeight: 900, padding: '10px 0', border: '1px solid rgba(201,137,42,0.3)', borderRadius: 8, background: 'rgba(0,0,0,0.9)', width: '100%', boxShadow: 'inset 0 0 16px rgba(0,0,0,0.8)' }} />
+                  </div>
+                  <div style={{ width: 44, flexShrink: 0, margin: '-16px 0', alignSelf: 'stretch', position: 'relative', background: 'radial-gradient(ellipse at 40% 50%, #2e2610 0%, #181308 55%, #060502 100%)', borderLeft: '1.5px solid rgba(201,137,42,0.8)', borderRight: '1.5px solid rgba(201,137,42,0.8)', boxShadow: 'inset 6px 0 14px rgba(0,0,0,0.95), inset -6px 0 14px rgba(0,0,0,0.95)' }}>
+                    <div style={{ position: 'absolute', inset: 0, background: 'repeating-linear-gradient(158deg, transparent 0px, transparent 18px, rgba(201,137,42,0.13) 18px, rgba(201,137,42,0.13) 19px, transparent 19px, transparent 36px, rgba(201,137,42,0.07) 36px, rgba(201,137,42,0.07) 37px)', pointerEvents: 'none' }} />
+                  </div>
+                </>)}
+                <div style={{ flex: 1, background: 'linear-gradient(160deg,#1c1a12 0%,#0f0d07 100%)', border: '1px solid rgba(201,137,42,0.5)', borderRadius: 10, padding: '14px 8px', display: 'flex', flexDirection: 'column', gap: 10, alignItems: 'center' }}>
+                  <div className="font-display" style={{ fontSize: 11, color: 'rgba(201,137,42,0.9)', letterSpacing: '0.14em', textAlign: 'center', fontWeight: 700 }}>TIME (S){isTimed ? ' *' : ''}</div>
+                  <input type="number" inputMode="decimal" value={set.time} onChange={(e) => updateSet(idx, 'time', e.target.value)} placeholder="0" min="0" step="0.1" style={{ fontSize: 36, color: 'var(--gold)', fontWeight: 900, padding: '10px 0', border: '1px solid rgba(201,137,42,0.3)', borderRadius: 8, background: 'rgba(0,0,0,0.9)', width: '100%', boxShadow: 'inset 0 0 16px rgba(0,0,0,0.8)' }} />
+                </div>
               </div>
               {!timerRunning && (<button type="button" className="btn btn-iron" onClick={() => startTimerFor(idx)} style={{ marginTop: 8, padding: '6px 10px', fontSize: 11, width: '100%' }}>⌛ STOPWATCH → SET {idx + 1}</button>)}
             </div>
           ))}
         </div>
-        <button type="button" className="btn btn-iron" onClick={addSet} style={{ width: '100%', marginTop: 10, padding: '10px', fontSize: 12 }}>+ ADD SET</button>
+        <div style={{ marginTop: 24, boxShadow: '0 0 28px rgba(201,137,42,0.5), 0 0 55px rgba(201,137,42,0.22), 0 0 90px rgba(201,137,42,0.08)', borderRadius: 4 }}>
+          <button type="button" onClick={addSet} style={{ display: 'block', width: '100%', padding: '22px 20px', fontSize: 22, letterSpacing: '0.18em', fontWeight: 900, color: 'rgba(215,165,55,0.95)', background: 'linear-gradient(180deg,#1c1810 0%,#0d0a05 100%)', border: '2px solid rgba(201,137,42,0.85)', borderRadius: 4, clipPath: 'polygon(18px 0%, calc(100% - 18px) 0%, 100% 18px, 100% calc(100% - 18px), calc(100% - 18px) 100%, 18px 100%, 0% calc(100% - 18px), 0% 18px)', cursor: 'pointer', fontFamily: 'inherit' }}>LOG SET</button>
+        </div>
       </div>
       <div style={{ padding: '12px 20px 0' }}>
         <button type="button" onClick={() => setMarkAsPR(p => !p)} className={markAsPR ? 'btn' : 'btn btn-iron'} style={{ width: '100%', padding: '12px', fontSize: 12, letterSpacing: '0.02em' }}>{markAsPR ? '★ MARKED AS PR' : '☆ MARK AS NEW PR'}</button>
@@ -4681,7 +4730,7 @@ function WallBreakIntro({ state, onDone }) {
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 200, background: '#0b0c0d', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: phase < 1 ? 1 : 0, transition: 'opacity 0.7s ease-out', pointerEvents: phase < 1 ? 'auto' : 'none' }}>
       <div style={{ textAlign: 'center', padding: 24 }}>
-        <div className="rise" style={{ animationDelay: '0.05s' }}><div style={{ width: 56, height: 56, borderRadius: 14, background: 'linear-gradient(135deg, #9aa1a8, #2c3034)', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}><div className="font-rune" style={{ fontSize: 30, color: '#161210', fontWeight: 900 }}>Λ</div></div></div>
+        <div className="rise" style={{ animationDelay: '0.05s' }}><img src="imgs/logo.png" alt="SPARTA" style={{ width: 96, height: 96, borderRadius: 22, objectFit: 'cover', boxShadow: '0 12px 36px rgba(0,0,0,0.6)' }} /></div>
         <div className="rise" style={{ animationDelay: '0.2s', marginTop: 20 }}>
           <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--bone)', letterSpacing: '-0.01em' }}>Welcome, {(state.name || 'Spartan').toUpperCase()}</div>
           <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', marginTop: 4 }}>{rank.label} · Lv {state.level || 1}</div>
@@ -4700,16 +4749,16 @@ async function shareLevelCard({ name, level, rankLabel, accent }) {
   ctx.fillStyle = grad; ctx.fillRect(0, 0, 1080, 1080);
   ctx.textAlign = 'center';
   ctx.fillStyle = accent || '#c9892a';
-  ctx.font = '700 38px Inter, sans-serif';
+  ctx.font = '700 38px Rajdhani, sans-serif';
   ctx.fillText('PANTHEON', 540, 220);
   ctx.font = '900 64px Cinzel, serif';
   ctx.fillText((name || 'SPARTAN').toUpperCase(), 540, 480);
   ctx.font = '900 220px Cinzel, serif';
   ctx.fillText(`Lv.${level}`, 540, 720);
-  ctx.font = '700 34px Inter, sans-serif';
+  ctx.font = '700 34px Rajdhani, sans-serif';
   ctx.fillStyle = '#f2eadc';
   ctx.fillText(rankLabel || '', 540, 800);
-  ctx.font = 'italic 28px Inter, sans-serif';
+  ctx.font = 'italic 28px Rajdhani, sans-serif';
   ctx.fillStyle = '#c0b59c';
   ctx.fillText('Training you remember.', 540, 940);
 
