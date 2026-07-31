@@ -561,26 +561,26 @@ const BOSSES = [
   { level: 16,  name: 'ACHILLES',    title: 'The Sulking Warrior',           emoji: '🛡️' },
   { level: 20,  name: 'BELLEROPHON', title: 'The Fallen Flyer',              emoji: '🐎' },
   // Corrupted Olympians (levels 24–49) — gods who surrendered to comfort
-  { level: 24,  name: 'ARES',        title: 'God of Purposeless War',        emoji: '⚔️' },
-  { level: 29,  name: 'APOLLO',      title: 'The Dimming Sun',               emoji: '☀️' },
-  { level: 34,  name: 'DIONYSUS',    title: 'God of Endless Indulgence',     emoji: '🍷' },
-  { level: 39,  name: 'HADES',       title: 'The Eternal Warden',            emoji: '💀' },
-  { level: 44,  name: 'POSEIDON',    title: 'Lord of the Stagnant Deep',     emoji: '🌊' },
-  { level: 49,  name: 'ZEUS',        title: 'The Sleeping King',             emoji: '⚡' },
+  { level: 24,  name: 'ARES',        title: 'God of Purposeless War',        emoji: '⚔️', img: 'imgs/boss_ares.png' },
+  { level: 29,  name: 'APOLLO',      title: 'The Dimming Sun',               emoji: '☀️', img: 'imgs/boss_apollo.png' },
+  { level: 34,  name: 'DIONYSUS',    title: 'God of Endless Indulgence',     emoji: '🍷', img: 'imgs/boss_dionysus.png' },
+  { level: 39,  name: 'HADES',       title: 'The Eternal Warden',            emoji: '💀', img: 'imgs/boss_hades.png' },
+  { level: 44,  name: 'POSEIDON',    title: 'Lord of the Stagnant Deep',     emoji: '🌊', img: 'imgs/boss_poseidon.png' },
+  { level: 49,  name: 'ZEUS',        title: 'The Sleeping King',             emoji: '⚡', img: 'imgs/boss_zeus.png' },
   // Corrupted Titans (levels 54–74) — ancient powers, fallen deeper
-  { level: 54,  name: 'OCEANUS',     title: 'The Still Ocean',               emoji: '🌑' },
-  { level: 59,  name: 'HYPERION',    title: 'The Dying Light',               emoji: '✨' },
-  { level: 64,  name: 'ATLAS',       title: 'Who Let the World Fall',        emoji: '🌍' },
-  { level: 69,  name: 'PROMETHEUS',  title: 'The Hoarder of Fire',           emoji: '🔥' },
-  { level: 74,  name: 'KRONOS',      title: 'Who Stopped All Time',          emoji: '⏳' },
+  { level: 54,  name: 'OCEANUS',     title: 'The Still Ocean',               emoji: '🌑', img: 'imgs/boss_oceanus.png' },
+  { level: 59,  name: 'HYPERION',    title: 'The Dying Light',               emoji: '✨', img: 'imgs/boss_hyperion.png' },
+  { level: 64,  name: 'ATLAS',       title: 'Who Let the World Fall',        emoji: '🌍', img: 'imgs/boss_atlas.png' },
+  { level: 69,  name: 'PROMETHEUS',  title: 'The Hoarder of Fire',           emoji: '🔥', img: 'imgs/boss_prometheus.png' },
+  { level: 74,  name: 'KRONOS',      title: 'Who Stopped All Time',          emoji: '⏳', img: 'imgs/boss_kronos.png' },
   // Corrupted Primordials (levels 79–99) — darkness given to ACEDIA willingly
-  { level: 79,  name: 'TARTARUS',    title: 'The Open Abyss',                emoji: '🕳️' },
+  { level: 79,  name: 'TARTARUS',    title: 'The Open Abyss',                emoji: '🕳️', img: 'imgs/boss_tartarus.png' },
   { level: 84,  name: 'EREBUS',      title: 'The All-Consuming Dark',        emoji: '🌑' },
-  { level: 89,  name: 'OURANOS',     title: 'The Shattered Sky',             emoji: '🌌' },
-  { level: 94,  name: 'GAIA',        title: 'The Barren Earth',              emoji: '🌿' },
-  { level: 99,  name: 'NYX',         title: 'Veil of Endless Night',         emoji: '🌒' },
+  { level: 89,  name: 'OURANOS',     title: 'The Shattered Sky',             emoji: '🌌', img: 'imgs/boss_ouranos.png' },
+  { level: 94,  name: 'GAIA',        title: 'The Barren Earth',              emoji: '🌿', img: 'imgs/boss_gaia.png' },
+  { level: 99,  name: 'NYX',         title: 'Veil of Endless Night',         emoji: '🌒', img: 'imgs/boss_nyx.png' },
   // ACEDIA — The Final Boss (level 100, 2× HP)
-  { level: 100, name: 'ACEDIA',      title: 'The Primordial of Laziness',    emoji: '💤', final: true },
+  { level: 100, name: 'ACEDIA',      title: 'The Primordial of Laziness',    emoji: '💤', final: true, img: 'imgs/boss_acedia.png' },
 ];
 
 const WEEK_CARD_BG = "imgs/img40.png";
@@ -3901,24 +3901,43 @@ function WeeklyProgramCard({ state }) {
   return (
     <div style={{ padding: '20px 20px 0' }}>
       {isBossWeek ? (
-        <div className="panel carved" style={{ padding: '18px', borderColor: 'var(--blood)', background: 'rgba(168,31,24,0.08)' }}>
-          <div className="font-display" style={{ fontSize: 10, color: 'var(--blood-2)', letterSpacing: '0.04em', fontWeight: 700 }}>◆ BOSS WEEK</div>
-          <div className="font-display" style={{ fontSize: 22, color: 'var(--blood-2)', fontWeight: 900, letterSpacing: '0.02em', marginTop: 6 }}>
-            {bossInfo ? `${bossInfo.emoji} ${bossInfo.name}` : 'BOSS'}
-          </div>
-          {bossInfo && <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', fontStyle: 'italic', marginTop: 2 }}>{bossInfo.title}</div>}
-          <div style={{ marginTop: 14 }}>
-            <div className="xp-bar" style={{ height: 14 }}>
-              <div className="xp-fill" style={{ width: `${bossHPPct}%`, background: 'linear-gradient(90deg, var(--blood), var(--blood-2))' }} />
+        <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', border: '1.5px solid rgba(168,31,24,0.6)', boxShadow: '0 0 32px rgba(168,31,24,0.25), 0 8px 32px rgba(0,0,0,0.9)' }}>
+          {/* Boss image background */}
+          {bossInfo && bossInfo.img && (
+            <React.Fragment>
+              <img src={bossInfo.img} alt={bossInfo.name}
+                style={{ width: '100%', height: 200, objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }} />
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 200,
+                background: 'linear-gradient(to bottom, rgba(8,4,2,0.25) 0%, rgba(8,4,2,0.5) 55%, rgba(8,4,2,0.98) 100%)' }} />
+            </React.Fragment>
+          )}
+          {/* Content overlay */}
+          <div style={{ position: bossInfo && bossInfo.img ? 'absolute' : 'relative', bottom: 0, left: 0, right: 0, padding: '14px 18px 16px', background: bossInfo && bossInfo.img ? 'transparent' : 'rgba(168,31,24,0.08)' }}>
+            <div className="font-display" style={{ fontSize: 9, color: 'var(--blood-2)', letterSpacing: '0.1em', fontWeight: 700 }}>◆ BOSS WEEK · CORRUPTED</div>
+            <div className="font-display" style={{ fontSize: 24, color: '#f2eadc', fontWeight: 900, letterSpacing: '0.03em', marginTop: 4, lineHeight: 1.1, textShadow: '0 2px 12px rgba(0,0,0,0.95)' }}>
+              {bossInfo ? bossInfo.name : 'BOSS'}
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 5, fontSize: 11, color: 'var(--text-faint)', fontFamily: 'Cinzel', fontWeight: 700 }}>
-              <span>HP {bossCurrentHP} / {bossMaxHP}</span>
-              <span style={{ color: 'var(--blood-2)' }}>−150 HP per session</span>
+            {bossInfo && <div className="font-ui" style={{ fontSize: 12, color: 'rgba(200,160,120,0.85)', fontStyle: 'italic', marginTop: 2 }}>{bossInfo.title}</div>}
+            <div style={{ marginTop: 12 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5, fontSize: 10, color: 'rgba(200,100,100,0.9)', fontFamily: 'Cinzel', fontWeight: 700 }}>
+                <span>HP {bossCurrentHP} / {bossMaxHP}</span>
+                <span>−150 per session</span>
+              </div>
+              <div className="xp-bar" style={{ height: 10, borderRadius: 5 }}>
+                <div className="xp-fill" style={{ width: `${bossHPPct}%`, background: 'linear-gradient(90deg, #6b0e0a, var(--blood-2))', borderRadius: 5 }} />
+              </div>
+            </div>
+            <div className="font-ui" style={{ fontSize: 11, color: 'rgba(180,140,110,0.7)', marginTop: 10, fontStyle: 'italic', lineHeight: 1.5 }}>
+              Defeat earns +500 XP and your next rank.
             </div>
           </div>
-          <div className="font-ui" style={{ fontSize: 12, color: 'var(--text-dim)', marginTop: 10, fontStyle: 'italic', lineHeight: 1.5 }}>
-            Complete sessions to drain the boss HP. Defeat earns +500 XP and your next rank.
-          </div>
+          {/* Full-height overlay when no image */}
+          {!(bossInfo && bossInfo.img) && (
+            <div style={{ padding: '18px' }}>
+              <div className="font-display" style={{ fontSize: 9, color: 'var(--blood-2)', letterSpacing: '0.1em', fontWeight: 700 }}>◆ BOSS WEEK · CORRUPTED</div>
+              <div className="font-display" style={{ fontSize: 24, color: '#f2eadc', fontWeight: 900, letterSpacing: '0.03em', marginTop: 4 }}>{bossInfo ? `${bossInfo.emoji} ${bossInfo.name}` : 'BOSS'}</div>
+            </div>
+          )}
         </div>
       ) : (
         <React.Fragment>
