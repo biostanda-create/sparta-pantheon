@@ -554,32 +554,32 @@ function rankFor(bossesDefeated) {
 function xpForLevel(level) { return Math.floor(200 + Math.pow(level, 1.85) * 1.2); }
 
 const BOSSES = [
-  // Olympians — levels 4–24 (every 4)
-  { level: 4,   name: 'ARES',       title: 'God of War',                emoji: '⚔️' },
-  { level: 8,   name: 'POSEIDON',   title: 'God of the Sea',            emoji: '🌊' },
-  { level: 12,  name: 'ATHENA',     title: 'Goddess of Strategy',       emoji: '🦉' },
-  { level: 16,  name: 'APOLLO',     title: 'God of the Sun',            emoji: '☀️' },
-  { level: 20,  name: 'HADES',      title: 'God of the Underworld',     emoji: '💀' },
-  { level: 24,  name: 'ZEUS',       title: 'King of the Gods',          emoji: '⚡' },
-  // Heroes & Demigods — levels 29–49 (every 5)
-  { level: 29,  name: 'HERACLES',   title: 'Hero of Strength',          emoji: '🦁' },
-  { level: 34,  name: 'ACHILLES',   title: 'Hero of Battle',            emoji: '🛡️' },
-  { level: 39,  name: 'ODYSSEUS',   title: 'Hero of Cunning',           emoji: '🌊' },
-  { level: 44,  name: 'PERSEUS',    title: 'Slayer of Monsters',        emoji: '🗡️' },
-  { level: 49,  name: 'THESEUS',    title: 'Hero of Athens',            emoji: '🏛️' },
-  // Titans — levels 54–74 (every 5)
-  { level: 54,  name: 'KRONOS',     title: 'Titan of Time',             emoji: '⏳' },
-  { level: 59,  name: 'ATLAS',      title: 'Titan of Endurance',        emoji: '🌍' },
-  { level: 64,  name: 'PROMETHEUS', title: 'Titan of Fire',             emoji: '🔥' },
-  { level: 69,  name: 'HYPERION',   title: 'Titan of Light',            emoji: '✨' },
-  { level: 74,  name: 'OCEANUS',    title: 'Titan of the Ocean',        emoji: '🌊' },
-  // Primordials — levels 79–99 (every 5)
+  // Heroes & Demigods — weakest tier (levels 4–20)
+  { level: 4,   name: 'THESEUS',    title: 'Hero of Athens',            emoji: '🏛️' },
+  { level: 8,   name: 'ODYSSEUS',   title: 'Hero of Cunning',           emoji: '🌊' },
+  { level: 12,  name: 'PERSEUS',    title: 'Slayer of Monsters',        emoji: '🗡️' },
+  { level: 16,  name: 'ACHILLES',   title: 'Hero of Battle',            emoji: '🛡️' },
+  { level: 20,  name: 'HERACLES',   title: 'Hero of Strength',          emoji: '🦁' },
+  // Olympians — divine tier (levels 24–49)
+  { level: 24,  name: 'ARES',       title: 'God of War',                emoji: '⚔️' },
+  { level: 29,  name: 'APOLLO',     title: 'God of the Sun',            emoji: '☀️' },
+  { level: 34,  name: 'ATHENA',     title: 'Goddess of Strategy',       emoji: '🦉' },
+  { level: 39,  name: 'HADES',      title: 'God of the Underworld',     emoji: '💀' },
+  { level: 44,  name: 'POSEIDON',   title: 'God of the Sea',            emoji: '🌊' },
+  { level: 49,  name: 'ZEUS',       title: 'King of the Gods',          emoji: '⚡' },
+  // Titans — ancient tier (levels 54–74)
+  { level: 54,  name: 'OCEANUS',    title: 'Titan of the Ocean',        emoji: '🌊' },
+  { level: 59,  name: 'HYPERION',   title: 'Titan of Light',            emoji: '✨' },
+  { level: 64,  name: 'ATLAS',      title: 'Titan of Endurance',        emoji: '🌍' },
+  { level: 69,  name: 'PROMETHEUS', title: 'Titan of Fire',             emoji: '🔥' },
+  { level: 74,  name: 'KRONOS',     title: 'Titan of Time',             emoji: '⏳' },
+  // Primordials — oldest tier (levels 79–99)
   { level: 79,  name: 'TARTARUS',   title: 'Primordial of the Abyss',   emoji: '🕳️' },
   { level: 84,  name: 'EREBUS',     title: 'Primordial of Darkness',    emoji: '🌑' },
-  { level: 89,  name: 'NYX',        title: 'Primordial of Night',       emoji: '🌒' },
+  { level: 89,  name: 'OURANOS',    title: 'Primordial Sky Father',     emoji: '🌌' },
   { level: 94,  name: 'GAIA',       title: 'Primordial Earth Mother',   emoji: '🌿' },
-  { level: 99,  name: 'OURANOS',    title: 'Primordial Sky Father',     emoji: '🌌' },
-  // Final Boss — level 100 (2× HP, 2 weeks)
+  { level: 99,  name: 'NYX',        title: 'Primordial of Night',       emoji: '🌒' },
+  // Final Boss — Chaos (level 100, 2× HP, 2 weeks)
   { level: 100, name: 'CHAOS',      title: 'Primordial of Creation',    emoji: '🌀', final: true },
 ];
 
