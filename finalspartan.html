@@ -2169,6 +2169,7 @@ function App() {
         const defeatedBoss = BOSSES.find(b => b.level === bossWeekLevel);
         queueToast(`${defeatedBoss ? defeatedBoss.emoji + ' ' : ''}BOSS DEFEATED: ${defeatedBoss ? defeatedBoss.name : 'BOSS'} — +500 XP`, 'danger');
         setTimeout(() => setLevelUpAnim({ newLevel: s.level, rankUp: true, newRank: rankFor(bossesDefeated).id }), toastDelay + 200);
+        setTimeout(() => showToast('⚔ DELOAD WEEK ACTIVATED — RECOVER YOUR STRENGTH', 'success'), toastDelay + 3000);
       }
       completedQuests.forEach(q => {
         const title = (s.mode === 'story' && q.storyTitle) ? q.storyTitle : q.title;
@@ -2265,6 +2266,23 @@ function App() {
         bossWeekLevel: bossJustDefeated ? null : bossWeekLevel,
         bossesDefeated,
         mesocycle, weeklyProgress, deloadSuggested, deloadActive, deloadWeekKey, preDeloadWeights,
+        // Boss defeat always auto-triggers deload week (no modal)
+        ...(bossJustDefeated && !deloadActive ? (() => {
+          const deloaded = Object.fromEntries(Object.entries(workingWeights).map(([id, ww]) => {
+            const n = { ...ww };
+            if (n.weight > 0) n.weight = Math.round(n.weight * DELOAD_WEIGHT_FACTOR / 2.5) * 2.5;
+            if (n.targetTime) n.targetTime = Math.round(n.targetTime * DELOAD_WEIGHT_FACTOR);
+            return [id, n];
+          }));
+          return {
+            workingWeights: deloaded,
+            preDeloadWeights: workingWeights,
+            deloadActive: true,
+            deloadWeekKey: getISOWeek(),
+            deloadSuggested: false,
+            mesocycle: { ...mesocycle, weeksSinceDeload: 0, lastDeloadDate: today.toISOString().slice(0, 10) },
+          };
+        })() : {}),
       };
     });
   }
@@ -2358,8 +2376,12 @@ function App() {
       {showPaywall && <PaywallModal state={state} onClose={() => setShowPaywall(false)} onCheckout={startCheckout} onRestoreCode={restoreWithCode} />}
       {state.ready && state.deloadSuggested && !state.deloadActive && <DeloadModal weeksSinceDeload={state.mesocycle?.weeksSinceDeload || DELOAD_WEEKS_THRESHOLD} onAccept={acceptDeload} onDismiss={dismissDeload} />}
       {state.ready && state.deloadActive && (
-        <div style={{ position: 'fixed', top: 'calc(env(safe-area-inset-top) + 4px)', left: '50%', transform: 'translateX(-50%)', zIndex: 80, background: 'rgba(80,50,8,0.92)', border: '1px solid var(--gold)', padding: '6px 16px', pointerEvents: 'none', maxWidth: 280, textAlign: 'center' }}>
-          <div className="font-display" style={{ fontSize: 11, color: 'var(--gold-2)', letterSpacing: '0.06em' }}>⚓ DELOAD TÝDEN — 55% VÁHY</div>
+        <div style={{ position: 'fixed', top: 'calc(env(safe-area-inset-top) + 4px)', left: '50%', transform: 'translateX(-50%)', zIndex: 80, border: '1px solid var(--gold)', pointerEvents: 'none', maxWidth: 300, textAlign: 'center', overflow: 'hidden', borderRadius: 6 }}>
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('imgs/deload_active.png')", backgroundSize: 'cover', backgroundPosition: 'center 20%', opacity: 0.35 }} aria-hidden="true" />
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(12,8,4,0.82)' }} aria-hidden="true" />
+          <div style={{ position: 'relative', zIndex: 1, padding: '6px 18px' }}>
+            <div className="font-display" style={{ fontSize: 11, color: 'var(--gold-2)', letterSpacing: '0.06em' }}>⚓ DELOAD WEEK ACTIVATED — 55% WEIGHT</div>
+          </div>
         </div>
       )}
     </>
@@ -2371,19 +2393,18 @@ function DeloadModal({ weeksSinceDeload, onAccept, onDismiss }) {
   React.useEffect(() => { const t = setTimeout(() => setShow(true), 40); return () => clearTimeout(t); }, []);
   return (
     <div className="levelup-overlay" style={{ background: 'radial-gradient(circle at 50% 30%, rgba(80,50,8,0.28), rgba(6,5,3,0.97) 70%)', zIndex: 150 }}>
-      <div className="panel-strong carved" onClick={e => e.stopPropagation()} style={{ padding: '28px 24px', maxWidth: 380, width: '90%', opacity: show ? 1 : 0, transform: show ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.45s cubic-bezier(0.2,0.8,0.2,1)', position: 'relative', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', top: -18, right: -8, opacity: 0.07, pointerEvents: 'none' }} aria-hidden="true">
-          <div className="font-rune" style={{ fontSize: 140, color: 'var(--gold)', lineHeight: 1 }}>Ω</div>
-        </div>
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <div className="font-display" style={{ fontSize: 10, color: 'var(--gold-2)', letterSpacing: '0.04em', fontWeight: 700 }}>MEZOCYKLUS · {weeksSinceDeload} {weeksSinceDeload === 1 ? 'TÝDEN' : weeksSinceDeload < 5 ? 'TÝDNY' : 'TÝDNŮ'} PROGRESE</div>
-          <div className="font-display" style={{ fontSize: 24, color: 'var(--gold)', fontWeight: 900, letterSpacing: '0.02em', marginTop: 6, lineHeight: 1.15 }}>CHRÁM ŽÁDÁ ODPOČINEK</div>
+      <div className="panel-strong carved" onClick={e => e.stopPropagation()} style={{ padding: '0', maxWidth: 380, width: '90%', opacity: show ? 1 : 0, transform: show ? 'translateY(0)' : 'translateY(20px)', transition: 'all 0.45s cubic-bezier(0.2,0.8,0.2,1)', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0, backgroundImage: "url('imgs/deload_active.png')", backgroundSize: 'cover', backgroundPosition: 'center top', opacity: 0.28, pointerEvents: 'none' }} aria-hidden="true" />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(6,4,2,0.45) 0%, rgba(6,4,2,0.82) 55%, rgba(6,4,2,0.97) 100%)', pointerEvents: 'none' }} aria-hidden="true" />
+        <div style={{ position: 'relative', zIndex: 1, padding: '28px 24px' }}>
+          <div className="font-display" style={{ fontSize: 10, color: 'var(--gold-2)', letterSpacing: '0.04em', fontWeight: 700 }}>MESOCYCLE · {weeksSinceDeload} {weeksSinceDeload === 1 ? 'WEEK' : 'WEEKS'} OF PROGRESSION</div>
+          <div className="font-display" style={{ fontSize: 24, color: 'var(--gold)', fontWeight: 900, letterSpacing: '0.02em', marginTop: 6, lineHeight: 1.15 }}>THE TEMPLE DEMANDS REST</div>
           <div className="knot-divider" style={{ margin: '14px 0' }} />
-          <p className="font-ui" style={{ margin: '0 0 10px', fontSize: 14, lineHeight: 1.6, color: 'var(--text)', fontStyle: 'italic' }}>Tvé tělo nabralo dost únavy. Odlehčovací týden není slabost — je to strategie. Spartský válečník ví, kdy šetřit sílu.</p>
-          <p className="font-ui" style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: 'var(--text-dim)', fontStyle: 'italic' }}>Příští týden: 55% pracovní váhy, 1 série méně. Po návratu budeš silnější.</p>
+          <p className="font-ui" style={{ margin: '0 0 10px', fontSize: 14, lineHeight: 1.6, color: 'var(--text)', fontStyle: 'italic' }}>Your body has accumulated enough fatigue. A deload week is not weakness — it is strategy. The Spartan warrior knows when to conserve strength.</p>
+          <p className="font-ui" style={{ margin: 0, fontSize: 13, lineHeight: 1.5, color: 'var(--text-dim)', fontStyle: 'italic' }}>Next week: 55% working weight. You will return stronger.</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 20 }}>
-            <button type="button" className="btn glow-gold" onClick={onAccept} style={{ width: '100%', padding: '14px', fontSize: 14 }}>⚔ PŘIJMOUT ODLEHČOVACÍ TÝDEN</button>
-            <button type="button" className="btn btn-iron" onClick={onDismiss} style={{ width: '100%', padding: '12px', fontSize: 13, color: 'var(--text-dim)' }}>Ještě ne — pokračovat bez deloadu</button>
+            <button type="button" className="btn glow-gold" onClick={onAccept} style={{ width: '100%', padding: '14px', fontSize: 14 }}>⚔ ACCEPT DELOAD WEEK</button>
+            <button type="button" className="btn btn-iron" onClick={onDismiss} style={{ width: '100%', padding: '12px', fontSize: 13, color: 'var(--text-dim)' }}>Not yet — continue without deload</button>
           </div>
         </div>
       </div>
@@ -4365,13 +4386,13 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave, o
   const nextExercise = _exIdx >= 0 && _exIdx < category.exercises.length - 1 ? category.exercises[_exIdx + 1] : null;
   const [showFemale, setShowFemale] = React.useState(false);
   const [sets, setSets] = useState([{ reps: '', weight: '', time: '' }]);
+  const [markAsPR, setMarkAsPR] = useState(false);
+
+  // ── Stopwatch (timed exercises only) ──
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerValue, setTimerValue] = useState(0);
   const [timerSetIdx, setTimerSetIdx] = useState(null);
-  const [markAsPR, setMarkAsPR] = useState(false);
   const timerRef = useRef(null);
-  // Timestamp-based stopwatch — no drift when backgrounded, and the start time is mirrored to
-  // localStorage so the elapsed time survives iOS suspending/reloading the WebView while away.
   const timerStartRef = useRef(0);
   const timerBaseRef = useRef(0);
   const timerStorageKey = `sparta_timer_${exerciseId}`;
@@ -4381,7 +4402,6 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave, o
   function clearPersistedTimer() {
     try { window.localStorage.removeItem(timerStorageKey); } catch {}
   }
-  // Restore a timer that was still running when the app got suspended/backgrounded
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(timerStorageKey);
@@ -4397,44 +4417,59 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave, o
   useEffect(() => {
     if (timerRunning) {
       timerStartRef.current = Date.now();
-      const tick = () => {
-        const elapsed = timerBaseRef.current + (Date.now() - timerStartRef.current) / 1000;
-        setTimerValue(elapsed);
-      };
+      const tick = () => { const elapsed = timerBaseRef.current + (Date.now() - timerStartRef.current) / 1000; setTimerValue(elapsed); };
       tick();
       timerRef.current = setInterval(tick, 100);
-      // Force an immediate recompute the moment the app comes back to the foreground,
-      // instead of waiting for the next 100ms tick to catch up.
       const onVisible = () => { if (document.visibilityState === 'visible') tick(); };
       document.addEventListener('visibilitychange', onVisible);
       return () => { clearInterval(timerRef.current); document.removeEventListener('visibilitychange', onVisible); };
-    } else {
-      clearInterval(timerRef.current);
-    }
+    } else { clearInterval(timerRef.current); }
   }, [timerRunning]);
-  function updateSet(idx, field, val) { setSets(s => s.map((x, i) => i === idx ? { ...x, [field]: val } : x)); }
-  function addSet() { setSets(s => [...s, { reps: '', weight: '', time: '' }]); }
-  function removeSet(idx) { setSets(s => s.length > 1 ? s.filter((_, i) => i !== idx) : s); }
   function startTimerFor(idx) {
     setTimerSetIdx(idx); setTimerValue(0); timerBaseRef.current = 0; timerStartRef.current = Date.now(); setTimerRunning(true);
     persistTimer(idx);
   }
   function stopTimer() {
-    // Freeze the displayed value using the same timestamp math as the tick
     const finalElapsed = timerBaseRef.current + (Date.now() - timerStartRef.current) / 1000;
-    setTimerRunning(false);
-    timerBaseRef.current = finalElapsed;
-    setTimerValue(finalElapsed);
-    clearPersistedTimer();
-    if (timerSetIdx !== null) {
-      const seconds = Math.round(finalElapsed * 10) / 10;
-      updateSet(timerSetIdx, 'time', String(seconds));
-    }
+    setTimerRunning(false); timerBaseRef.current = finalElapsed; setTimerValue(finalElapsed); clearPersistedTimer();
+    if (timerSetIdx !== null) updateSet(timerSetIdx, 'time', String(Math.round(finalElapsed * 10) / 10));
   }
   function resetTimer() { setTimerRunning(false); setTimerValue(0); timerBaseRef.current = 0; clearPersistedTimer(); }
-  function handleCancel() { clearPersistedTimer(); onCancel(); }
+
+  // ── Rest countdown timer (non-timed exercises) ──
+  const REST_DEFAULT = 90;
+  const [restSecs, setRestSecs] = useState(null);
+  const [restTotal, setRestTotal] = useState(REST_DEFAULT);
+  const [restDone, setRestDone] = useState(false);
+  const restIntervalRef = useRef(null);
+  function startRest(duration) {
+    const d = duration || REST_DEFAULT;
+    clearInterval(restIntervalRef.current);
+    setRestTotal(d); setRestSecs(d); setRestDone(false);
+    restIntervalRef.current = setInterval(() => {
+      setRestSecs(s => {
+        if (s <= 1) {
+          clearInterval(restIntervalRef.current);
+          try { if (navigator.vibrate) navigator.vibrate([150, 80, 150, 80, 300]); } catch {}
+          setRestDone(true);
+          return 0;
+        }
+        return s - 1;
+      });
+    }, 1000);
+  }
+  function skipRest() { clearInterval(restIntervalRef.current); setRestSecs(null); setRestDone(false); }
+  useEffect(() => () => clearInterval(restIntervalRef.current), []);
+
+  function updateSet(idx, field, val) { setSets(s => s.map((x, i) => i === idx ? { ...x, [field]: val } : x)); }
+  function addSet() {
+    setSets(s => [...s, { reps: '', weight: '', time: '' }]);
+    if (!isTimed) startRest();
+  }
+  function removeSet(idx) { setSets(s => s.length > 1 ? s.filter((_, i) => i !== idx) : s); }
+  function handleCancel() { clearPersistedTimer(); skipRest(); onCancel(); }
   function canSave() { return sets.some(s => isTimed ? Number(s.time) > 0 : Number(s.reps) > 0); }
-  function handleSave() { const validSets = sets.filter(s => isTimed ? Number(s.time) > 0 : Number(s.reps) > 0); if (validSets.length === 0) return; clearPersistedTimer(); onSave({ exerciseId, sets: validSets, markAsPR }); }
+  function handleSave() { const validSets = sets.filter(s => isTimed ? Number(s.time) > 0 : Number(s.reps) > 0); if (validSets.length === 0) return; clearPersistedTimer(); skipRest(); onSave({ exerciseId, sets: validSets, markAsPR }); }
   const prLine = (() => { if (!currentPR) return null; return currentPR.detail; })();
   return (
     <div style={{ paddingBottom: 24 }}>
@@ -4529,22 +4564,62 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave, o
         </div>
       )}
       <ExerciseProgressGraph history={history} exerciseId={exerciseId} categoryColor={category.color} />
-      <div style={{ padding: '8px 20px' }}>
-        <div className="panel carved" style={{ padding: '16px', borderColor: timerRunning ? 'var(--blood)' : 'var(--line)' }}>
-          <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 8 }}>STOPWATCH</div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
-            <div className="font-display" style={{ fontSize: 38, fontWeight: 900, color: timerRunning ? 'var(--blood-2)' : 'var(--gold)', letterSpacing: '0.05em', fontVariantNumeric: 'tabular-nums' }}>{Math.floor(timerValue / 60).toString().padStart(2, '0')}:{(Math.floor(timerValue) % 60).toString().padStart(2, '0')}.{Math.floor((timerValue % 1) * 10)}</div>
-            <div style={{ display: 'flex', gap: 6 }}>
-              {!timerRunning ? (
-                <button type="button" className="btn" onClick={() => { if (timerSetIdx === null) startTimerFor(sets.length - 1); else setTimerRunning(true); }} style={{ padding: '8px 12px', fontSize: 11 }}>▶ START</button>
-              ) : (
-                <button type="button" className="btn btn-blood" onClick={stopTimer} style={{ padding: '8px 12px', fontSize: 11 }}>■ STOP</button>
-              )}
-              <button type="button" className="btn btn-iron" onClick={resetTimer} style={{ padding: '8px 10px', fontSize: 12 }}>↺</button>
+      {isTimed && (
+        <div style={{ padding: '8px 20px' }}>
+          <div className="panel carved" style={{ padding: '16px', borderColor: timerRunning ? 'var(--blood)' : 'var(--line)' }}>
+            <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 8 }}>STOPWATCH</div>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
+              <div className="font-display" style={{ fontSize: 38, fontWeight: 900, color: timerRunning ? 'var(--blood-2)' : 'var(--gold)', letterSpacing: '0.05em', fontVariantNumeric: 'tabular-nums' }}>{Math.floor(timerValue / 60).toString().padStart(2, '0')}:{(Math.floor(timerValue) % 60).toString().padStart(2, '0')}.{Math.floor((timerValue % 1) * 10)}</div>
+              <div style={{ display: 'flex', gap: 6 }}>
+                {!timerRunning ? (
+                  <button type="button" className="btn" onClick={() => { if (timerSetIdx === null) startTimerFor(sets.length - 1); else setTimerRunning(true); }} style={{ padding: '8px 12px', fontSize: 11 }}>▶ START</button>
+                ) : (
+                  <button type="button" className="btn btn-blood" onClick={stopTimer} style={{ padding: '8px 12px', fontSize: 11 }}>■ STOP</button>
+                )}
+                <button type="button" className="btn btn-iron" onClick={resetTimer} style={{ padding: '8px 10px', fontSize: 12 }}>↺</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
+      {!isTimed && restSecs !== null && (() => {
+        const pct = restTotal > 0 ? restSecs / restTotal : 0;
+        const mins = Math.floor(restSecs / 60);
+        const secs = restSecs % 60;
+        const r = 42, circ = 2 * Math.PI * r;
+        const color = restDone ? 'var(--jade)' : restSecs <= 10 ? 'var(--blood-2)' : 'var(--gold)';
+        return (
+          <div style={{ padding: '8px 20px' }}>
+            <div className="panel carved" style={{ padding: '16px 20px', borderColor: restDone ? 'var(--jade)' : restSecs <= 10 ? 'var(--blood)' : 'var(--gold)', transition: 'border-color 0.4s' }}>
+              <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 12 }}>REST TIMER</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+                <div style={{ position: 'relative', width: 96, height: 96, flexShrink: 0 }}>
+                  <svg width="96" height="96" style={{ transform: 'rotate(-90deg)' }}>
+                    <circle cx="48" cy="48" r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="6" />
+                    <circle cx="48" cy="48" r={r} fill="none" stroke={color} strokeWidth="6"
+                      strokeDasharray={circ} strokeDashoffset={circ * (1 - pct)}
+                      strokeLinecap="round" style={{ transition: 'stroke-dashoffset 0.9s linear, stroke 0.4s' }} />
+                  </svg>
+                  <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <div className="font-display" style={{ fontSize: restDone ? 14 : 26, fontWeight: 900, color, letterSpacing: '0.04em', fontVariantNumeric: 'tabular-nums', lineHeight: 1, textAlign: 'center' }}>
+                      {restDone ? 'GO!' : `${mins > 0 ? mins + ':' : ''}${secs.toString().padStart(mins > 0 ? 2 : 1, '0')}`}
+                    </div>
+                  </div>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div className="font-ui" style={{ fontSize: 13, color: 'var(--text-dim)', fontStyle: 'italic', marginBottom: 12 }}>
+                    {restDone ? 'Rest complete. Time to go.' : `Next set in ${mins > 0 ? mins + 'm ' : ''}${secs}s`}
+                  </div>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button type="button" className="btn btn-iron" onClick={skipRest} style={{ flex: 1, padding: '8px', fontSize: 11 }}>SKIP</button>
+                    <button type="button" className="btn btn-iron" onClick={() => startRest(restTotal + 30)} style={{ padding: '8px 10px', fontSize: 11 }}>+30s</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
       <div style={{ padding: '8px 20px 12px', background: '#000' }}>
         <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 8 }}>SETS · {sets.length}</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -4578,7 +4653,7 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave, o
                   <input type="number" inputMode="decimal" value={set.time} onChange={(e) => updateSet(idx, 'time', e.target.value)} placeholder="0" min="0" step="0.1" style={{ fontSize: 36, color: 'var(--gold)', fontWeight: 900, padding: '10px 0', border: '1px solid rgba(201,137,42,0.3)', borderRadius: 8, background: 'rgba(0,0,0,0.9)', width: '100%', boxShadow: 'inset 0 0 16px rgba(0,0,0,0.8)' }} />
                 </div>
               </div>
-              {!timerRunning && (<button type="button" className="btn btn-iron" onClick={() => startTimerFor(idx)} style={{ marginTop: 8, padding: '6px 10px', fontSize: 11, width: '100%' }}>⌛ STOPWATCH → SET {idx + 1}</button>)}
+              {isTimed && !timerRunning && (<button type="button" className="btn btn-iron" onClick={() => startTimerFor(idx)} style={{ marginTop: 8, padding: '6px 10px', fontSize: 11, width: '100%' }}>⌛ STOPWATCH → SET {idx + 1}</button>)}
             </div>
           ))}
         </div>
