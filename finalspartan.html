@@ -554,23 +554,33 @@ function rankFor(bossesDefeated) {
 function xpForLevel(level) { return Math.floor(200 + Math.pow(level, 1.85) * 1.2); }
 
 const BOSSES = [
-  // Olympians — levels 4–24
-  { level: 4,   name: 'ARES',       title: 'God of War',              emoji: '⚔️' },
-  { level: 8,   name: 'POSEIDON',   title: 'God of the Sea',          emoji: '🌊' },
-  { level: 12,  name: 'ATHENA',     title: 'Goddess of Strategy',     emoji: '🦉' },
-  { level: 16,  name: 'APOLLO',     title: 'God of the Sun',          emoji: '☀️' },
-  { level: 20,  name: 'HADES',      title: 'God of the Underworld',   emoji: '💀' },
-  { level: 24,  name: 'ZEUS',       title: 'King of the Gods',        emoji: '⚡' },
-  // Titans — levels 30–60
-  { level: 30,  name: 'KRONOS',     title: 'Titan of Time',           emoji: '⏳' },
-  { level: 40,  name: 'ATLAS',      title: 'Titan of Endurance',      emoji: '🌍' },
-  { level: 50,  name: 'PROMETHEUS', title: 'Titan of Fire',           emoji: '🔥' },
-  { level: 60,  name: 'HYPERION',   title: 'Titan of Light',          emoji: '✨' },
-  // Primordials — levels 70–100
-  { level: 70,  name: 'TARTARUS',   title: 'Primordial of the Abyss', emoji: '🕳️' },
-  { level: 80,  name: 'EREBUS',     title: 'Primordial of Darkness',  emoji: '🌑' },
-  { level: 90,  name: 'NYX',        title: 'Primordial of Night',     emoji: '🌒' },
-  { level: 100, name: 'CHAOS',      title: 'Primordial of Creation',  emoji: '🌀' },
+  // Olympians — levels 4–24 (every 4)
+  { level: 4,   name: 'ARES',       title: 'God of War',                emoji: '⚔️' },
+  { level: 8,   name: 'POSEIDON',   title: 'God of the Sea',            emoji: '🌊' },
+  { level: 12,  name: 'ATHENA',     title: 'Goddess of Strategy',       emoji: '🦉' },
+  { level: 16,  name: 'APOLLO',     title: 'God of the Sun',            emoji: '☀️' },
+  { level: 20,  name: 'HADES',      title: 'God of the Underworld',     emoji: '💀' },
+  { level: 24,  name: 'ZEUS',       title: 'King of the Gods',          emoji: '⚡' },
+  // Heroes & Demigods — levels 29–49 (every 5)
+  { level: 29,  name: 'HERACLES',   title: 'Hero of Strength',          emoji: '🦁' },
+  { level: 34,  name: 'ACHILLES',   title: 'Hero of Battle',            emoji: '🛡️' },
+  { level: 39,  name: 'ODYSSEUS',   title: 'Hero of Cunning',           emoji: '🌊' },
+  { level: 44,  name: 'PERSEUS',    title: 'Slayer of Monsters',        emoji: '🗡️' },
+  { level: 49,  name: 'THESEUS',    title: 'Hero of Athens',            emoji: '🏛️' },
+  // Titans — levels 54–74 (every 5)
+  { level: 54,  name: 'KRONOS',     title: 'Titan of Time',             emoji: '⏳' },
+  { level: 59,  name: 'ATLAS',      title: 'Titan of Endurance',        emoji: '🌍' },
+  { level: 64,  name: 'PROMETHEUS', title: 'Titan of Fire',             emoji: '🔥' },
+  { level: 69,  name: 'HYPERION',   title: 'Titan of Light',            emoji: '✨' },
+  { level: 74,  name: 'OCEANUS',    title: 'Titan of the Ocean',        emoji: '🌊' },
+  // Primordials — levels 79–99 (every 5)
+  { level: 79,  name: 'TARTARUS',   title: 'Primordial of the Abyss',   emoji: '🕳️' },
+  { level: 84,  name: 'EREBUS',     title: 'Primordial of Darkness',    emoji: '🌑' },
+  { level: 89,  name: 'NYX',        title: 'Primordial of Night',       emoji: '🌒' },
+  { level: 94,  name: 'GAIA',       title: 'Primordial Earth Mother',   emoji: '🌿' },
+  { level: 99,  name: 'OURANOS',    title: 'Primordial Sky Father',     emoji: '🌌' },
+  // Final Boss — level 100 (2× HP, 2 weeks)
+  { level: 100, name: 'CHAOS',      title: 'Primordial of Creation',    emoji: '🌀', final: true },
 ];
 
 const WEEK_CARD_BG = "imgs/img40.png";
@@ -1954,8 +1964,10 @@ function App() {
       while (xp >= needed) {
         xp -= needed; level += 1; needed = xpForLevel(level);
         // Check if this level is a boss level and no boss currently active
-        if (BOSSES.some(b => b.level === level) && activeBossHP === null && oldBossesDefeated < BOSSES.length) {
-          activeBossHP = Math.round((frequency || 3) * 150 * 0.92);
+        const _bossEntry = BOSSES.find(b => b.level === level);
+        if (_bossEntry && activeBossHP === null && oldBossesDefeated < BOSSES.length) {
+          const _hpMult = _bossEntry.final ? 2 : 1;
+          activeBossHP = Math.round((frequency || 3) * 150 * 0.92 * _hpMult);
           activeBossWeekLevel = level;
         }
       }
