@@ -2190,6 +2190,7 @@ function App() {
       const mesocycle = { ...(s.mesocycle || { weeksSinceDeload: 0, lastDeloadDate: null }) };
       let weeklyProgress = { ...(s.weeklyProgress || { progressed: 0, stalled: 0 }) };
       let deloadSuggested = s.deloadSuggested || false;
+      let autoDeload = false;
 
       // Choose base weights: restore pre-deload weights if deload week just ended
       const currentISOWeek = getISOWeek();
@@ -2232,7 +2233,9 @@ function App() {
           if (mesocycle.weeksSinceDeload >= DELOAD_WEEKS_THRESHOLD
               && distinctWeeks >= DELOAD_MIN_HISTORY_WEEKS
               && lastDeloadOld && !deloadActive) {
-            deloadSuggested = true;
+            autoDeload = true;
+            deloadSuggested = false;
+            setTimeout(() => showToast('⚔ DELOAD WEEK ACTIVATED — RECOVER YOUR STRENGTH', 'success'), 400);
           }
         }
         weeklyProgress = { progressed: 0, stalled: 0 };
@@ -2266,6 +2269,23 @@ function App() {
         bossWeekLevel: bossJustDefeated ? null : bossWeekLevel,
         bossesDefeated,
         mesocycle, weeklyProgress, deloadSuggested, deloadActive, deloadWeekKey, preDeloadWeights,
+        // Progression threshold auto-triggers deload (no modal)
+        ...(autoDeload && !deloadActive ? (() => {
+          const deloaded = Object.fromEntries(Object.entries(workingWeights).map(([id, ww]) => {
+            const n = { ...ww };
+            if (n.weight > 0) n.weight = Math.round(n.weight * DELOAD_WEIGHT_FACTOR / 2.5) * 2.5;
+            if (n.targetTime) n.targetTime = Math.round(n.targetTime * DELOAD_WEIGHT_FACTOR);
+            return [id, n];
+          }));
+          return {
+            workingWeights: deloaded,
+            preDeloadWeights: workingWeights,
+            deloadActive: true,
+            deloadWeekKey: getISOWeek(),
+            deloadSuggested: false,
+            mesocycle: { ...mesocycle, weeksSinceDeload: 0, lastDeloadDate: today.toISOString().slice(0, 10) },
+          };
+        })() : {}),
         // Boss defeat always auto-triggers deload week (no modal)
         ...(bossJustDefeated && !deloadActive ? (() => {
           const deloaded = Object.fromEntries(Object.entries(workingWeights).map(([id, ww]) => {
