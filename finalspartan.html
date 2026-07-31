@@ -3542,6 +3542,58 @@ function WorkoutSummaryModal({ state, onClose }) {
   );
 }
 
+function HeraclesSummons({ state, onGoto }) {
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const lastDate = state.lastWorkoutDate;
+  if (!lastDate) return null;
+  const daysSince = Math.floor((new Date(todayStr) - new Date(lastDate)) / 86400000);
+  if (daysSince < 2) return null;
+
+  const CALLS = [
+    { min: 7, title: 'HERACLES TURNS HIS BACK', line: 'Seven days of silence. The gods watch no coward. Return — or be forgotten.' },
+    { min: 5, title: 'HERACLES IS DISPLEASED',  line: 'Five days idle. The Nemean lion was not slain by a man who rested.' },
+    { min: 3, title: 'HERACLES GROWS IMPATIENT', line: 'Three days of weakness. The forge grows cold. Rise, warrior.' },
+    { min: 2, title: 'HERACLES STIRS',           line: 'Two days of silence. The hero grows restless — the temple awaits your return.' },
+  ];
+  const call = CALLS.find(c => daysSince >= c.min);
+  if (!call) return null;
+
+  return (
+    <div style={{ padding: '16px 20px 0' }}>
+      <button type="button" onClick={() => onGoto('train')}
+        style={{ width: '100%', background: 'transparent', border: 'none', padding: 0, cursor: 'pointer', textAlign: 'left' }}>
+        <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden',
+          border: '1.5px solid rgba(168,31,24,0.55)',
+          boxShadow: '0 0 24px rgba(168,31,24,0.18), 0 4px 20px rgba(0,0,0,0.7)' }}>
+          <div style={{ position: 'absolute', inset: 0,
+            background: 'linear-gradient(135deg, rgba(100,12,8,0.28) 0%, rgba(8,5,3,0.96) 55%)' }} />
+          <div style={{ position: 'absolute', inset: 0,
+            background: 'repeating-linear-gradient(0deg, transparent, transparent 22px, rgba(168,31,24,0.04) 22px, rgba(168,31,24,0.04) 23px)' }} />
+          <div style={{ position: 'relative', padding: '14px 16px', display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div style={{ fontSize: 36, lineHeight: 1, flexShrink: 0, filter: 'drop-shadow(0 0 8px rgba(200,40,30,0.7))' }}>🦁</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div className="font-display" style={{ fontSize: 9, color: 'var(--blood-2)', letterSpacing: '0.12em', fontWeight: 900, marginBottom: 4 }}>
+                ⚔ {daysSince} DAY{daysSince !== 1 ? 'S' : ''} WITHOUT TRAINING
+              </div>
+              <div className="font-display" style={{ fontSize: 14, color: 'var(--bone)', fontWeight: 900, letterSpacing: '0.02em', lineHeight: 1.2 }}>
+                {call.title}
+              </div>
+              <div className="font-ui" style={{ fontSize: 12, color: 'var(--text-dim)', fontStyle: 'italic', marginTop: 5, lineHeight: 1.45 }}>
+                {call.line}
+              </div>
+            </div>
+            <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+              <div className="font-display" style={{ fontSize: 11, color: 'var(--blood-2)', fontWeight: 900, letterSpacing: '0.04em' }}>TRAIN</div>
+              <div style={{ fontSize: 16, color: 'var(--blood-2)' }}>›</div>
+            </div>
+          </div>
+          <div style={{ height: 3, background: `linear-gradient(90deg, var(--blood) ${Math.min(100, daysSince * 14)}%, rgba(168,31,24,0.12) ${Math.min(100, daysSince * 14)}%)` }} />
+        </div>
+      </button>
+    </div>
+  );
+}
+
 function HubScreen({ state, onGoto, onOpenPaywall }) {
   const rank = rankFor(state.bossesDefeated || 0);
   const stats = computeStats(state);
@@ -3681,6 +3733,7 @@ function HubScreen({ state, onGoto, onOpenPaywall }) {
           <div><div className="font-ui" style={{ fontSize: 11, color: 'var(--text-faint)' }}>Distance</div><div style={{ fontSize: 20, fontWeight: 700, color: 'var(--text)' }}>{((state.stats?.totalDistance || 0) / 1000).toFixed(1)}<span style={{ fontSize: 11, color: 'var(--text-dim)', fontWeight: 500 }}> km</span></div></div>
         </div>
       </div>
+      <HeraclesSummons state={state} onGoto={onGoto} />
       {state.history && state.history.length > 0 && (
         <div style={{ padding: '20px 20px 0' }}>
           <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em', marginBottom: 10 }}>RECENT WORKOUTS</div>
