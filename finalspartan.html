@@ -2011,7 +2011,7 @@ function App() {
         const _bossEntry = BOSSES.find(b => b.level === level);
         if (_bossEntry && activeBossHP === null && oldBossesDefeated < BOSSES.length) {
           const _hpMult = _bossEntry.final ? 2 : 1;
-          activeBossHP = Math.round((frequency || 3) * 300 * _hpMult);
+          activeBossHP = Math.round(((frequency || 3) * 600 + 4200) * _hpMult);
           activeBossWeekLevel = level;
         }
       }
@@ -3912,7 +3912,7 @@ function WeeklyProgramCard({ state }) {
   const weekSessionsCompleted = state.weekSessionsCompleted || 0;
   const isBossWeek = bossCurrentHP !== null;
   const bossInfo = isBossWeek ? BOSSES.find(b => b.level === bossWeekLevel) : null;
-  const bossMaxHP = Math.round(freq * 300 * (bossInfo && bossInfo.final ? 2 : 1));
+  const bossMaxHP = Math.round((freq * 600 + 4200) * (bossInfo && bossInfo.final ? 2 : 1));
   const bossHPPct = isBossWeek ? Math.max(0, Math.min(100, (bossCurrentHP / bossMaxHP) * 100)) : 0;
   const [expanded, setExpanded] = React.useState(false);
 
@@ -3939,14 +3939,20 @@ function WeeklyProgramCard({ state }) {
             <div style={{ marginTop: 12 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5, fontSize: 10, color: 'rgba(200,100,100,0.9)', fontFamily: 'Cinzel', fontWeight: 700 }}>
                 <span>HP {bossCurrentHP} / {bossMaxHP}</span>
-                <span>−150 per session</span>
+                <span>WEEK {Math.min(4, Math.ceil((bossMaxHP - bossCurrentHP) / (bossMaxHP / 4) + 0.01) || 1)} / 4</span>
               </div>
-              <div className="xp-bar" style={{ height: 10, borderRadius: 5 }}>
+              <div style={{ position: 'relative', height: 10, borderRadius: 5, overflow: 'hidden' }} className="xp-bar">
                 <div className="xp-fill" style={{ width: `${bossHPPct}%`, background: 'linear-gradient(90deg, #6b0e0a, var(--blood-2))', borderRadius: 5 }} />
+                {[1,2,3].map(i => (
+                  <div key={i} style={{ position: 'absolute', top: 0, bottom: 0, left: `${i * 25}%`, width: 2, background: 'rgba(0,0,0,0.6)', zIndex: 2 }} />
+                ))}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 3, fontSize: 8, color: 'rgba(150,100,80,0.6)', fontFamily: 'Cinzel' }}>
+                <span>WK 1</span><span>WK 2</span><span>WK 3</span><span>WK 4</span>
               </div>
             </div>
-            <div className="font-ui" style={{ fontSize: 11, color: 'rgba(180,140,110,0.7)', marginTop: 10, fontStyle: 'italic', lineHeight: 1.5 }}>
-              Defeat earns +500 XP and your next rank.
+            <div className="font-ui" style={{ fontSize: 11, color: 'rgba(180,140,110,0.7)', marginTop: 8, fontStyle: 'italic', lineHeight: 1.5 }}>
+              Sessions −150 · Quests −XP · Defeat = +500 XP + rank up
             </div>
           </div>
           {/* Full-height overlay when no image */}
@@ -4996,7 +5002,7 @@ function BossesScreen({ state, embedded }) {
   const playerLevel = state.level || 1;
   const freq = state.freq || 3;
   const activeBoss = state.bossCurrentHP != null ? BOSSES.find(b => b.level === (state.bossWeekLevel || 0)) : null;
-  const bossMaxHP = Math.round(freq * 300 * (activeBoss && activeBoss.final ? 2 : 1));
+  const bossMaxHP = Math.round((freq * 600 + 4200) * (activeBoss && activeBoss.final ? 2 : 1));
   const bossHPPct = activeBoss ? Math.max(0, Math.min(100, ((state.bossCurrentHP || 0) / bossMaxHP) * 100)) : 0;
   const nextBoss = !activeBoss ? BOSSES.find(b => b.level > playerLevel) : null;
   const defeatedBosses = BOSSES.filter(b => b.level <= playerLevel && !activeBoss);
@@ -5028,10 +5034,19 @@ function BossesScreen({ state, embedded }) {
           <div style={{ marginTop: 14 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5, fontSize: 10, color: 'rgba(200,100,100,0.9)', fontFamily: 'Cinzel', fontWeight: 700 }}>
               <span>HP {state.bossCurrentHP} / {bossMaxHP}</span>
-              <span>−150 per session</span>
+              <span>WEEK {Math.min(4, Math.ceil((bossMaxHP - state.bossCurrentHP) / (bossMaxHP / 4) + 0.01) || 1)} / 4</span>
             </div>
-            <div className="xp-bar" style={{ height: 10, borderRadius: 5 }}>
-              <div className="xp-fill" style={{ width: `${bossHPPct}%`, background: 'linear-gradient(90deg, #6b0e0a, var(--blood-2))', borderRadius: 5 }} />
+            <div style={{ position: 'relative', height: 12, borderRadius: 6, overflow: 'hidden' }} className="xp-bar">
+              <div className="xp-fill" style={{ width: `${bossHPPct}%`, background: 'linear-gradient(90deg, #6b0e0a, var(--blood-2))', borderRadius: 6 }} />
+              {[1,2,3].map(i => (
+                <div key={i} style={{ position: 'absolute', top: 0, bottom: 0, left: `${i * 25}%`, width: 2, background: 'rgba(0,0,0,0.6)', zIndex: 2 }} />
+              ))}
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4, fontSize: 8, color: 'rgba(150,100,80,0.6)', fontFamily: 'Cinzel' }}>
+              <span>WK 1</span><span>WK 2</span><span>WK 3</span><span>WK 4</span>
+            </div>
+            <div className="font-ui" style={{ fontSize: 11, color: 'rgba(180,140,110,0.6)', marginTop: 8, fontStyle: 'italic' }}>
+              Sessions −150 · Quests −XP · 4 weeks to defeat
             </div>
           </div>
         )}
