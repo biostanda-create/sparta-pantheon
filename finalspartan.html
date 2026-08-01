@@ -2011,7 +2011,7 @@ function App() {
         const _bossEntry = BOSSES.find(b => b.level === level);
         if (_bossEntry && activeBossHP === null && oldBossesDefeated < BOSSES.length) {
           const _hpMult = _bossEntry.final ? 2 : 1;
-          activeBossHP = Math.round((frequency || 3) * 150 * 0.92 * _hpMult);
+          activeBossHP = Math.round((frequency || 3) * 300 * _hpMult);
           activeBossWeekLevel = level;
         }
       }
@@ -2191,7 +2191,7 @@ function App() {
         awardSessionXp = true;
       }
 
-      // New boss HP damage (session-based boss weeks)
+      // New boss HP damage (session + quest completion)
       let newBossHP = s.bossCurrentHP;
       let bossWeekLevel = s.bossWeekLevel;
       let bossJustDefeated = false;
@@ -2204,6 +2204,20 @@ function App() {
           newBossHP = null;
           bossesDefeated += 1;
         }
+      }
+      // Quest completions also deal damage equal to their XP
+      if (completedQuests.length > 0) {
+        completedQuests.forEach(q => {
+          if (newBossHP !== null) {
+            newBossHP -= q.xp;
+            if (newBossHP <= 0 && !bossJustDefeated) {
+              bossJustDefeated = true;
+              xpFinal += 500;
+              newBossHP = null;
+              bossesDefeated += 1;
+            }
+          }
+        });
       }
 
       // Weekly completion bonus (normal weeks only)
@@ -2232,6 +2246,10 @@ function App() {
       }
       if (prHit) queueToast(`★ NEW PR! ${exercise.name.toUpperCase()} → ${prDetail} (+${prBonus})`, 'warn');
       if (awardSessionXp) queueToast(`⚡ SESSION COMPLETE — +150 XP`, 'success');
+      if (completedQuests.length > 0 && s.bossCurrentHP !== null) {
+        const questDmg = completedQuests.reduce((sum, q) => sum + q.xp, 0);
+        queueToast(`⚔ QUEST COMPLETE — BOSS −${questDmg} HP`, 'danger');
+      }
       if (bossJustDefeated) {
         const defeatedBoss = BOSSES.find(b => b.level === bossWeekLevel);
         queueToast(`${defeatedBoss ? defeatedBoss.emoji + ' ' : ''}BOSS DEFEATED: ${defeatedBoss ? defeatedBoss.name : 'BOSS'} — +500 XP`, 'danger');
@@ -3894,7 +3912,7 @@ function WeeklyProgramCard({ state }) {
   const weekSessionsCompleted = state.weekSessionsCompleted || 0;
   const isBossWeek = bossCurrentHP !== null;
   const bossInfo = isBossWeek ? BOSSES.find(b => b.level === bossWeekLevel) : null;
-  const bossMaxHP = Math.round(freq * 150 * 0.92);
+  const bossMaxHP = Math.round(freq * 300 * (bossInfo && bossInfo.final ? 2 : 1));
   const bossHPPct = isBossWeek ? Math.max(0, Math.min(100, (bossCurrentHP / bossMaxHP) * 100)) : 0;
   const [expanded, setExpanded] = React.useState(false);
 
@@ -4977,8 +4995,8 @@ function QuestsScreen({ state, embedded }) {
 function BossesScreen({ state, embedded }) {
   const playerLevel = state.level || 1;
   const freq = state.freq || 3;
-  const bossMaxHP = Math.round(freq * 150 * 0.92);
   const activeBoss = state.bossCurrentHP != null ? BOSSES.find(b => b.level === (state.bossWeekLevel || 0)) : null;
+  const bossMaxHP = Math.round(freq * 300 * (activeBoss && activeBoss.final ? 2 : 1));
   const bossHPPct = activeBoss ? Math.max(0, Math.min(100, ((state.bossCurrentHP || 0) / bossMaxHP) * 100)) : 0;
   const nextBoss = !activeBoss ? BOSSES.find(b => b.level > playerLevel) : null;
   const defeatedBosses = BOSSES.filter(b => b.level <= playerLevel && !activeBoss);
