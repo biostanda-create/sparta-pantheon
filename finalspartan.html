@@ -4975,17 +4975,52 @@ function QuestsScreen({ state, embedded }) {
 }
 
 function BossesScreen({ state, embedded }) {
-  const boss = getWeeklyBoss();
-  const isStory = state.mode === 'story';
-  const progress = state.bossProgress || 0;
-  const pct = Math.min(100, (progress / boss.target) * 100);
-  const slain = progress >= boss.target;
-  const name = isStory && boss.storyName ? boss.storyName : boss.name;
-  const desc = isStory && boss.storyDesc ? boss.storyDesc : boss.desc;
-  const levelBoss = state.bossCurrentHP != null ? BOSSES.find(b => b.level === (state.bossWeekLevel || 0)) : null;
+  const playerLevel = state.level || 1;
   const freq = state.freq || 3;
   const bossMaxHP = Math.round(freq * 150 * 0.92);
-  const bossHPPct = levelBoss ? Math.max(0, Math.min(100, ((state.bossCurrentHP || 0) / bossMaxHP) * 100)) : 0;
+  const activeBoss = state.bossCurrentHP != null ? BOSSES.find(b => b.level === (state.bossWeekLevel || 0)) : null;
+  const bossHPPct = activeBoss ? Math.max(0, Math.min(100, ((state.bossCurrentHP || 0) / bossMaxHP) * 100)) : 0;
+  const nextBoss = !activeBoss ? BOSSES.find(b => b.level > playerLevel) : null;
+  const defeatedBosses = BOSSES.filter(b => b.level <= playerLevel && !activeBoss);
+
+  const BossCard = ({ boss, isActive, isNext }) => (
+    <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden',
+      border: isActive ? '1.5px solid rgba(168,31,24,0.7)' : '1px solid rgba(120,100,80,0.25)',
+      boxShadow: isActive ? '0 0 32px rgba(168,31,24,0.3), 0 8px 32px rgba(0,0,0,0.9)' : '0 4px 20px rgba(0,0,0,0.6)',
+      opacity: isNext ? 0.75 : 1 }}>
+      {boss.img ? (
+        <React.Fragment>
+          <img src={boss.img} alt={boss.name}
+            style={{ width: '100%', height: isActive ? 280 : 200, objectFit: 'cover', objectPosition: 'center 20%', display: 'block',
+              filter: isNext ? 'grayscale(40%) brightness(0.6)' : 'none' }} />
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: isActive ? 280 : 200,
+            background: 'linear-gradient(to bottom, rgba(8,4,2,0.05) 0%, rgba(8,4,2,0.4) 45%, rgba(8,4,2,0.97) 100%)' }} />
+        </React.Fragment>
+      ) : (
+        <div style={{ height: 120, background: 'rgba(20,10,8,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontSize: 48 }}>{boss.emoji}</div>
+      )}
+      <div style={{ position: boss.img ? 'absolute' : 'relative', bottom: 0, left: 0, right: 0, padding: '14px 20px 18px' }}>
+        {isActive && <div className="font-display" style={{ fontSize: 9, color: 'var(--blood-2)', letterSpacing: '0.12em', fontWeight: 700, marginBottom: 4 }}>◆ BOSS WEEK · CORRUPTED</div>}
+        {isNext && <div className="font-display" style={{ fontSize: 9, color: 'rgba(180,150,100,0.7)', letterSpacing: '0.12em', fontWeight: 700, marginBottom: 4 }}>NEXT ENEMY · REACH LEVEL {boss.level}</div>}
+        <div className="font-display" style={{ fontSize: isActive ? 30 : 22, color: isNext ? 'rgba(220,200,170,0.6)' : '#f2eadc', fontWeight: 900,
+          letterSpacing: '0.03em', lineHeight: 1.1, textShadow: '0 2px 16px rgba(0,0,0,0.95)' }}>{boss.name}</div>
+        <div className="font-ui" style={{ fontSize: 12, color: isNext ? 'rgba(180,150,100,0.5)' : 'rgba(200,160,120,0.85)', fontStyle: 'italic', marginTop: 3 }}>{boss.title}</div>
+        {isActive && (
+          <div style={{ marginTop: 14 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5, fontSize: 10, color: 'rgba(200,100,100,0.9)', fontFamily: 'Cinzel', fontWeight: 700 }}>
+              <span>HP {state.bossCurrentHP} / {bossMaxHP}</span>
+              <span>−150 per session</span>
+            </div>
+            <div className="xp-bar" style={{ height: 10, borderRadius: 5 }}>
+              <div className="xp-fill" style={{ width: `${bossHPPct}%`, background: 'linear-gradient(90deg, #6b0e0a, var(--blood-2))', borderRadius: 5 }} />
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
   return (
     <div style={{ paddingBottom: embedded ? 0 : 24 }}>
       {!embedded && (
@@ -4993,60 +5028,35 @@ function BossesScreen({ state, embedded }) {
           <div className="font-display" style={{ fontSize: 28, fontWeight: 900, color: 'var(--blood-2)', letterSpacing: '0.02em', marginTop: 4 }}>BOSS</div>
         </div>
       )}
-      <div style={{ padding: '12px 20px' }}>
-        {levelBoss && (
-          <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', border: '1.5px solid rgba(168,31,24,0.6)', boxShadow: '0 0 32px rgba(168,31,24,0.25), 0 8px 32px rgba(0,0,0,0.9)', marginBottom: 14 }}>
-            {levelBoss.img && (
-              <React.Fragment>
-                <img src={levelBoss.img} alt={levelBoss.name}
-                  style={{ width: '100%', height: 260, objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }} />
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 260,
-                  background: 'linear-gradient(to bottom, rgba(8,4,2,0.1) 0%, rgba(8,4,2,0.45) 50%, rgba(8,4,2,0.98) 100%)' }} />
-              </React.Fragment>
-            )}
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '16px 20px 20px' }}>
-              <div className="font-display" style={{ fontSize: 9, color: 'var(--blood-2)', letterSpacing: '0.1em', fontWeight: 700 }}>◆ BOSS WEEK · CORRUPTED</div>
-              <div className="font-display" style={{ fontSize: 30, color: '#f2eadc', fontWeight: 900, letterSpacing: '0.03em', marginTop: 4, lineHeight: 1.1, textShadow: '0 2px 16px rgba(0,0,0,0.95)' }}>{levelBoss.name}</div>
-              <div className="font-ui" style={{ fontSize: 13, color: 'rgba(200,160,120,0.9)', fontStyle: 'italic', marginTop: 3 }}>{levelBoss.title}</div>
-              <div style={{ marginTop: 14 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5, fontSize: 10, color: 'rgba(200,100,100,0.9)', fontFamily: 'Cinzel', fontWeight: 700 }}>
-                  <span>HP {state.bossCurrentHP} / {bossMaxHP}</span>
-                  <span>−150 per session</span>
+      <div style={{ padding: '12px 20px', display: 'flex', flexDirection: 'column', gap: 14 }}>
+        {activeBoss ? (
+          <BossCard boss={activeBoss} isActive />
+        ) : nextBoss ? (
+          <BossCard boss={nextBoss} isNext />
+        ) : (
+          <div style={{ padding: '32px 24px', textAlign: 'center', background: 'rgba(20,10,8,0.6)', borderRadius: 12, border: '1px solid rgba(120,100,80,0.2)' }}>
+            <div style={{ fontSize: 36 }}>💤</div>
+            <div className="font-display" style={{ fontSize: 18, color: 'var(--gold)', marginTop: 12, fontWeight: 900 }}>ACEDIA DEFEATED</div>
+            <div className="font-ui" style={{ fontSize: 14, color: 'var(--text-dim)', marginTop: 8, fontStyle: 'italic' }}>You have conquered the Primordial of Laziness. The cosmos is free.</div>
+          </div>
+        )}
+        {defeatedBosses.length > 0 && (
+          <div>
+            <div className="font-display" style={{ fontSize: 9, color: 'var(--text-faint)', letterSpacing: '0.12em', marginBottom: 10 }}>DEFEATED ENEMIES</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {[...defeatedBosses].reverse().map(b => (
+                <div key={b.name} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px', background: 'rgba(20,10,8,0.5)', borderRadius: 8, border: '1px solid rgba(80,80,80,0.2)' }}>
+                  <span style={{ fontSize: 22, opacity: 0.5 }}>{b.emoji}</span>
+                  <div>
+                    <div className="font-display" style={{ fontSize: 13, color: 'rgba(180,160,130,0.6)', fontWeight: 700, letterSpacing: '0.05em', textDecoration: 'line-through' }}>{b.name}</div>
+                    <div className="font-ui" style={{ fontSize: 11, color: 'rgba(140,120,100,0.5)', fontStyle: 'italic' }}>{b.title}</div>
+                  </div>
+                  <div style={{ marginLeft: 'auto', fontSize: 16, opacity: 0.4 }}>✓</div>
                 </div>
-                <div className="xp-bar" style={{ height: 10, borderRadius: 5 }}>
-                  <div className="xp-fill" style={{ width: `${bossHPPct}%`, background: 'linear-gradient(90deg, #6b0e0a, var(--blood-2))', borderRadius: 5 }} />
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         )}
-        <div className="panel-strong carved carved-blood" style={{ padding: '24px', position: 'relative', overflow: 'hidden', backgroundImage: 'var(--boss-card-bg-img)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-          {isStory && <DarkMaskBg slain={slain} />}
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <div className="font-display" style={{ fontSize: 10, color: 'var(--blood-2)', letterSpacing: '0.02em', fontWeight: 700 }}>{slain ? '✓ SLAIN' : '◆ ACTIVE'}</div>
-            <div className="font-display" style={{ fontSize: 12, color: 'var(--text-dim)', letterSpacing: '0.02em', marginTop: 4 }}>{isStory ? 'ENEMY OF THE WEEK' : 'BOSS'}</div>
-            <div className="font-display" style={{ fontSize: 28, fontWeight: 900, color: 'var(--blood-2)', letterSpacing: '0.02em', marginTop: 6, fontFamily: 'Cinzel' }}>{name}</div>
-            {!isStory && <div className="font-ui" style={{ fontSize: 14, color: 'var(--gold-2)', marginTop: 4, fontStyle: 'italic' }}>{boss.translit}</div>}
-            <div className="font-ui" style={{ fontSize: 15, color: 'var(--text)', marginTop: 14, lineHeight: 1.5 }}>{desc}</div>
-            <div style={{ marginTop: 20 }}>
-              <div className="xp-bar" style={{ height: 16 }}>
-                <div className="xp-fill" style={{ width: `${pct}%`, background: slain ? 'linear-gradient(90deg, var(--moss), #88c080)' : 'linear-gradient(90deg, var(--blood), var(--blood-2))' }} />
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6, fontSize: 12, color: 'var(--text)', fontFamily: 'Cinzel', letterSpacing: '0.02em', fontWeight: 700 }}>
-                <span>HP {Math.floor(boss.target - progress)} / {boss.target}</span>
-                <span style={{ color: 'var(--blood-2)' }}>{pct.toFixed(0)}%</span>
-              </div>
-            </div>
-            <div style={{ marginTop: 20, padding: '12px', background: 'rgba(0,0,0,0.4)', borderLeft: '3px solid var(--gold)' }}>
-              <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em' }}>REWARD FOR VICTORY</div>
-              <div className="font-display" style={{ fontSize: 24, color: 'var(--gold)', fontWeight: 900, marginTop: 4 }}>+{boss.reward} XP</div>
-            </div>
-          </div>
-        </div>
-        <div className="panel" style={{ marginTop: 16, padding: '16px', backgroundImage: 'var(--boss-card-bg-img)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
-          <div className="font-display" style={{ fontSize: 10, color: 'var(--text-faint)', letterSpacing: '0.02em' }}>{isStory ? 'VOICE OF THE OLD GODS' : 'WORD OF THE ORACLE'}</div>
-          <div className="font-ui" style={{ fontSize: 14, color: 'var(--text-dim)', marginTop: 8, lineHeight: 1.5, fontStyle: 'italic' }}>{isStory ? 'Behind the mask lurks your own sloth. Every rep tears the face from it. It falls only when you stop looking for excuses.' : 'A god of sleep rises every week. Every workout is a blow to its will — every rep brings it closer to falling. When it falls, a reward worthy of a hero awaits you.'}</div>
-        </div>
       </div>
     </div>
   );
