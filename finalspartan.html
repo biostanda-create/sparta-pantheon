@@ -2141,7 +2141,7 @@ function App() {
         let next = cur;
         if (q.metric === 'workouts') { if (isNewSessionDay) next = cur + 1; }
         else if (q.metric === 'volume' && category.xpType !== 'cardio') next = cur + totalKg;
-        else if (q.metric === 'reps_cali' && category.xpType === 'bodyweight') next = cur + totalReps;
+        else if (q.metric === 'reps_cali' && exercise.weighted === false) next = cur + totalReps;
         else if (q.metric === 'minutes_run' && category.xpType === 'cardio') next = cur + (totalSeconds / 60);
         else if (q.metric === 'pulls' && ['pullup','wpullup','muscleup','wmuscleup'].includes(exercise.id)) next = cur + totalReps;
         else if (q.metric === 'distance' && category.xpType === 'cardio') next = cur + distanceM;
