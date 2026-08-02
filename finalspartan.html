@@ -1580,17 +1580,32 @@ function useCircularAvatarImg(src) {
         const dW = 600, dH = 870;
         const scale = Math.max(dW / iW, dH / iH);
         const sW = iW * scale, sH = iH * scale;
-        const offX = (dW - sW) / 2;
+        const baseOffX = (dW - sW) / 2;
         const offY = 0;
         const cv = document.createElement('canvas');
         cv.width = dW; cv.height = dH;
         const ctx = cv.getContext('2d');
-        ctx.drawImage(img, offX, offY, sW, sH);
-        const id = ctx.getImageData(0, 0, dW, dH);
-        const d = id.data;
         const cx = dW / 2, cy = dH / 2;
         const r = dW * 0.68;
         const r2 = r * r;
+        // First pass: draw + circular clip to find character center of mass
+        ctx.drawImage(img, baseOffX, offY, sW, sH);
+        const id0 = ctx.getImageData(0, 0, dW, dH);
+        const d0 = id0.data;
+        let totalA = 0, wX = 0;
+        for (let i = 0; i < d0.length; i += 4) {
+          const a = d0[i + 3]; if (a < 10) continue;
+          const px = (i >> 2) % dW, py = Math.floor((i >> 2) / dW);
+          if ((px - cx) * (px - cx) + (py - cy) * (py - cy) > r2) continue;
+          totalA += a; wX += px * a;
+        }
+        const charCX = totalA > 0 ? wX / totalA : cx;
+        const autoShift = Math.round(cx - charCX);
+        // Second pass: redraw with centering correction + clip
+        ctx.clearRect(0, 0, dW, dH);
+        ctx.drawImage(img, baseOffX + autoShift, offY, sW, sH);
+        const id = ctx.getImageData(0, 0, dW, dH);
+        const d = id.data;
         for (let i = 0; i < d.length; i += 4) {
           const px = (i >> 2) % dW;
           const py = Math.floor((i >> 2) / dW);
