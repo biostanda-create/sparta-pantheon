@@ -1,5 +1,6 @@
-const CACHE = 'sparta-shell-v1';
+const CACHE = 'sparta-shell-v3';
 const SHELL = ['./finalspartan.html', './manifest.json'];
+const HTML_FILES = ['finalspartan.html', 'index.html'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)));
@@ -15,20 +16,39 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
-  event.respondWith(
-    caches.match(event.request).then((cached) => {
-      const network = fetch(event.request)
+  const url = new URL(event.request.url);
+  const isHTML = HTML_FILES.some(f => url.pathname.endsWith(f)) || url.pathname === '/' || url.pathname.endsWith('/');
+
+  if (isHTML) {
+    // Network-first for HTML: always get fresh version, fall back to cache
+    event.respondWith(
+      fetch(event.request)
         .then((res) => {
-          if (res.ok && event.request.url.startsWith(self.location.origin)) {
+          if (res.ok) {
             const copy = res.clone();
             caches.open(CACHE).then((c) => c.put(event.request, copy));
           }
           return res;
         })
-        .catch(() => cached);
-      return cached || network;
-    })
-  );
+        .catch(() => caches.match(event.request))
+    );
+  } else {
+    // Cache-first for assets
+    event.respondWith(
+      caches.match(event.request).then((cached) => {
+        const network = fetch(event.request)
+          .then((res) => {
+            if (res.ok && event.request.url.startsWith(self.location.origin)) {
+              const copy = res.clone();
+              caches.open(CACHE).then((c) => c.put(event.request, copy));
+            }
+            return res;
+          })
+          .catch(() => cached);
+        return cached || network;
+      })
+    );
+  }
 });
 
 self.addEventListener('push', (event) => {
