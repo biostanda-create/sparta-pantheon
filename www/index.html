@@ -3899,9 +3899,10 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave, o
   return (
     <div style={{ paddingBottom: 24 }}>
       {hasActiveWorkout && (
-        <div style={{ padding: '8px 20px', background: 'rgba(201,137,42,0.15)', borderBottom: '2px solid rgba(201,137,42,0.3)' }}>
-          <button type="button" onClick={() => onNavigate && onNavigate(lastWorkout.exerciseId)} style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%', padding: '10px 12px', fontSize: 12, background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(201,137,42,0.5)', borderRadius: 6, color: 'var(--gold)', cursor: 'pointer', fontWeight: 700 }}>
-            <span>⚡ CONTINUE CURRENT WORKOUT</span>
+        <div style={{ padding: '12px 20px', background: 'rgba(201,137,42,0.15)', borderBottom: '2px solid rgba(201,137,42,0.3)' }}>
+          <button type="button" onClick={() => onNavigate && onNavigate(lastWorkout.exerciseId)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 6, width: '100%', padding: '12px 14px', fontSize: 12, background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(201,137,42,0.5)', borderRadius: 6, color: 'var(--gold)', cursor: 'pointer', fontWeight: 700, textAlign: 'left' }}>
+            <span style={{ fontSize: 13, fontWeight: 900, letterSpacing: '0.04em' }}>⚡ THE TRIAL CONTINUES</span>
+            <span style={{ fontSize: 11, fontWeight: 500, color: 'rgba(201,137,42,0.85)', fontStyle: 'italic' }}>Return to your path. Victory awaits the persistent.</span>
           </button>
         </div>
       )}
