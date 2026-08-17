@@ -3793,14 +3793,24 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave, o
   const prevExercise = _exIdx > 0 ? category.exercises[_exIdx - 1] : null;
   const nextExercise = _exIdx >= 0 && _exIdx < category.exercises.length - 1 ? category.exercises[_exIdx + 1] : null;
   const [showFemale, setShowFemale] = React.useState(false);
-  const [sets, setSets] = useState([{ reps: '', weight: '', time: '' }]);
+  const activeWorkoutKey = 'sparta_active_workout';
+  const [sets, setSets] = useState(() => {
+    try {
+      const saved = window.localStorage.getItem(activeWorkoutKey);
+      if (saved) {
+        const data = JSON.parse(saved);
+        if (data.exerciseId === exerciseId) {
+          return data.sets || [{ reps: '', weight: '', time: '' }];
+        }
+      }
+    } catch {}
+    return [{ reps: '', weight: '', time: '' }];
+  });
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerValue, setTimerValue] = useState(0);
   const [timerSetIdx, setTimerSetIdx] = useState(null);
   const [markAsPR, setMarkAsPR] = useState(false);
   const timerRef = useRef(null);
-  // Timestamp-based stopwatch — no drift when backgrounded, and the start time is mirrored to
-  // localStorage so the elapsed time survives iOS suspending/reloading the WebView while away.
   const timerStartRef = useRef(0);
   const timerBaseRef = useRef(0);
   const timerStorageKey = `sparta_timer_${exerciseId}`;
@@ -3810,6 +3820,25 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave, o
   function clearPersistedTimer() {
     try { window.localStorage.removeItem(timerStorageKey); } catch {}
   }
+  function persistWorkout() {
+    try { window.localStorage.setItem(activeWorkoutKey, JSON.stringify({ exerciseId, sets, timestamp: Date.now() })); } catch {}
+  }
+  function clearPersistedWorkout() {
+    try { window.localStorage.removeItem(activeWorkoutKey); } catch {}
+  }
+  function getLastWorkout() {
+    try {
+      const saved = window.localStorage.getItem(activeWorkoutKey);
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return null;
+  }
+  // Save workout whenever sets change
+  useEffect(() => {
+    if (sets.some(s => s.reps || s.weight || s.time)) {
+      persistWorkout();
+    }
+  }, [sets]);
   // Restore a timer that was still running when the app got suspended/backgrounded
   useEffect(() => {
     try {
@@ -3861,12 +3890,21 @@ function ExerciseLogger({ exerciseId, categoryId, currentPR, onCancel, onSave, o
     }
   }
   function resetTimer() { setTimerRunning(false); setTimerValue(0); timerBaseRef.current = 0; clearPersistedTimer(); }
-  function handleCancel() { clearPersistedTimer(); onCancel(); }
+  function handleCancel() { clearPersistedTimer(); clearPersistedWorkout(); onCancel(); }
   function canSave() { return sets.some(s => isTimed ? Number(s.time) > 0 : Number(s.reps) > 0); }
-  function handleSave() { const validSets = sets.filter(s => isTimed ? Number(s.time) > 0 : Number(s.reps) > 0); if (validSets.length === 0) return; clearPersistedTimer(); onSave({ exerciseId, sets: validSets, markAsPR }); }
+  function handleSave() { const validSets = sets.filter(s => isTimed ? Number(s.time) > 0 : Number(s.reps) > 0); if (validSets.length === 0) return; clearPersistedTimer(); clearPersistedWorkout(); onSave({ exerciseId, sets: validSets, markAsPR }); }
   const prLine = (() => { if (!currentPR) return null; return currentPR.detail; })();
+  const lastWorkout = getLastWorkout();
+  const hasActiveWorkout = lastWorkout && lastWorkout.exerciseId !== exerciseId && lastWorkout.sets && lastWorkout.sets.some(s => s.reps || s.weight || s.time);
   return (
     <div style={{ paddingBottom: 24 }}>
+      {hasActiveWorkout && (
+        <div style={{ padding: '8px 20px', background: 'rgba(201,137,42,0.15)', borderBottom: '2px solid rgba(201,137,42,0.3)' }}>
+          <button type="button" onClick={() => onNavigate && onNavigate(lastWorkout.exerciseId)} style={{ display: 'flex', alignItems: 'center', gap: 8, width: '100%', padding: '10px 12px', fontSize: 12, background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(201,137,42,0.5)', borderRadius: 6, color: 'var(--gold)', cursor: 'pointer', fontWeight: 700 }}>
+            <span>⚡ CONTINUE CURRENT WORKOUT</span>
+          </button>
+        </div>
+      )}
       <div className="safe-top" style={{ padding: '16px 20px 8px', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         <button type="button" className="btn btn-iron" onClick={handleCancel} style={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)', padding: '6px 12px', fontSize: 12 }}>◂</button>
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5 }}>
