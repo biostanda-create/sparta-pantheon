@@ -3038,6 +3038,10 @@ function StrengthTestScreen({ onSubmit, onBack, bodyweightKg }) {
           <h1 className="font-display" style={{ fontSize:34, fontWeight:700, color:'rgba(224,192,78,0.98)', margin:0, letterSpacing:'0.03em', textShadow:'0 2px 16px rgba(0,0,0,0.9), 0 0 40px rgba(160,110,20,0.5)' }}>Test of Strength</h1>
         </div>
 
+        <div style={{ padding:'0 18px 12px', textAlign:'center', fontSize:11, color:'rgba(165,145,90,0.9)', fontFamily:'Rajdhani,sans-serif', letterSpacing:'0.03em', lineHeight:'1.5' }}>
+          Enter your current 1RM. Unknown? Select "I Don't Know" for bodyweight calibration.
+        </div>
+
         <div style={{ padding:'0 14px', display:'flex', flexDirection:'column', gap:12, flex:1 }}>
           {TESTS.map((t, i) => {
             const v = vals[t.id];
